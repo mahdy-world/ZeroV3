@@ -1,4 +1,5 @@
 from datetime import datetime
+from tkinter import Widget
 from django import forms
 from .models import *
 
@@ -63,5 +64,16 @@ class WorkerAttendanceForm(forms.ModelForm):
             'hour_count' : forms.Select(attrs={'class':'form-control',  'placeholder':'عدد الساعات...', 'id':'hours_count'}),
         }
         
-        
+ 
+ 
+class WorkerProductionForm(forms.ModelForm):
+    class Meta:
+        fields = ['date', 'quantity', 'product']
+        model = WorkerProduction
+        widgets = {
+            'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control', 'placeholder':'تاريخ الاستلام', 'id':'production_date'}),
+            'product' : forms.TextInput(attrs={'type':'text', 'class':'form-control', 'placeholder':' المنتج', 'id':'product'}),
+            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'price'})   
+        }
+                
    

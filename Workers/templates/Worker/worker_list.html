@@ -107,20 +107,37 @@
 
                             <div style="margin-top: 5px;">
                                 <ul class="list-inline mb-0">
-                                    <li class="list-inline-item mr-1">
-                                        <div >
-                                            <a href="{% url 'Workers:WorkerAttendances' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
-                                                <span class="badge  badge-success"  style="padding: 5px;"><i class="fas fa-calendar-check"></i> الحضور</span>
-                                            </a>
-                                        </div>
-                                    </li>
+                                    
+                                    {% if x.worker_type != 6  %}
+                                        <li class="list-inline-item mr-1">
+                                            <div >
+                                                <a href="{% url 'Workers:WorkerAttendances' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
+                                                    <span class="badge  badge-success"  style="padding: 5px;"><i class="fas fa-calendar-check"></i> الحضور</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+
+
+                                    {% if x.worker_type == 6 %}
+                                        <li class="list-inline-item mr-1">
+                                            <div>
+                                                <a href="{% url 'Workers:WorkerProduction' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="انتاج العامل">
+                                                    <span class="badge badge-dark" style="padding:5px;"><i class="fas fa-archive"></i> إنتاج العامل</span>
+                                                </a>
+                                            </div>
+                                        </li>   
+                                    {% endif %}
+                                        
+                                        
                                     <li class="list-inline-item mr-1">
                                         <div>
-                                            <a href="{% url 'Workers:WorkerPayment' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
-                                                <span class="badge  badge-warning"  style="padding: 5px;"><i class="fas fa-hand-holding-usd"></i> المسحوبات</span>
+                                            <a href="{% url 'Workers:WorkerPayment' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="مسحوبات العامل" data-original-title="Message">
+                                                <span class="badge badge-warning"  style="padding: 5px;"><i class="fas fa-hand-holding-usd"></i> المسحوبات</span>
                                             </a>
                                         </div>
                                     </li>
+
                                 </ul>
                                 
 
