@@ -70,13 +70,14 @@ class ProductSellerForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'phone': forms.TextInput(attrs={'class':'form-control'}),
             'initial_balance_debit': forms.NumberInput(attrs={'class':'form-control'}),
+            'initial_balance_type': forms.Select(attrs={'class':'form-control'}),
         }
 
 
 class ProductSellerFormUpdate(forms.ModelForm):
     class Meta:
         model = ProductSellers
-        exclude = ['deleted', 'initial_balance_debit']
+        exclude = ['deleted', 'initial_balance_debit', 'initial_balance_type']
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'phone': forms.TextInput(attrs={'class':'form-control'}),

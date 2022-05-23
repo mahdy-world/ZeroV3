@@ -51,10 +51,21 @@ class Product(models.Model):
         return self.name
 
 
+Balance_Type = (
+    (1, "للتاجر"),
+    (2, "علي التاجر"),
+    )
+
+Paid_Type = (
+    (1, "التاجر يدفع لك"),
+    (2, "أنت تدفع للتاجر"),
+    )
+
 class ProductSellers(models.Model):
     name = models.CharField(max_length=250, verbose_name='اسم التاجر')
     phone = models.CharField(max_length=11, verbose_name='رقم الهاتف')
-    initial_balance_debit = models.FloatField(default=0, verbose_name='الدين الافتتاحي')
+    initial_balance_debit = models.FloatField(default=0, verbose_name='القيمة الافتتاحية')
+    initial_balance_type = models.IntegerField(choices=Balance_Type, default=0, verbose_name="نوع القيمة الافتتاحية")
     deleted = models.BooleanField(default=False, verbose_name='حذف')
 
     def __str__(self):
@@ -64,6 +75,7 @@ class ProductSellers(models.Model):
 class SellerPayments(models.Model):
     seller = models.ForeignKey(ProductSellers, on_delete=models.CASCADE, null=True, verbose_name='التاجر')
     paid_value = models.FloatField(default=0.0, verbose_name='القيمة المدفوعة')
+    paid_type = models.IntegerField(choices=Paid_Type, default=0, verbose_name="نوع الدفع")
     date = models.DateTimeField(default=datetime.now(), verbose_name='التاريخ')
 
     def __str__(self):

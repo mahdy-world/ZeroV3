@@ -297,11 +297,42 @@ class PaidSellerValue(LoginRequiredMixin, CreateView):
         myform = SellerPayments()
         myform.seller = seller
         myform.paid_value = form.cleaned_data.get("paid_value")
+        myform.paid_type = 1
         myform.save()
         return redirect(self.get_success_url())
 
     def get_success_url(self):
         messages.success(self.request, "تم استلام مبلغ من التاجر " + str(ProductSellers.objects.get(id=self.kwargs['pk']).name) + " بنجاح ", extra_tags="success")
+        if self.request.POST.get('url'):
+            return self.request.POST.get('url')
+        else:
+            return self.success_url
+
+
+class PaidSellerValue2(LoginRequiredMixin, CreateView):
+    login_url = '/auth/login/'
+    model = SellerPayments
+    form_class = ProductSellerPaymentForm
+    template_name = 'forms/form_template.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'تسليم مبلغ الي التاجر: ' + str(ProductSellers.objects.get(id=self.kwargs['pk']).name)
+        context['message'] = 'add'
+        context['action_url'] = reverse_lazy('Products:PaidSellerValue2', kwargs={'pk': self.kwargs['pk']})
+        return context
+
+    def form_valid(self, form):
+        seller = ProductSellers.objects.get(id=self.kwargs['pk'])
+        myform = SellerPayments()
+        myform.seller = seller
+        myform.paid_value = form.cleaned_data.get("paid_value")
+        myform.paid_type = 2
+        myform.save()
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        messages.success(self.request, "تم تسليم مبلغ الي التاجر " + str(ProductSellers.objects.get(id=self.kwargs['pk']).name) + " بنجاح ", extra_tags="success")
         if self.request.POST.get('url'):
             return self.request.POST.get('url')
         else:
@@ -377,3 +408,24 @@ class SellerSuperDelete(LoginRequiredMixin, UpdateView):
         my_form = ProductSellers.objects.get(id=self.kwargs['pk'])
         my_form.delete()
         return redirect(self.get_success_url())
+
+
+class SellerDetails(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = SellerPayments
+    template_name = 'Products/productsellers_detail.html'
+    # paginate_by = 5
+
+    def get_queryset(self):
+        queryset = SellerPayments.objects.filter(seller=self.kwargs['pk']).order_by('-date')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'عمليات استلام/تسليم مبالغ من/الي التاجر: ' + str(ProductSellers.objects.get(id=self.kwargs['pk']).name)
+        context['type'] = 'list'
+        context['seller'] = ProductSellers.objects.get(id=int(self.kwargs['pk']))
+        context['from'] = SellerPayments.objects.filter(seller=int(self.kwargs['pk']), paid_type=1).aggregate(sum=Sum('paid_value'))
+        context['to'] = SellerPayments.objects.filter(seller=int(self.kwargs['pk']), paid_type=2).aggregate(sum=Sum('paid_value'))
+        context['count'] = SellerPayments.objects.filter(seller=self.kwargs['pk']).order_by('date').count()
+        return context

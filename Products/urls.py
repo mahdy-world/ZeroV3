@@ -17,7 +17,9 @@ urlpatterns = [
     path('seller_create/', SellerCreate.as_view(), name="SellerCreate"),
     path('seller_update/<int:pk>', SellerUpdate.as_view(), name="SellerUpdate"),
     path('seller_paid_value/<int:pk>', PaidSellerValue.as_view(), name="PaidSellerValue"),
+    path('seller_paid_value2/<int:pk>', PaidSellerValue2.as_view(), name="PaidSellerValue2"),
     path('seller_delete/<int:pk>', SellerDelete.as_view(), name="SellerDelete"),
     path('seller_restore/<int:pk>', SellerRestore.as_view(), name="SellerRestore"),
     path('seller_superDelete/<int:pk>', SellerSuperDelete.as_view(), name="SellerSuperDelete"),
+    path('seller_details/<int:pk>', SellerDetails.as_view(), name="SellerDetails"),
 ]
