@@ -188,6 +188,22 @@ class WorkerPayments(LoginRequiredMixin, DetailView):
         context['form'] = WorkerPaymentForm(self.request.POST or None)
         context['type'] = 'list'
         return context
+
+
+class WorkerProductions(LoginRequiredMixin, DetailView):
+    login_url = '/auth/login/'
+    model = Worker 
+    template_name = 'Worker/worker_production.html'
+    
+    def get_context_data(self, **kwargs):
+        queryset = WorkerProduction.objects.filter(worker=self.object)
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'انتاج العامل: ' + str(self.object)
+        context['production'] = queryset.order_by('-id')
+        context['form'] = WorkerProductionForm(self.request.POST or None)
+        context['type']  = 'list'
+        return context
+        
     
     
 class WorkerPayment_div(LoginRequiredMixin, DetailView):

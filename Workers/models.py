@@ -1,5 +1,4 @@
-from datetime import date
-from pyexpat import model
+from django.utils import timezone
 from django.db import models
 
 from Auth.models import User
@@ -35,9 +34,9 @@ HOUR_COUNT = (
 )
 
 class WorkerAttendance(models.Model):
-    date = models.DateField(verbose_name="تاريخ الحضور")    
+    date = models.DateField(verbose_name="تاريخ الحضور", default = timezone.now())    
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE,verbose_name="العامل")    
-    hour_count = models.IntegerField(choices=HOUR_COUNT,  verbose_name="عدد الساعات")
+    hour_count = models.IntegerField(choices=HOUR_COUNT, null=True, blank=True, verbose_name="عدد الساعات")
     attend = models.BooleanField(default=0, verbose_name="حضر")
     admin = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="المسئول")
     
@@ -45,11 +44,20 @@ class WorkerAttendance(models.Model):
         return self.worker.name
     
 class WorkerPayment(models.Model):
-    date = models.DateField(verbose_name="تاريخ السحب") 
+    date = models.DateField(verbose_name="تاريخ السحب", default = timezone.now()) 
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name=" العامل") 
     price = models.FloatField(verbose_name="المبلغ") 
     admin = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="المسئول")
     
     def __str__(self):
         return self.worker.name
+
+class WorkerProduction(models.Model):
+    date = models.DateField(verbose_name="تاريخ الاستلام", default = timezone.now())
+    worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name="العامل")
+    quantity = models.FloatField(default=0, verbose_name="الكمية")
+    product = models.CharField(max_length=50, verbose_name="المنتج", null=True, blank=True)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = "المسئول")
     
+    def __str__(self):
+        return self.worker.name     
