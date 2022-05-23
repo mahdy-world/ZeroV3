@@ -7,15 +7,26 @@ from Products.models import *
 
 @register.simple_tag(name='sellers_debit')
 def sellers_debit(seller_id):
-    seller_initial_debit = ProductSellers.objects.get(id=seller_id).initial_balance_debit
-    seller_payments = SellerPayments.objects.filter(seller__id=seller_id).aggregate(sum=Sum('paid_value')).get('sum')
-    if seller_initial_debit:
-        seller_initial_debit = seller_initial_debit
+    seller = ProductSellers.objects.get(id=seller_id)
+    seller_payments_from = SellerPayments.objects.filter(seller__id=seller_id, paid_type=1)
+    seller_payments_to = SellerPayments.objects.filter(seller__id=seller_id, paid_type=2)
+    if seller:
+        initial_debit = seller.initial_balance_debit
     else:
-        seller_initial_debit = 0
+        initial_debit = 0
 
-    if seller_payments:
-        seller_payments = seller_payments
+    if seller_payments_from:
+        payments_from = seller_payments_from.aggregate(sum=Sum('paid_value')).get('sum')
     else:
-        seller_payments = 0
-    return float(seller_initial_debit) - float(seller_payments)
+        payments_from = 0
+
+    if seller_payments_to:
+        payments_to = seller_payments_to.aggregate(sum=Sum('paid_value')).get('sum')
+    else:
+        payments_to = 0
+
+    if seller.initial_balance_type == 1:
+        sum = (payments_from - payments_to) + initial_debit
+    else:
+        sum = (payments_from - payments_to) - initial_debit
+    return float(sum)

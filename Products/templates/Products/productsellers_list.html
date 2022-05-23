@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mathfilters %}
 {% block title %}
 <title>قائمة التجار</title>
 
@@ -101,7 +102,7 @@
                                             <form class="app-search d-none d-lg-block" autocomplete="off" method="get" action="{% url 'Core:SellerSearch' %}">
                                                 <div class="position-relative" >
 
-                                                    <input type="text" value="{{seller_search}}" list="sells"  class="form-control border-0" style="border-radius: 0" name="seller" placeholder="بحث ... بإسم التاجر">
+                                                    <input type="text" value="{{seller_search}}" list="sells" autocomplete="off"  class="form-control border-0" style="border-radius: 0" name="seller" placeholder="بحث ... بإسم التاجر">
                                                     <span >
                                                         <button class="bx bx-search-alt btn btn-warning" style="border-radius: 0" type="submit"></button>
                                                     </span>
@@ -133,7 +134,19 @@
                                         <h3 class="mb-3 text-truncate"><a href="#" class="text-dark">{{x.name}}</a></h3>
                                         <ul class="list-inline mb-0">
                                             <li class="list-inline-item mr-1"><h5 class="my-0"><span class="text-muted mr-1">الهاتف:</span> <b>{{x.phone}}</b></h5></li><br>
-                                            <li class="list-inline-item mr-1"><h5 {% if sellers_debit_val > 0 %} class="my-0 text-danger" {% else %} class="my-0 text-success" {% endif %}><span class="text-muted mr-1">الدين:</span> <b>${{sellers_debit_val}}</b></h5></li>
+                                            <li class="list-inline-item mr-1"><h5 {% if sellers_debit_val < 0 %} class="my-0 text-danger" {% else %} class="my-0 text-success" {% endif %}><span class="text-muted mr-1">
+                                                {% if sellers_debit_val < 0 %}
+                                                عليه:
+                                                {% else %}
+                                                له:
+                                                {% endif %}
+                                            </span> <b>$
+                                                {% if sellers_debit_val < 0 %}
+                                                {{sellers_debit_val|mul:-1}}
+                                                {% else %}
+                                                {{sellers_debit_val}}
+                                                {% endif %}
+                                            </b></h5></li>
                                         </ul>
 
                                     </div>
@@ -143,12 +156,18 @@
                                           {% if type == "list"  %}
 
                                           <div class="mr-3">
-                                               <a href="{% url 'Products:SellerUpdate' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">
-                                                   <span class="badge  badge-info"><i class='bx bx-edit' ></i>تعديل</span>
+                                               <a href="{% url 'Products:SellerDetails' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
+                                                   <span class="badge badge-warning"><i class='bx bx-list-ul' ></i>العمليات</span>
                                               </a>
                                            </div>
 
-                                          <div class="">
+                                          <div class="mr-3">
+                                               <a href="{% url 'Products:SellerUpdate' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">
+                                                   <span class="badge badge-info"><i class='bx bx-edit' ></i>تعديل</span>
+                                              </a>
+                                           </div>
+
+                                          <div class="mr-3">
                                               <a
                                                   {% if sellers_debit_val == 0 %}
                                                   href="{% url 'Products:SellerDelete' x.id %}" data-toggle="modal" data-target="#action_modal"
@@ -186,8 +205,13 @@
                                     <div class="card-footer bg-transparent border-top">
                                         <div class="contact-links d-flex justify-content-center font-size-20">
                                           <div class="mr-3">
-                                           <a href="{% url 'Products:PaidSellerValue' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">
-                                               <span class="btn btn-outline-secondary"><i class='bx bx-money' ></i>استلام مبلغ</span>
+                                              <a href="{% url 'Products:PaidSellerValue' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">
+                                                  <span class="btn btn-outline-secondary"><i class='bx bx-money' ></i>استلام مبلغ</span>
+                                              </a>
+                                           </div>
+                                            <div class="mr-3">
+                                              <a href="{% url 'Products:PaidSellerValue2' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">
+                                                  <span class="btn btn-outline-secondary"><i class='bx bx-money' ></i>تسليم مبلغ</span>
                                               </a>
                                            </div>
                                         </div>
