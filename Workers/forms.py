@@ -30,7 +30,7 @@ class WorkerPaymentForm(forms.ModelForm):
         fields = ['date', 'price', 'worker', 'admin']
         model = WorkerPayment
         widgets = {
-            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
+            'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
             'price' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'price'}),
             'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المستلم...', 'id':'recipient', 'id':'admin'}),
         }
@@ -60,7 +60,7 @@ class WorkerAttendanceForm(forms.ModelForm):
         fields = ['date', 'hour_count']
         model = WorkerAttendance
         widgets = {
-            'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
+            'date' :  forms.DateInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
             'hour_count' : forms.Select(attrs={'class':'form-control',  'placeholder':'عدد الساعات...', 'id':'hours_count'}),
         }
         
