@@ -202,6 +202,7 @@ class WorkerProductions(LoginRequiredMixin, DetailView):
         context['production'] = queryset.order_by('-id')
         context['form'] = WorkerProductionForm(self.request.POST or None)
         context['type']  = 'list'
+        context['total_production'] = queryset.aggregate(quantity=Sum('quantity')).get('quantity')
         return context
         
 
