@@ -72,8 +72,8 @@ class WorkerProductionForm(forms.ModelForm):
         model = WorkerProduction
         widgets = {
             'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control', 'placeholder':'تاريخ الاستلام', 'id':'production_date'}),
-            'product' : forms.TextInput(attrs={'type':'text', 'class':'form-control', 'placeholder':' المنتج', 'id':'product'}),
-            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'price'})   
+            'product' : forms.TextInput(attrs={'type':'text', 'class':'form-control', 'placeholder':' المنتج', 'id':'worker_production'}),
+            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'worker_quantity'})   
         }
                 
    

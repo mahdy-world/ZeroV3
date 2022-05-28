@@ -204,6 +204,21 @@ class WorkerProductions(LoginRequiredMixin, DetailView):
         context['type']  = 'list'
         return context
         
+
+class Worker_Production_div(LoginRequiredMixin, DetailView):
+    login_url = '/auth/login/'
+    model = Worker 
+    template_name = 'Worker/worker_production_div.html'
+    
+    def get_context_data(self, **kwargs):
+        queryset = WorkerProduction.objects.filter(worker=self.object)
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'انتاج العامل: ' + str(self.object)
+        context['production'] = queryset.order_by('-id')
+        context['form'] = WorkerProductionForm(self.request.POST or None)
+        context['type']  = 'list'
+        return context
+        
     
     
 class WorkerPayment_div(LoginRequiredMixin, DetailView):
@@ -225,6 +240,7 @@ class WorkerPayment_div(LoginRequiredMixin, DetailView):
         return context
 
 
+
 class WorkerPaymentUpdate(LoginRequiredMixin, UpdateView):
     login_url = '/auth/login/'
     model = WorkerPayment
@@ -244,7 +260,27 @@ class WorkerPaymentUpdate(LoginRequiredMixin, UpdateView):
             return self.request.POST.get('url')
         else:
             return self.success_url
-
+        
+        
+class WorkerProductionUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/auth/login/'
+    model = WorkerProduction
+    form_class = WorkerProductionForm
+    template_name = 'forms/form_template.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'تعديل  انتاج العامل يوم : ' + str(self.object)
+        context['message'] = 'update'
+        context['action_url'] = reverse_lazy('Workers:WorkerProductionUpdate', kwargs={'pk': self.object.id})
+        return context 
+    
+    def get_success_url(self):
+        messages.success(self.request, " تم تعديل الانتاج " + str(self.object) + " بنجاح ", extra_tags="success")
+        if self.request.POST.get('url'):
+            return self.request.POST.get('url')
+        else:
+            return self.success_url
          
 
 def WorkerPaymentCreate(request):
@@ -274,7 +310,34 @@ def WorkerPaymentCreate(request):
                 'msg' : 0
             }
         return JsonResponse(response)
-
+    
+    
+def WorkerProductionCreate(request):
+    if request.is_ajax():
+        worker_id = request.POST.get('id')
+        worker = Worker.objects.get(id=worker_id)
+        
+        date = request.POST.get('date')
+        quantity = request.POST.get('worker_quantity')
+        product =  request.POST.get('worker_production')
+        
+        if worker and date and quantity and product:
+            obj = WorkerProduction()
+            obj.admin = request.user
+            obj.date = date
+            obj.quantity = quantity
+            obj.product = product
+            obj.worker = worker   
+            obj.save()   
+            if obj:
+                response = {
+                    'msg' : 1
+                }
+        else:
+            response = {
+                'msg' : 0
+            }
+        return JsonResponse(response)    
     
 def WorkerPaymentDelete(request):
     if request.is_ajax():
@@ -508,6 +571,20 @@ def WorkerAttendanceDelete(request):
     if request.is_ajax():
         attendance_id = request.POST.get('attendance_id')
         obj =  WorkerAttendance.objects.get(id=attendance_id)
+        obj.delete()
+        
+        if obj:
+            response = {
+                'msg' : 'Send Successfully'
+            }
+
+        return JsonResponse(response)    
+    
+    
+def WorkerProductionDelete(request):
+    if request.is_ajax():
+        production_id = request.POST.get('worker_Production_id')
+        obj =  WorkerProduction.objects.get(id=production_id)
         obj.delete()
         
         if obj:

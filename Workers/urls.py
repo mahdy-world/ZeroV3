@@ -31,9 +31,15 @@ urlpatterns = [
     path('delete/attendnace', WorkerAttendanceDelete, name="WorkerAttendanceDelete"),
     path('report/attendance/<int:pk>/', WorkerAttendanceReport.as_view(), name="WorkerAttendanceReport"),
     path('attendance/print/<int:pk>/', PrintWorkerAttendance , name="PrintWorkerAttendance"),
+    
+    
+    
 
-    path('detail/production/<int:pk>', WorkerProductions.as_view(), name="WorkerProduction")
-
+    path('detail/production/<int:pk>', WorkerProductions.as_view(), name="WorkerProduction"),
+    path('detail/production/<int:pk>/div/', Worker_Production_div.as_view(), name="WorkerProductions_div"),
+    path('create/workerProdduction', WorkerProductionCreate, name="WorkerProductionCreate"),
+    path('update/workerProdduction/<int:pk>/', WorkerProductionUpdate.as_view(), name="WorkerProductionUpdate"),
+    path('delete/worker_production', WorkerProductionDelete, name="WorkerProductionDelete"),
     
 ]
     
