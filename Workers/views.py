@@ -203,6 +203,7 @@ class WorkerProductions(LoginRequiredMixin, DetailView):
         context['form'] = WorkerProductionForm(self.request.POST or None)
         context['type']  = 'list'
         context['total_production'] = queryset.aggregate(quantity=Sum('quantity')).get('quantity')
+        context['total'] = queryset.aggregate(quantity=Sum('quantity')).get('quantity') * self.object.day_cost
         return context
         
 
