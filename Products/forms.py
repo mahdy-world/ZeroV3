@@ -6,7 +6,7 @@ from .models import *
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['deleted', 'code']
+        exclude = ['deleted', ]
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control'}),
             'image': forms.FileInput(attrs={'class':'form-control'}),
@@ -23,7 +23,7 @@ class ProductForm(forms.ModelForm):
 class ProductFormUpdate(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ['deleted', 'code']
+        exclude = ['deleted',]
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control'}),
             'image': forms.FileInput(attrs={'class':'form-control'}),

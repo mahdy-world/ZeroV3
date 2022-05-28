@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mathfilters %}
 {% block title %}
 <title>قائمة المنتجات</title>
 
@@ -130,6 +131,18 @@
                                                 ق
                                             </span>
                                         </div>
+
+                                        
+                                        {% if x.quantity >= 12 %}
+                                        <div class="avatar-sm product-ribbon" style="margin-top:20%">
+                                            <span class="avatar-title rounded-circle  bg-dark">
+                                                {{x.quantity|div:12|floatformat:1}} 
+                                                د   
+                                            </span>
+                                        </div>
+                                        {% endif %}
+                                            
+                                       
                                         {% if x.image %}
                                         <img src="{{x.image.url}}" width="250px" height="250px" alt="" class="img mx-auto d-block">
                                         {% else %}
@@ -141,7 +154,6 @@
                                     <div class="mt-4 text-center">
                                         <h3 class="mb-3 text-truncate"><a href="#" class="text-dark">{{x.name}}</a></h3>
                                         <ul class="list-inline mb-0">
-                                            <li class="list-inline-item mr-1"><h5 class="my-0"><span class="text-muted mr-1">الكود:</span> <b>{{x.code}}</b></h5></li>
                                             <li class="list-inline-item mr-1"><h5 class="my-0"><span class="text-muted mr-1">السعر:</span> <b>${{x.price}}</b></h5></li>
                                             <li class="list-inline-item mr-1"><h5 class="my-0"><span class="text-muted mr-1">الوزن:</span> <b>{{x.weight}} جرام</b></h5></li>
                                         </ul>

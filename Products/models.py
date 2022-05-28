@@ -30,7 +30,7 @@ SIZE= (
 class Product(models.Model):
     created = models.DateTimeField(auto_now=True, verbose_name="تاريخ الاضافة")
     name = models.CharField(max_length=50, verbose_name="اسم الموديل")
-    code = models.IntegerField(null=True, blank=True, verbose_name="كود الموديل")
+    # code = models.IntegerField(null=True, blank=True, verbose_name="كود الموديل")
     image = models.ImageField(null=True, blank=True , verbose_name="صورة الموديل")
     weight = models.FloatField(null=True, blank=True ,  verbose_name="وزن الموديل" )
     cost = models.FloatField(null=True, blank=True , max_length=15 , verbose_name="التكلفة")
@@ -42,10 +42,10 @@ class Product(models.Model):
     deleted = models.BooleanField(default=False)
     
     # To create random code for product
-    def save(self, **kwargs):
-        if not self.code:
-            self.code = randint(10000, 99999)
-        return super(Product, self).save(**kwargs)   
+    # def save(self, **kwargs):
+    #     if not self.code:
+    #         self.code = randint(10000, 99999)
+    #     return super(Product, self).save(**kwargs)   
     
     def __str__(self):
         return self.name
