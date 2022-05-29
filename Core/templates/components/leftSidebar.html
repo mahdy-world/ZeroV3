@@ -356,6 +356,38 @@
                         </ul>
                     </li>
                {% endif %}
+
+                {% if request.user.has_access_to_products %}
+                <!-- الفواتير  -->
+                <li>
+                    <a href="javascript: void(0);" data-toggle="modal" data-target="#machine_invoice_modal" class="has-arrow waves-effect">
+                        <i class='bx bx-receipt bx-sm' ></i>
+                        <span key="t-ecommerce"> الفواتير</span>
+                    </a>
+                    <ul class="sub-menu bg-light" aria-expanded="false">
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class='bx bx-receipt bx-sm' ></i>
+                                <span key="t-ecommerce"> فواتير المبيعات</span>
+                            </a>
+                            <ul class="sub-menu bg-light" aria-expanded="false">
+
+                                <li><a href="{% url 'Invoices:InvoiceList' %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                قائمة الفواتير </a></li>
+
+                                <li><a href="{% url 'Invoices:InvoiceCreate' %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                اضافة فاتورة جديدة</a></li>
+
+                                <li><a href="{% url 'Invoices:InvoiceTrashList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                    سلة المهملاات</a></li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+               {% endif %}
                    
                    
                {% if request.user.has_access_to_products %}

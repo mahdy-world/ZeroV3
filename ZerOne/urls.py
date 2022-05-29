@@ -29,6 +29,7 @@ urlpatterns = [
     path('factory/', include('Factories.urls')),
     path('product/', include('Products.urls')),
     path('worker/', include('Workers.urls')),
+    path('invoices/',include('Invoices.urls'), ),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
 
