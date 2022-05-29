@@ -18,9 +18,11 @@
 <div class="card">
   <div class="card-header">
     <div class="card-title">
-      <b class="font-weight-bold text-center"> {{ title }}</b>
     </div>
     <div class="card-tools">
+      <button type="button" class="btn btn-tool" data-dismiss="modal">
+        <i class="fas fa-times"></i>
+      </button>
       <button
         type="button"
         class="btn btn-tool"
@@ -42,9 +44,7 @@
         <input type="number" value="0" id="expand_modal" hidden />
         <i class="fas fa-expand"></i>
       </button>
-      <button type="button" class="btn btn-tool" data-dismiss="modal">
-        <i class="fas fa-times"></i>
-      </button>
+      
     </div>
   </div>
 
@@ -99,7 +99,7 @@
                           <th class="col-lg-2 col-xl-2 col-md-2">
                             <button
                               style="width: 100%"
-                              onclick="attenCreate()"
+                              onclick="workProductionCreate()"
                               class="btn btn-success"
                             >
                             <i class="fas fa-plus-circle"></i>
@@ -130,7 +130,7 @@
                   }
                 </style>
 
-                <div class="card-body" id="attendance">
+                <div class="card-body" id="production_worker">
                   <div class="table-responsive">
                     <table
                       class="table table-centered table-dark table-nowrap text-center"
@@ -139,7 +139,7 @@
                         <tr>
                           <th>م</th>
                           <th>التاريخ</th>
-                          <th>كمية الانتاج</th>
+                          <th>كمية الانتاج بالقطعة</th>
                           <th>المنتج</th>
                           <th>المسئول</th>
                           <th><i class="fas fa-cogs"></i></th>
@@ -164,7 +164,7 @@
                                 {% if request.user.is_superuser %}
                                 <td>
                                 <a
-                                    href="{% url 'Workers:WorkerAttendancesUpdate' x.id %}"
+                                    href="{% url 'Workers:WorkerProductionUpdate' x.id %}"
                                     class="mr-3 text-warning"
                                     data-toggle="modal"
                                     data-target="#action_modal"
@@ -172,7 +172,7 @@
                                     ><i class="mdi mdi-pencil font-size-18"></i
                                 ></a>
                                 <a
-                                    onclick="WorkerAttendanceDelete('{{x.id}}')"
+                                    onclick="WorkerProductionDelete('{{x.id}}')"
                                     style="cursor: pointer"
                                     class="text-danger"
                                     ><i class="mdi mdi-close font-size-18"></i
@@ -196,10 +196,10 @@
                             <div class="d-flex flex-wrap">
                               <div class="">
                                 <h5 class="mb-2 text-light">
-                                  اجمالي الانتاج 
+                                  اجمالي الإنتاج 
                                 </h5>
                                 <h3 class="mb-0 text-dark">
-                                  {{summary.count_days}} قطعة
+                                  {{total_production}} قطعة
                                 </h3>
                               </div>
 
@@ -207,13 +207,15 @@
                                 <div
                                   class="avatar-title bg-light rounded-circle text-dark font-size-20"
                                 >
-                                <i class="fas fa-clock"></i>                
+                                <i class="fas fa-calculator"></i>               
                                  </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      
 
                       <div class="col-lg-6 flex-center">
                         <div class="card mini-stats-wid mb-0">
@@ -224,7 +226,8 @@
                                   اجمالي الحساب المستحق
                                 </h5>
                                 <h3 class="mb-0 text-dark">
-                                  {{all_cost.sum_price}} جنية
+                                 
+                                  {{total}} جنية
                                 </h3>
                               </div>
 
@@ -245,14 +248,15 @@
                 </div>
 
                 <script>
-                  function attenCreate() {
+                  function workProductionCreate() {
                     $.ajax({
                       type: "POST",
-                      url: "{% url 'Workers:WorkerAttendanceCreate'  %}",
+                      url: "{% url 'Workers:WorkerProductionCreate'  %}",
                       data: {
                         id: "{{object.id}}",
-                        date: $("#date").val(),
-                        hour_count: $("#hours_count").val(), 
+                        date: $("#production_date").val(),
+                        worker_production: $("#worker_production").val(), 
+                        worker_quantity: $("#worker_quantity").val(), 
                         csrfmiddlewaretoken: "{{ csrf_token }}",
                         dataType: "json",
                       },
@@ -260,12 +264,9 @@
                         /* response message */
                         if (response.msg == 1) {
                           $("#date").val("");
-                          $("#hours_count").val("");
-                          $("#attendance")
-                            .html("&nbsp;")
-                            .load(
-                              "{% url 'Workers:WorkerAttendance_div' object.id %}"
-                            );
+                          $("#worker_production").val("");
+                          $("#worker_quantity").val("")
+                          $("#production_worker").html("&nbsp;").load("{% url 'Workers:WorkerProductions_div' object.id %}");
                           alert("تم الاضافة بنجاح");
                         } else {
                           alert("حاول مرة اخري / خطأ في البيانات");
@@ -276,22 +277,18 @@
                     });
                   }
 
-                  function WorkerAttendanceDelete(attendance_id) {
+                  function WorkerProductionDelete(proid) {
                     $.ajax({
                       type: "POST",
-                      url: "{% url 'Workers:WorkerAttendanceDelete' %}",
+                      url: "{% url 'Workers:WorkerProductionDelete' %}",
                       data: {
-                        attendance_id: attendance_id,
+                        worker_Production_id: proid,
                         csrfmiddlewaretoken: "{{ csrf_token }}",
                         dataType: "json",
                       },
                       success: function (data) {
                         /* response message */
-                        $("#attendance")
-                          .html("&nbsp;")
-                          .load(
-                            "{% url 'Workers:WorkerAttendance_div' object.id %}"
-                          );
+                        $("#production_worker").html("&nbsp;").load("{% url 'Workers:WorkerProductions_div' object.id %}");
                         alert("تم الحذف بنجاح");
                       },
 
