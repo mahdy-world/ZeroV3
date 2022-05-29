@@ -55,6 +55,19 @@
                                 الي سلة المهملات
                                 ؟
                             </h5>
+                        {% elif message == 'deletee' %}
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <h5 class="font-weight-bold text-center">هل انت متأكد من نقل العنصر
+                                "فاتورة {{ object.id }}"
+                                الي سلة المهملات
+                                ؟
+                            </h5>
+                        {% elif message == 'inv_back' %}
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <h5 class="font-weight-bold text-center">فتح الفاتورة مرة اخري؟
+                            </h5>
                         {% elif message == 'restore' %}
                             {% csrf_token %}
                             {% bootstrap_form form %}
@@ -72,6 +85,8 @@
                                 "{{ object.name }}"
                                 {% elif object.order_number %}
                                 "{{object.order_number}}"
+                                {% elif object.invoice %}
+                                "{{object.item.name}}"
                                 {% else %}
                                 "{{ object.product_name }}"
                                 {% endif %}
@@ -84,7 +99,7 @@
                             {% bootstrap_form form %}
                             <h5 class="font-weight-bold text-center"> تأكيد العملية !</h5>   
                         {% elif message == 'info' %}   
-                        <img src="{{info_obj.logo.url}}" width="200px" height="200px"> 
+{#                        <img src="{{info_obj.logo.url}}" width="200px" height="200px"> #}
                         
                         {% csrf_token %}
                         {% bootstrap_form form %}
@@ -129,6 +144,11 @@
                         <button type="submit" class="btn btn-info ">
                             <i class="fa fa-save"></i>
                              نعم
+
+                        {% elif message == 'inv_back' %}
+                        <button type="submit" class="btn btn-info ">
+                            <i class="fa fa-save"></i>
+                             نعم
                          {% else %}
                             <button type="submit" class="btn btn-success">
                                                             
@@ -136,7 +156,7 @@
                             حفظ
                         </button>
                         {% endif %}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <button style="margin-right: 10px" type="button" class="btn btn-secondary" data-dismiss="modal">
                             <i class="fas fa-times"></i>
                             الغاء
                         </button>
@@ -163,9 +183,9 @@
         get_url();
     </script>
 
-   
 
- 
+
+
 
 {% endblock %} 
 
