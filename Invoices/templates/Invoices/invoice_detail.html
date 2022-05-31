@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 
 {% block title %}
-<title> فاتورة مبيعات {{invoice.id}}</title>
+<title>
+    {% if invoice.invoice_type == 1 %}
+    فاتورة مبيعات
+    {% elif invoice.invoice_type == 2 %}
+    فاتورة مرتجع مبيعات
+    {% elif invoice.invoice_type == 3 %}
+    مبيعات مستقلة
+    {% endif %}
+    {{invoice.id}}</title>
 {% endblock title %}
 
 {% block css %}
@@ -51,19 +59,33 @@
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
                             
-                            <h3 class="mb-0 "> فاتورة مبيعات
+                            <h3 class="mb-0 ">
+                                {% if invoice.invoice_type == 1 %}
+                                فاتورة مبيعات
+                                {% elif invoice.invoice_type == 2 %}
+                                فاتورة مرتجع مبيعات
+                                {% elif invoice.invoice_type == 3 %}
+                                مبيعات مستقلة
+                                {% endif %}
                                 {{invoice.id}}</h3>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
                                     {% if invoice.deleted == 0 %}
-                                    <li class="breadcrumb-item"><a href="{% url 'Invoices:InvoiceList' %}">قائمة الفواتير</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'Invoices:InvoiceList' invoice.invoice_type %}">قائمة الفواتير</a></li>
                                     {% else %}
-                                    <li class="breadcrumb-item"><a href="{% url 'Invoices:InvoiceTrashList' %}">قائمة الفواتير</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'Invoices:InvoiceTrashList' invoice.invoice_type %}">قائمة الفواتير</a></li>
                                     {% endif %}
 
-                                    <li class="breadcrumb-item active">فاتورة مبيعات
+                                    <li class="breadcrumb-item active">
+                                        {% if invoice.invoice_type == 1 %}
+                                        فاتورة مبيعات
+                                        {% elif invoice.invoice_type == 2 %}
+                                        فاتورة مرتجع مبيعات
+                                        {% elif invoice.invoice_type == 3 %}
+                                        مبيعات مستقلة
+                                        {% endif %}
                                         {{invoice.id}}</li>
                                 </ol>
                             </div>
@@ -105,8 +127,20 @@
                                                                     <td>{{ invoice.date|date:'Y-m-d' }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th scope="row"><i class='bx bx-user-pin bx-sm' style='color:#556ee6' ></i>التاجر : </th>
-                                                                    <td>{{ invoice.seller.name }}</td>
+                                                                    <th scope="row"><i class='bx bx-user-pin bx-sm' style='color:#556ee6' ></i>
+                                                                        {% if invoice.seller %}
+                                                                        التاجر
+                                                                        {% else %}
+                                                                        العميل
+                                                                        {% endif %}
+                                                                        : </th>
+                                                                    <td>
+                                                                        {% if invoice.seller %}
+                                                                        {{ invoice.seller.name }}
+                                                                        {% else %}
+                                                                        {{ invoice.customer }}
+                                                                        {% endif %}
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><i class='bx bx-note bx-sm' style='color:#556ee6'  ></i> ملاحظات :</th>
@@ -118,6 +152,24 @@
                                                                         {% endif %}
                                                                     </td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <th scope="row"><i class='bx bx-stats bx-sm' style='color:#556ee6' ></i>حالة الفاتورة : </th>
+                                                                    <td>
+                                                                    <span class="badge badge-warning" style="font-size: medium">
+                                                                        {% if invoice.saved and invoice.close %}
+                                                                        تم اغلاق الفاتورة
+                                                                        <br>
+                                                                        "حفظ نهائي"
+                                                                        {% elif invoice.saved and not invoice.close %}
+                                                                        حفظ مؤقت
+                                                                        <br>
+                                                                        "يمكنك الارجاع"
+                                                                        {% else %}
+                                                                        الفاتورة مفتوحة
+                                                                        {% endif %}
+                                                                    </span>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -126,16 +178,21 @@
                         </div>
 
                         {% if invoice.saved %}
-                        <a href="{% url 'Invoices:PrintInvoice' invoice.id %}" target="_blank" class="form-control btn btn-success" title=" طباعة الفاتورة">
+                            {% if not invoice.close %}
+                            <a href="{% url 'Invoices:InvoiceClose' invoice.id %}" data-toggle="modal" data-target="#action_modal" class="form-control btn btn-success" title="حفظ نهائي">
+                                <i class="fa fa-save"></i> حفظ نهائي
+                            </a>
+                            <a style="margin-top: 10px" href="{% url 'Invoices:InvoiceBack' invoice.id %}" data-toggle="modal" data-target="#action_modal" class="form-control btn btn-info" title=" ارجاع من الحفظ">
+                                <i class="fa fa-backspace"></i> ارجاع من الحفظ
+                            </a>
+                            {% endif %}
+                        <a style="margin-top: 10px" href="{% url 'Invoices:PrintInvoice' invoice.id %}" target="_blank" class="form-control btn btn-outline-success" title=" طباعة الفاتورة">
                             <i class="fa fa-print"></i> طباعة الفاتورة
-                        </a>
-                        <a style="margin-top: 10px" href="{% url 'Invoices:InvoiceBack' invoice.id %}" data-toggle="modal" data-target="#action_modal" class="form-control btn btn-info" title=" ارجاع من الحفظ">
-                            <i class="fa fa-backspace"></i> ارجاع من الحفظ
                         </a>
                         {% else %}
                             {% if product %}
-                                <a href="{% url 'Invoices:InvoiceSave' invoice.id %}" data-toggle="modal" data-target="#action_modal" class="form-control btn btn-success" title="حفظ الفاتورة">
-                                    <i class="fa fa-save"></i> حفظ الفاتورة
+                                <a href="{% url 'Invoices:InvoiceSave' invoice.id %}" data-toggle="modal" data-target="#action_modal" class="form-control btn btn-success" title="حفظ مؤقت">
+                                    <i class="fa fa-save"></i> حفظ مؤقت
                                 </a>
                             {% endif %}
                         {% endif %}
@@ -172,11 +229,12 @@
                                                                 <form method="post" action="{{action_url}}">
                                                                 {% csrf_token %}
                                                                 <tr>
-                                                                    <th class="col-lg-5 col-xl-5 col-md-5">
+                                                                    <th class="col-lg-3 col-xl-3 col-md-3">
                                                                         {{form.item|as_crispy_field}}
                                                                     </th>
                                                                     <th class="col-lg-2 col-xl-2 col-md-2">{{form.unit_price|as_crispy_field}}</th>
                                                                     <th class="col-lg-2 col-xl-2 col-md-2">{{form.quantity|as_crispy_field}} </th>
+                                                                    <th class="col-lg-2 col-xl-2 col-md-2">{{form.unit|as_crispy_field}} </th>
                                                                     <th class="col-lg-2 col-xl-2 col-md-2">{{form.total_price|as_crispy_field}} </th>
                                                                     {% if not invoice.saved %}
                                                                     <th class="col-lg-2 col-xl-2 col-md-2">
@@ -200,6 +258,7 @@
                                                                         <th>الصنف</th>
                                                                         <th>سعر البيع</th>
                                                                         <th>الكمية</th>
+                                                                        <th>الوحدة</th>
                                                                         <th>الاجمالي</th>
                                                                         {% if not invoice.saved %}
                                                                         <th></th>
@@ -223,6 +282,9 @@
                                                                         </td>
                                                                         <td>
                                                                             {{x.quantity}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{x.get_unit_display}}
                                                                         </td>
                                                                         <td>
                                                                             <span class="badge badge-pill badge-soft-success font-size-12 text-danger">
@@ -417,17 +479,40 @@
 </script>
 
 <script>
+    $( '#item' ).on('change keyup', function () {
+        e = this.value;
+        var unit = parseFloat($('#unit').val());
+        var quantity = parseFloat($('#quantity').val());
+        $.ajax({
+            url: "{% url 'Invoices:get_item_price' %}?e=" + e,
+            success: function (data) {
+                $("#unit_price").val(data.product_price);
+                $('#total_price').val(data.product_price*quantity*unit);
+            }
+        });
+    });
+</script>
+
+<script>
     $( '#unit_price' ).on('change keyup', function () {
         var unit_price = parseFloat(this.value);
         var quantity = parseFloat($('#quantity').val());
-        $('#total_price').val(unit_price*quantity);
+        var unit = parseFloat($('#unit').val());
+        $('#total_price').val(unit_price*quantity*unit);
     });
 
     $( '#quantity' ).on('change keyup', function () {
         var quantity = parseFloat(this.value);
+        var unit = parseFloat($('#unit').val());
         var unit_price = parseFloat($('#unit_price').val());
-        $('#total_price').val(unit_price*quantity);
+        $('#total_price').val(unit_price*quantity*unit);
+    });
+
+    $( '#unit' ).on('change keyup', function () {
+        var unit = parseFloat(this.value);
+        var quantity = parseFloat($('#quantity').val());
+        var unit_price = parseFloat($('#unit_price').val());
+        $('#total_price').val(unit_price*quantity*unit);
     });
 </script>
-
 {% endblock js %}

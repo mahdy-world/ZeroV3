@@ -5,6 +5,7 @@
 
 {% endblock title %}
 
+{% load products_tags %}
 
 {% block main %}
     <div class="main-content">
@@ -121,28 +122,29 @@
                         </div>
                     <div class="row">
                     {% for x in object_list  %}
+                        {% product_12_quantity x.id as product_12_quantity %}
                         <div class="col-xl-3 col-sm-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="product-img position-relative">
                                         <div class="avatar-sm product-ribbon">
-                                            <span class="avatar-title rounded-circle  bg-primary">
+                                            <span class="avatar-title rounded-circle bg-secondary">
                                                 {{x.quantity}}
                                                 ق
                                             </span>
                                         </div>
 
-                                        
+
                                         {% if x.quantity >= 12 %}
-                                        <div class="avatar-sm product-ribbon" style="margin-top:20%">
-                                            <span class="avatar-title rounded-circle  bg-dark">
-                                                {{x.quantity|div:12|floatformat:1}} 
-                                                د   
+                                        <div class="avatar-sm product-ribbon" style="margin-right: 80%">
+                                            <span class="avatar-title rounded-circle bg-primary">
+                                                {{product_12_quantity}}
+                                                د
                                             </span>
                                         </div>
                                         {% endif %}
-                                            
-                                       
+
+
                                         {% if x.image %}
                                         <img src="{{x.image.url}}" width="250px" height="250px" alt="" class="img mx-auto d-block">
                                         {% else %}

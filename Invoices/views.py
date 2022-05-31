@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Sum, Count, query
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -21,13 +23,14 @@ class InvoiceList(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = self.model.objects.filter(deleted=False).order_by('-id')
+        queryset = self.model.objects.filter(deleted=False, invoice_type=int(self.kwargs['type'])).order_by('-id')
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['message'] = 'active'
-        context['count'] = self.model.objects.filter(deleted=False).count()
+        context['type'] = self.kwargs['type']
+        context['count'] = self.model.objects.filter(deleted=False, invoice_type=int(self.kwargs['type'])).count()
         return context
 
 
@@ -37,32 +40,40 @@ class InvoiceTrashList(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = self.model.objects.filter(deleted=True).order_by('-id')
+        queryset = self.model.objects.filter(deleted=True, invoice_type=int(self.kwargs['type'])).order_by('-id')
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['message'] = 'trash'
-        context['count'] = self.model.objects.filter(deleted=True).count()
+        context['type'] = self.kwargs['type']
+        context['count'] = self.model.objects.filter(deleted=True, invoice_type=int(self.kwargs['type'])).count()
         return context
 
 
 class InvoiceCreate(LoginRequiredMixin, CreateView):
     login_url = '/auth/login/'
     model = Invoice
-    form_class = InvoiceForm
+    # form_class = InvoiceForm
+    def get_form_class(self, **kwargs):
+        if int(self.kwargs['type']) == 1 or int(self.kwargs['type']) == 2:
+            form_class_name = InvoiceForm
+        else:
+            form_class_name = InvoiceForm2
+        return form_class_name
     template_name = 'forms/form_template.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'فاتورة مبيعات'
         context['message'] = 'create'
-        context['action_url'] = reverse_lazy('Invoices:InvoiceCreate')
+        context['action_url'] = reverse_lazy('Invoices:InvoiceCreate', kwargs={'type': self.kwargs['type']})
         return context
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=self.form_class)
-        form.fields['seller'].queryset = ProductSellers.objects.filter(deleted=False)
+        if int(self.kwargs['type']) == 1 or int(self.kwargs['type']) == 2:
+            form.fields['seller'].queryset = ProductSellers.objects.filter(deleted=False)
         return form
 
     def form_valid(self, form):
@@ -70,7 +81,7 @@ class InvoiceCreate(LoginRequiredMixin, CreateView):
         obj = form.save(commit=False)
         myform = Invoice.objects.get(id=obj.id)
         myform.creator = self.request.user
-        myform.invoice_type = 1
+        myform.invoice_type = int(self.kwargs['type'])
         myform.save()
         return redirect('Invoices:InvoiceDetail', pk=myform.id)
 
@@ -82,7 +93,13 @@ class InvoiceCreate(LoginRequiredMixin, CreateView):
 class InvoiceUpdate(LoginRequiredMixin, UpdateView):
     login_url = '/auth/login/'
     model = Invoice
-    form_class = InvoiceForm
+    # form_class = InvoiceForm
+    def get_form_class(self, **kwargs):
+        if int(self.object.invoice_type) == 1 or int(self.object.invoice_type) == 2:
+            form_class_name = InvoiceForm
+        else:
+            form_class_name = InvoiceForm2
+        return form_class_name
     template_name = 'forms/form_template.html'
 
     def get_context_data(self, **kwargs):
@@ -99,7 +116,7 @@ class InvoiceUpdate(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self, **kwargs):
         messages.success(self.request, "تم تعديل فاتورة مبيعات بنجاح", extra_tags="success")
-        return reverse('Invoices:InvoiceList')
+        return reverse('Invoices:InvoiceList', kwargs={'type': self.object.invoice_type})
 
 
 class InvoiceSave(LoginRequiredMixin, UpdateView):
@@ -110,7 +127,7 @@ class InvoiceSave(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'حفظ فاتورة مبيعات: ' + str(self.object)
+        context['title'] = 'حفظ مؤقت لفاتورة مبيعات: ' + str(self.object)
         context['message'] = 'inv_save'
         context['action_url'] = reverse_lazy('Invoices:InvoiceSave', kwargs={'pk': self.object.id})
         return context
@@ -127,6 +144,30 @@ class InvoiceSave(LoginRequiredMixin, UpdateView):
         form.save()
         myform = Invoice.objects.get(id=self.kwargs['pk'])
         myform.saved = 1
+        myform.save()
+        return redirect(self.get_success_url())
+
+
+class InvoiceClose(LoginRequiredMixin, UpdateView):
+    login_url = '/auth/login/'
+    model = Invoice
+    form_class = InvoiceCloseForm
+    template_name = 'forms/form_template.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'حفظ نهائي لفاتورة مبيعات: ' + str(self.object)
+        context['message'] = 'close'
+        context['action_url'] = reverse_lazy('Invoices:InvoiceClose', kwargs={'pk': self.object.id})
+        return context
+
+    def get_success_url(self, **kwargs):
+        messages.success(self.request, "تم حفظ الفاتورة بنجاح", extra_tags="success")
+        return reverse('Invoices:InvoiceDetail', kwargs={'pk': self.object.id})
+
+    def form_valid(self, form):
+        myform = Invoice.objects.get(id=self.kwargs['pk'])
+        myform.close = 1
         myform.save()
         return redirect(self.get_success_url())
 
@@ -165,7 +206,7 @@ class InvoiceDelete(LoginRequiredMixin, UpdateView):
     template_name = 'forms/form_template.html'
 
     def get_success_url(self):
-        return reverse('Invoices:InvoiceList')
+        return reverse('Invoices:InvoiceList', kwargs={'type': self.object.invoice_type})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -189,12 +230,12 @@ class InvoiceRestore(LoginRequiredMixin, UpdateView):
     template_name = 'forms/form_template.html'
 
     def get_success_url(self):
-        return reverse('Invoices:InvoiceTrashList')
+        return reverse('Invoices:InvoiceTrashList', kwargs={'type': self.object.invoice_type})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'استرجاع فاتورة مبيعات: ' + str(self.object)
-        context['message'] = 'restore'
+        context['message'] = 'restoree'
         context['action_url'] = reverse_lazy('Invoices:InvoiceRestore', kwargs={'pk': self.object.id})
         return context
 
@@ -213,12 +254,12 @@ class InvoiceSuperDelete(LoginRequiredMixin, UpdateView):
     template_name = 'forms/form_template.html'
 
     def get_success_url(self):
-        return reverse('Invoices:InvoiceTrashList')
+        return reverse('Invoices:InvoiceTrashList', kwargs={'type': self.object.invoice_type})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'حذف فاتورة مبيعات : ' + str(self.object.id) + 'بشكل نهائي'
-        context['message'] = 'super_delete'
+        context['message'] = 'super_deletee'
         context['action_url'] = reverse_lazy('Invoices:InvoiceSuperDelete', kwargs={'pk': self.object.id})
         return context
 
@@ -235,7 +276,17 @@ def InvoiceDetail(request, pk):
     count_product = product.count()
 
     total = product.aggregate(total=Sum('total_price')).get('total')
-    quantity = product.aggregate(quantity=Sum('quantity')).get('quantity')
+    quantity1 = product.filter(unit=1).aggregate(quantity=Sum('quantity')).get('quantity')
+    if quantity1:
+        quantity1 = quantity1
+    else:
+        quantity1 = 0.0
+    quantity2 = product.filter(unit=12).aggregate(quantity=Sum('quantity')).get('quantity')
+    if quantity2:
+        quantity2 = quantity2
+    else:
+        quantity2 = 0.0
+    quantity = quantity1 + (quantity2 * 12)
 
     if total:
         invoice.total = total
@@ -246,7 +297,7 @@ def InvoiceDetail(request, pk):
     for prod in product:
         products.append(prod.item.id)
 
-    form.fields['item'].queryset = Product.objects.filter(deleted=False).exclude(id__in=products)
+    form.fields['item'].queryset = Product.objects.filter(deleted=False, quantity__gt=0).exclude(id__in=products)
 
     type_page = "list"
     page = "active"
@@ -291,7 +342,7 @@ def AddProductInvoice(request, pk):
     }
 
     if form.is_valid():
-        quantity = form.cleaned_data.get("quantity")
+        quantity = form.cleaned_data.get("quantity") * form.cleaned_data.get("unit")
         item = form.cleaned_data.get("item")
         trans = item.quantity
 
@@ -330,7 +381,7 @@ class InvoiceProductsUpdate(LoginRequiredMixin, UpdateView):
         return reverse('Invoices:InvoiceDetail', kwargs={'pk': self.kwargs['id']})
 
     def form_valid(self, form):
-        quantity = form.cleaned_data.get("quantity")
+        quantity = form.cleaned_data.get("quantity") * form.cleaned_data.get("unit")
         unit_price = form.cleaned_data.get("unit_price")
         item = form.cleaned_data.get("item")
         trans = item.quantity
@@ -344,6 +395,19 @@ class InvoiceProductsUpdate(LoginRequiredMixin, UpdateView):
         else:
             messages.success(self.request, " لاتوجد كمية كافية من المنتج داخل المخزن ", extra_tags="danger")
         return redirect(self.get_success_url())
+
+
+def get_item_price(request):
+    e = request.GET.get('e')
+    product = Product.objects.get(id=int(e))
+    if product.price:
+        price = product.price
+    else:
+        price = 0.0
+    data = json.dumps({
+        'product_price': float(price),
+    })
+    return HttpResponse(data, content_type='application/json')
 
 
 class InvoiceProductsDelete(LoginRequiredMixin, UpdateView):
@@ -391,3 +455,144 @@ def PrintInvoice(request, id):
     pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/main_invoice_pdf.css')], presentational_hints=True)
     response = HttpResponse(pdf, content_type='application/pdf')
     return response
+
+
+# def InvoiceReturn(request):
+#     invoices = Invoice.objects.filter(deleted=0, saved=1, close=1)
+#     context = {
+#         'invoices': invoices,
+#     }
+#     return render(request, 'Invoices/invoice_return.html', context)
+#
+#
+# def InvoiceReturnProduct(request):
+#     invoices = Invoice.objects.filter(deleted=0, saved=1, close=1)
+#     invoice_id = int(request.POST.get('invoice_id'))
+#     invoice = Invoice.objects.get(id=invoice_id)
+#     product = InvoiceItem.objects.filter(invoice__id=invoice_id)
+#     r_product = InvoiceItemDetails.objects.filter(invoice__id=invoice_id)
+#
+#     total = product.aggregate(total=Sum('total_price')).get('total')
+#     quantity1 = product.filter(unit=1).aggregate(quantity=Sum('quantity')).get('quantity')
+#     if quantity1:
+#         quantity1 = quantity1
+#     else:
+#         quantity1 = 0.0
+#     quantity2 = product.filter(unit=12).aggregate(quantity=Sum('quantity')).get('quantity')
+#     if quantity2:
+#         quantity2 = quantity2
+#     else:
+#         quantity2 = 0.0
+#     quantity = quantity1 + (quantity2 * 12)
+#
+#     form = InvoiceItemProductsForm()
+#     products = []
+#     for prod in product:
+#         products.append(prod.item.id)
+#
+#     r_products = []
+#     for prod in r_product:
+#         r_products.append(prod.item.id)
+#     form.fields['item'].queryset = Product.objects.filter(deleted=False, id__in=products).exclude(id__in=r_products)
+#     context = {
+#         'invoices': invoices,
+#         'product': product,
+#         'r_product': r_product,
+#         'invoice_id': invoice_id,
+#         'invoice': invoice,
+#         'count_product': product.count(),
+#         'total': total,
+#         'qu': quantity,
+#         'form': form,
+#     }
+#     return render(request, 'Invoices/invoice_return.html', context)
+#
+#
+# def get_item_return_price(request):
+#     l = request.GET.get('l').split(',')
+#     item = InvoiceItem.objects.get(invoice__id=int(l[1]), item__id=int(l[0]))
+#     if item.unit_price:
+#         price = item.unit_price
+#     else:
+#         price = 0.0
+#
+#     if item.quantity:
+#         quantity = item.quantity
+#     else:
+#         quantity = 0.0
+#
+#     if item.unit:
+#         unit = item.unit
+#     else:
+#         unit = 1
+#
+#     data = json.dumps({
+#         'product_price': float(price),
+#         'product_quantity': float(quantity),
+#         'product_unit': float(unit),
+#     })
+#     return HttpResponse(data, content_type='application/json')
+#
+#
+# def ReturnProductInvoice(request, pk):
+#     invoice = get_object_or_404(Invoice, id=pk)
+#     form = InvoiceItemProductsForm(request.POST or None)
+#     formm = InvoiceItemProductsForm()
+#
+#     invoices = Invoice.objects.filter(deleted=0, saved=1, close=1)
+#     invoice_id = int(invoice.id)
+#     product = InvoiceItem.objects.filter(invoice__id=invoice_id)
+#     r_product = InvoiceItemDetails.objects.filter(invoice__id=invoice_id)
+#
+#     total = product.aggregate(total=Sum('total_price')).get('total')
+#     quantity1 = product.filter(unit=1).aggregate(quantity=Sum('quantity')).get('quantity')
+#     if quantity1:
+#         quantity1 = quantity1
+#     else:
+#         quantity1 = 0.0
+#     quantity2 = product.filter(unit=12).aggregate(quantity=Sum('quantity')).get('quantity')
+#     if quantity2:
+#         quantity2 = quantity2
+#     else:
+#         quantity2 = 0.0
+#     quantity = quantity1 + (quantity2 * 12)
+#
+#     products = []
+#     for prod in product:
+#         products.append(prod.item.id)
+#
+#     r_products = []
+#     for prod in r_product:
+#         r_products.append(prod.item.id)
+#     formm.fields['item'].queryset = Product.objects.filter(deleted=False, id__in=products).exclude(id__in=r_products)
+#     context = {
+#         'invoices': invoices,
+#         'product': product,
+#         'r_product': r_product,
+#         'invoice_id': invoice_id,
+#         'invoice': invoice,
+#         'count_product': product.count(),
+#         'total': total,
+#         'qu': quantity,
+#         'form': formm,
+#     }
+#
+#     if form.is_valid():
+#         item = form.cleaned_data.get("item")
+#         invoice_item = InvoiceItem.objects.get(invoice=invoice, item=item)
+#         # invoice_return_item = InvoiceItemDetails.objects.get(invoice=invoice, item=item)
+#         # trans = (invoice_item.quantity * invoice_item.unit) - (invoice_return_item.quantity * invoice_return_item.unit)
+#         trans = invoice_item.quantity * invoice_item.unit
+#         quantity = form.cleaned_data.get("quantity") * form.cleaned_data.get("unit")
+#
+#         if trans >= quantity:
+#             obj = form.save(commit=False)
+#             obj.invoice = invoice
+#             obj.invoice_item = invoice_item
+#             obj.save()
+#             messages.success(request, " تم ارجاع كمية منتج من الفاتورة بنجاح ", extra_tags="success")
+#         else:
+#             messages.success(request, " لاتوجد كمية كافية من المنتج داخل الفاتورة المختارة ", extra_tags="danger")
+#         return render(request, 'Invoices/invoice_return.html', context)
+#
+#     return render(request, 'Invoices/invoice_return.html', context)

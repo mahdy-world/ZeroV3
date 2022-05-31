@@ -62,7 +62,7 @@
                                 اضافة طلبية جديدة</a></li>
 
                                 <li><a href="{% url 'SpareParts:SparePartsOrderTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -81,7 +81,7 @@
                                 اضافة مورد جديد</a></li>
 
                                 <li><a href="{% url 'SpareParts:SparePartsSupplierTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -93,7 +93,7 @@
                             </a>
                             <ul class="sub-menu bg-light" aria-expanded="false">
 
-                                
+
 
                                 <li><a href="{% url 'SpareParts:SparePartsWarehouseList' %}" key="t-products"><i class='bx bx-list-ul' ></i>
                                 قائمة المخازن </a></li>
@@ -102,7 +102,7 @@
                                 اضافة مخزن جديد</a></li>
 
                                 <li><a href="{% url 'SpareParts:SparePartsWarehouseTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -121,7 +121,7 @@
                                 اضافة صنف جديد</a></li>
 
                                 <li><a href="{% url 'SpareParts:SpareNameTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -140,7 +140,7 @@
                                 اضافة نوع جديد</a></li>
 
                                 <li><a href="{% url 'SpareParts:SpareTypeTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -148,9 +148,9 @@
                     </ul>
                 </li>
                 {% endif %}
-                    
 
-               
+
+
                {% if request.user.has_access_to_machine == True %}
                 <!-- الماكينات  -->
                 <li>
@@ -160,7 +160,7 @@
                     </a>
                     <ul class="sub-menu bg-light" aria-expanded="false">
 
-                       
+
 
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -176,7 +176,7 @@
                                 اضافة طلبية جديدة</a></li>
 
                                 <li><a href="{% url 'Machines:MachinesOrdersTrashList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -195,7 +195,7 @@
                                 اضافة مورد جديد</a></li>
 
                                 <li><a href="{% url 'Machines:suppliers_trash_list' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -207,7 +207,7 @@
                             </a>
                             <ul class="sub-menu bg-light" aria-expanded="false">
 
-                                
+
 
                                 <li><a href="{% url 'Machines:warehouses_active_list' %}" key="t-products"><i class='bx bx-list-ul' ></i>
                                 قائمة المخازن </a></li>
@@ -216,7 +216,7 @@
                                 اضافة مخزن جديد</a></li>
 
                                 <li><a href="{% url 'Machines:warehouses_trash_list' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -235,7 +235,7 @@
                                 اضافة صنف جديد</a></li>
 
                                 <li><a href="{% url 'Machines:names_trash_list' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -254,16 +254,16 @@
                                 اضافة نوع جديد</a></li>
 
                                 <li><a href="{% url 'Machines:types_trash_list' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </li>
                {% endif %}
 
-               
+
                {% if request.user.has_access_to_factory %}
                    <!-- المصانع  -->
                     <li>
@@ -286,11 +286,11 @@
                                     اضافة مصنع جديد</a></li>
 
                                     <li><a href="{% url 'Factories:FactoryTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                        سلة المهملاات</a></li>
+                                        سلة المهملات</a></li>
 
                                 </ul>
                             </li>
-                            
+
                         </ul>
                     </li>
                {% endif %}
@@ -318,15 +318,15 @@
                                     اضافة منتج جديد</a></li>
 
                                     <li><a href="{% url 'Products:ProductTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                        سلة المهملاات</a></li>
+                                        سلة المهملات</a></li>
 
                                 </ul>
                             </li>
-                            
+
                         </ul>
                     </li>
                {% endif %}
-                   
+
                {% if request.user.has_access_to_products %}
                    <!-- التجار -->
                     <li>
@@ -348,11 +348,10 @@
                                     اضافة تاجر جديد</a></li>
 
                                     <li><a href="{% url 'Products:SellerTrashList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                        سلة المهملاات</a></li>
+                                        سلة المهملات</a></li>
 
                                 </ul>
                             </li>
-                          
                         </ul>
                     </li>
                {% endif %}
@@ -373,14 +372,53 @@
                             </a>
                             <ul class="sub-menu bg-light" aria-expanded="false">
 
-                                <li><a href="{% url 'Invoices:InvoiceList' %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                <li><a href="{% url 'Invoices:InvoiceList' 1 %}"  key="t-products"><i class='bx bx-list-ul' ></i>
                                 قائمة الفواتير </a></li>
 
-                                <li><a href="{% url 'Invoices:InvoiceCreate' %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                <li><a href="{% url 'Invoices:InvoiceCreate' 1 %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                اضافة فاتورة جديدة</a></li>
+<!--
+{#                                <li><a href="{% url 'Invoices:InvoiceReturn' %}" key="t-product-detail"> <i class='bx bxs-minus-square'></i>#}
+{#                                مرتجع جديد</a></li>#}
+-->
+                                <li><a href="{% url 'Invoices:InvoiceTrashList' 1 %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                    سلة المهملات</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class='bx bx-receipt bx-sm' ></i>
+                                <span key="t-ecommerce"> فواتير مرتجع المبيعات</span>
+                            </a>
+                            <ul class="sub-menu bg-light" aria-expanded="false">
+
+                                <li><a href="{% url 'Invoices:InvoiceList' 2 %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                قائمة الفواتير </a></li>
+
+                                <li><a href="{% url 'Invoices:InvoiceCreate' 2 %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
                                 اضافة فاتورة جديدة</a></li>
 
-                                <li><a href="{% url 'Invoices:InvoiceTrashList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                <li><a href="{% url 'Invoices:InvoiceTrashList' 2 %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                    سلة المهملات</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class='bx bx-receipt bx-sm' ></i>
+                                <span key="t-ecommerce"> مبيعات مستقلة</span>
+                            </a>
+                            <ul class="sub-menu bg-light" aria-expanded="false">
+
+                                <li><a href="{% url 'Invoices:InvoiceList' 3 %}"  key="t-products"><i class='bx bx-list-ul' ></i>
+                                قائمة الفواتير </a></li>
+
+                                <li><a href="{% url 'Invoices:InvoiceCreate' 3 %}" data-target="#sub_modal" data-toggle="modal"  key="t-product-detail"> <i class='bx bxs-add-to-queue'></i>
+                                اضافة فاتورة جديدة</a></li>
+
+                                <li><a href="{% url 'Invoices:InvoiceTrashList' 3 %}" key="t-product-detail"> <i class='bx bx-trash'></i>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -388,8 +426,8 @@
                     </ul>
                 </li>
                {% endif %}
-                   
-                   
+
+
                {% if request.user.has_access_to_products %}
                    <!-- العمال  -->
                     <li>
@@ -410,19 +448,19 @@
                                     اضافة عامل جديد</a></li>
 
                                     <li><a href="{% url 'Workers:WorkerTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                        سلة المهملاات</a></li>
+                                        سلة المهملات</a></li>
 
                                 </ul>
                             </li>
-                          
+
                         </ul>
                     </li>
                {% endif %}
-                   
-                   
+
+
                 <li class="menu-title" key="t-menu">التحويلات والمعاملات المالية</li>
 
-                
+
                 {% if request.user.has_access_to_treasury == True %}
                 <!-- الخزائن والحسابات البنكية  -->
                 <li>
@@ -431,7 +469,7 @@
                         <span key="t-ecommerce"> الخزائن والحسابات البنكية</span>
                     </a>
                     <ul class="sub-menu  bg-light"  aria-expanded="false">
-                        
+
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class='bx bxl-shopify bx-sm' ></i>
@@ -446,7 +484,7 @@
                                 اضافة خزنة جديدة</a></li>
 
                                 <li><a href="{% url 'Treasury:WorkTreasuryTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -465,7 +503,7 @@
                                 اضافة خزنة جديدة</a></li>
 
                                 <li><a href="{% url 'Treasury:HomeTreasuryTrachList' %}"  key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
@@ -484,7 +522,7 @@
                                 اضافة حساب جديد</a></li>
 
                                 <li><a href="{% url 'Treasury:BankAccountTrachList' %}" key="t-product-detail"> <i class='bx bx-trash'></i>
-                                    سلة المهملاات</a></li>
+                                    سلة المهملات</a></li>
 
                             </ul>
                         </li>
