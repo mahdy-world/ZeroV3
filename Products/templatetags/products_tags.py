@@ -30,3 +30,14 @@ def sellers_debit(seller_id):
     else:
         sum = (payments_from - payments_to) - initial_debit
     return float(sum)
+
+
+@register.simple_tag(name='product_12_quantity')
+def product_12_quantity(product_id):
+    prod = Product.objects.get(id=product_id)
+    quant = prod.quantity / 12
+    if prod.quantity % 12 == 0:
+        quant = int(quant)
+    else:
+        quant = '＋' + str(int(quant))
+    return quant

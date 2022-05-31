@@ -2,12 +2,22 @@ from django import forms
 from django.db.models import fields
 from django.forms import widgets
 from .models import *
+from django_select2.forms import Select2Widget, Select2MultipleWidget
 
 
 class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
         fields = ['date', 'seller']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+
+class InvoiceForm2(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = ['date', 'customer']
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
@@ -44,26 +54,48 @@ class InvoiceDeleteForm(forms.ModelForm):
             'deleted': forms.HiddenInput(),
         }
 
+class InvoiceCloseForm(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = ['close']
+        widgets = {
+            'close': forms.HiddenInput(),
+        }
 
 class InvoiceProductsForm(forms.ModelForm):
     class Meta:
         model = InvoiceItem
-        fields = ['item', 'unit_price', 'quantity', 'total_price']
+        fields = ['item', 'unit_price', 'quantity', 'unit', 'total_price']
         widgets = {
             'item': forms.Select(attrs={'class': 'form-control', 'id': 'item'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'quantity'}),
+            'unit': forms.Select(attrs={'class': 'form-control', 'id': 'unit'}),
             'unit_price': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'unit_price'}),
             'total_price': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'total_price', 'readonly': 'readonly'}),
         }
 
 
+# class InvoiceItemProductsForm(forms.ModelForm):
+#     class Meta:
+#         model = InvoiceItemDetails
+#         fields = ['item', 'unit_price', 'quantity', 'unit', 'total_price']
+#         widgets = {
+#             'item': forms.Select(attrs={'class': 'form-control', 'id': 'item'}),
+#             'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'quantity'}),
+#             'unit': forms.Select(attrs={'class': 'form-control', 'id': 'unit'}),
+#             'unit_price': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'unit_price', 'readonly': 'readonly'}),
+#             'total_price': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'total_price', 'readonly': 'readonly'}),
+#         }
+
+
 class InvoiceProductsFormUpdate(forms.ModelForm):
     class Meta:
         model = InvoiceItem
-        fields = ['item', 'unit_price', 'quantity', 'total_price']
+        fields = ['item', 'unit_price', 'quantity', 'unit', 'total_price']
         widgets = {
             'item': forms.Select(attrs={'class': 'form-control', 'id': 'item', 'readonly': 'readonly'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'quantity'}),
+            'unit': forms.Select(attrs={'class': 'form-control', 'id': 'unit'}),
             'unit_price': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'id': 'unit_price'}),
             'total_price': forms.HiddenInput(attrs={'class': 'form-control', 'min': '1', 'id': 'total_price', 'readonly': 'readonly'}),
         }

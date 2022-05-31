@@ -4,4 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(Invoice)
 admin.site.register(InvoiceItem)
-admin.site.register(InvoiceItemDetails)
+# admin.site.register(InvoiceItemDetails)

@@ -16,7 +16,7 @@ class Color(models.Model):
 CATEGORY= (
     (1, "شبابي"),
     (2, "حريمي"),
-    (3, "اولاادي")
+    (3, "اولادي")
     )
 
 SIZE= (

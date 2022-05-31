@@ -68,12 +68,33 @@
                             {% bootstrap_form form %}
                             <h5 class="font-weight-bold text-center">فتح الفاتورة مرة اخري؟
                             </h5>
+                        {% elif message == 'close' %}
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <h5 class="font-weight-bold text-center">حفظ نهائي للفاتورة؟
+                            </h5>
                         {% elif message == 'restore' %}
                             {% csrf_token %}
                             {% bootstrap_form form %}
                             <h5 class="font-weight-bold text-center">هل انت متأكد من ارجاع العنصر
                                 "{{ object.name }}"
                                 الى القائمة النشطة مرة اخري
+                                ؟
+                            </h5>
+                        {% elif message == 'restoree' %}
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <h5 class="font-weight-bold text-center">هل انت متأكد من ارجاع العنصر
+                                "{{ object.id }}"
+                                الى القائمة النشطة مرة اخري
+                                ؟
+                            </h5>
+                        {% elif message == 'super_deletee' %}
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <h5 class="font-weight-bold text-center">هل انت متأكد من حذف العنصر
+                                "{{ object.id }}"
+                                بشكل نهائي
                                 ؟
                             </h5>
                         {% elif message == 'super_delete' %}
@@ -123,13 +144,13 @@
                         {% endif %}
                     </div>
                     <div class="card-footer text-center">
-                        {% if message == 'delete' or message == 'super_delete' %}
+                        {% if message == 'delete' or message == 'super_delete' or message == 'super_deletee' or message == 'deletee' %}
                            <button type="submit" class="btn btn-danger">
                                 <i class="fa fa-save"></i>
                                  نعم
                                
                         </button>
-                        {% elif message == 'restore' %}
+                        {% elif message == 'restore' or message == 'restoree' %}
                            <button type="submit" class="btn btn-info ">
                                 <i class="fa fa-save"></i>
                                  نعم
@@ -145,7 +166,7 @@
                             <i class="fa fa-save"></i>
                              نعم
 
-                        {% elif message == 'inv_back' %}
+                        {% elif message == 'inv_back' or message == 'close' %}
                         <button type="submit" class="btn btn-info ">
                             <i class="fa fa-save"></i>
                              نعم

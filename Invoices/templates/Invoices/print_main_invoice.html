@@ -1,4 +1,4 @@
-{% load static %}{% load invoice_tags %}<!DOCTYPE html>
+{% load static %}{% load invoice_tags %} {% load mathfilters %}<!DOCTYPE html>
 <html lang="ar">
 
 <head>
@@ -21,7 +21,11 @@
             </td>
             <td style="border: none">
                 <h2 style="border: 1px solid #6495ED; border-radius: 10px; padding: 5px; background-color: white; margin-top: 65px;">
+                {% if invoice.invoice_type == 1 or invoice.invoice_type == 3 %}
                 فاتورة مبيعات
+                {% elif invoice.invoice_type == 2 %}
+                فاتورة مرتجع مبيعات
+                {% endif %}
                 <br>
                 No: {{ invoice.id }}
                 </h2>
@@ -44,8 +48,18 @@
     </span>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <span>
-        المطلوب من التاجر/
+        المطلوب من
+        {% if invoice.seller %}
+        التاجر
+        {% else %}
+        العميل
+        {% endif %}
+        /
+        {% if invoice.seller %}
         {{ invoice.seller.name }}
+        {% else %}
+        {{ invoice.customer }}
+        {% endif %}
     </span>
 </div><br>
 <table class="prods">
@@ -67,9 +81,9 @@
 <tr>
 <td> {% profit_decimal item.total_price as num %} {{ num }}
 </td>
-<td> {% profit_decimal item.unit_price as num %} {{ num }}
+<td> {% profit_decimal item.unit_price as num %} {{ num|mul:item.unit }}
 </td>
-<td> {{ item.unit_name }}
+<td> {{ item.get_unit_display }}
 </td>
 <td> {% profit_decimal item.quantity as num %} {{ num }}
 </td>
@@ -77,9 +91,7 @@
 </td>
 <td> {{ forloop.counter }}
 </td>
-</tr> {% endfor %} </tbody>
-</table>
-<table class="prods">
+</tr> {% endfor %}
 <tr style="background-color:transparent">
 <td style="background-color:white; color: black">
     {% profit_decimal invoice.total as num %} {{ num }}
@@ -88,7 +100,6 @@
     اجمالي الفاتورة
 </td>
 </tr>
-
 <tr style="background-color:transparent">
 <td style="background-color:white; color: black">
     {% profit_decimal invoice.discount as num %} {{ num }}
@@ -96,11 +107,12 @@
 <td style="background-color:white; color: black">
     قيمة الخصم
 </td>
-<td colspan="2" style="border: none">
-     شكرا لتعاملكم معنا
+<td colspan="4" style="border: none">
+    <sup>جـ</sup>
+     المطلوب:
+    {% profit_decimal invoice.overall as num %} {{ num }}
 </td>
 </tr>
-
 <tr style="background-color:transparent">
 <td style="background-color:white; color: black">
     {% profit_decimal invoice.overall as num %} {{ num }}
@@ -108,11 +120,11 @@
 <td style="background-color:white; color: black">
     صافي الفاتورة
 </td>
-<td colspan="2" style="border: none">
-      البضاعة المباعة ترد وتستبدل خلال 14 يوم
+<td colspan="4" style="border: none">
+     شكرا لتعاملكم معنا
 </td>
 </tr>
-
+</tbody>
 </table>
 </div>
 </body>

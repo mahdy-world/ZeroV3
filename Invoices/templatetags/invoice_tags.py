@@ -16,7 +16,12 @@ def invoice_products_val(inv_id):
 
 @register.simple_tag(name='invoice_saved')
 def invoice_saved(inv_id):
-    return Invoice.objects.filter(id=inv_id, saved=True)
+    return Invoice.objects.filter(id=inv_id, saved=True, close=False)
+
+
+@register.simple_tag(name='invoice_closed')
+def invoice_closed(inv_id):
+    return Invoice.objects.filter(id=inv_id, saved=True, close=True)
 
 
 @register.simple_tag(name='profit_decimal')
