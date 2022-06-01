@@ -50,8 +50,8 @@ INSTALLED_APPS = [
     'Products',
     'Factories',
     'Wool',
-    'Workers'
-
+    'Workers',
+    'Invoices',
 ]
 
 # Add this to Abstruct user 

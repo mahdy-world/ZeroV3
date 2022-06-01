@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls.conf import include
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +30,9 @@ urlpatterns = [
     path('factory/', include('Factories.urls')),
     path('product/', include('Products.urls')),
     path('worker/', include('Workers.urls')),
+    path('invoices/',include('Invoices.urls'), ),
     path('__debug__/', include('debug_toolbar.urls')),
+    url(r'^select2/', include('django_select2.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

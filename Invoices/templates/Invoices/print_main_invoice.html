@@ -1,0 +1,131 @@
+{% load static %}{% load invoice_tags %} {% load mathfilters %}<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+<meta charset="UTF-8">
+<title>طباعة فاتورة مبيعات
+</title>
+<style> @page { @bottom-right { content: ' ( ' counter(page) ' / ' counter(pages) ' ) ';font-size: 25px; } @bottom-left { content: "{{ user }} {{ date|date:'d-m-Y H:i' }}";font-size: 25px; } }
+</style>
+</head>
+
+<body>
+
+<div style="margin-top: -100px">
+    <table class="headname">
+        <tr>
+            <td style="border: none">
+                <h2 style="margin-top: 50px; margin-left:-70px"> إدارة : أ/ {{ shop_setting.manage }} </h2>
+                <h3 style="margin-top: -20px; margin-left:-70px">{{ shop_setting.phone }} <img src="{% static 'assets/images/phone_call.png' %}" style="margin-left: 5px" width="15px" height="15px"> </h3>
+                <h3 style="margin-top: -20px; margin-left:-70px">{{ shop_setting.phone2 }} <img src="{% static 'assets/images/phone_call.png' %}" style="margin-left: 5px" width="15px" height="15px"> </h3>
+            </td>
+            <td style="border: none">
+                <h2 style="border: 1px solid #6495ED; border-radius: 10px; padding: 5px; background-color: white; margin-top: 65px;">
+                {% if invoice.invoice_type == 1 or invoice.invoice_type == 3 %}
+                فاتورة مبيعات
+                {% elif invoice.invoice_type == 2 %}
+                فاتورة مرتجع مبيعات
+                {% endif %}
+                <br>
+                No: {{ invoice.id }}
+                </h2>
+            </td>
+            <td style="border: none">
+                <h2 style="margin-right:-70px" id="shop_name">{{ shop_setting.name }}</h2>
+                <h2 style="margin-top: -5px; margin-right:-70px">{{ shop_setting.type }}</h2>
+                <h2 style="margin-top: -30px; margin-right:-70px">ـــــــــــــــــــــــــــ</h2>
+                <h2 style="margin-top: -25px; margin-right:-70px">{{ shop_setting.address }} <img src="{% static 'assets/images/geo.png' %}" style="margin-left: 5px" width="25px" height="25px"> </h2>
+            </td>
+        </tr>
+    </table>
+</div><hr><br>
+
+<div>
+<div style="text-align: right; margin-right: -70px">
+    <span>
+    تحريرا في/
+        {{ invoice.date|date:'d-m-Y' }}
+    </span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span>
+        المطلوب من
+        {% if invoice.seller %}
+        التاجر
+        {% else %}
+        العميل
+        {% endif %}
+        /
+        {% if invoice.seller %}
+        {{ invoice.seller.name }}
+        {% else %}
+        {{ invoice.customer }}
+        {% endif %}
+    </span>
+</div><br>
+<table class="prods">
+<thead>
+<tr style="background-color: white; color: black">
+<td>الإجمالي
+</td>
+<td>سعر الوحدة
+</td>
+<td>الوحدة
+</td>
+<td>الكمية
+</td>
+<td>الصنف
+</td>
+<td>م
+</td>
+</tr> </thead> <tbody> {% for item in invoice_items %}
+<tr>
+<td> {% profit_decimal item.total_price as num %} {{ num }}
+</td>
+<td> {% profit_decimal item.unit_price as num %} {{ num|mul:item.unit }}
+</td>
+<td> {{ item.get_unit_display }}
+</td>
+<td> {% profit_decimal item.quantity as num %} {{ num }}
+</td>
+<td> {{ item.item.name }}
+</td>
+<td> {{ forloop.counter }}
+</td>
+</tr> {% endfor %}
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black">
+    {% profit_decimal invoice.total as num %} {{ num }}
+</td>
+<td style="background-color:white; color: black">
+    اجمالي الفاتورة
+</td>
+</tr>
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black">
+    {% profit_decimal invoice.discount as num %} {{ num }}
+</td>
+<td style="background-color:white; color: black">
+    قيمة الخصم
+</td>
+<td colspan="4" style="border: none">
+    <sup>جـ</sup>
+     المطلوب:
+    {% profit_decimal invoice.overall as num %} {{ num }}
+</td>
+</tr>
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black">
+    {% profit_decimal invoice.overall as num %} {{ num }}
+</td>
+<td style="background-color:white; color: black">
+    صافي الفاتورة
+</td>
+<td colspan="4" style="border: none">
+     شكرا لتعاملكم معنا
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
