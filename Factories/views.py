@@ -417,11 +417,11 @@ class FactoryInside(LoginRequiredMixin, DetailView):
         context['title'] = 'الداخل لمصنع: ' + str(self.object)
         context['form'] = FactoryInSideForm(self.request.POST or None)
         sum_outside = outSide.aggregate(out=Sum('weight_after_loss')).get('out')
-        context['sum_outside'] = "{:.1f}".format(sum_outside)
+        context['sum_outside'] = sum_outside
         sum_weight = queryset.aggregate(weight=Sum('weight')).get('weight')
-        context['sum_weight'] = "{:.1f}".format(sum_weight)
+        context['sum_weight'] = sum_weight
         sum_weight_after = queryset.aggregate(after=Sum('total_account')).get('after')
-        context['sum_weight_after'] = "{:.1f}".format(sum_weight_after)
+        context['sum_weight_after'] = sum_weight_after
         context['type'] = 'list'
         return context
 
