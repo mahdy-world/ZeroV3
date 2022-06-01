@@ -104,7 +104,6 @@
                                             <th>التاريخ</th>
                                             <th>المبلغ</th>
                                             <th>المسئول</th>
-                                            <th>المستلم</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -112,21 +111,18 @@
                                           <tr style="text-align: center">
                                             <td>{{forloop.counter}}</td>
                                             <td>
-                                              <span class="badge badge-danger"><i class="fas fa-calendar-alt"></i>
+                                              <span style="font-size:14px; ;" class="badge badge-danger"><i class="fas fa-calendar-alt"></i>
                                                 {{x.date|date:'Y-m-d'}}</span>
                                             </td>
                                             <td>
                                               <i class="fas fa-dollar-sign"></i> {{x.price}}
                                             </td>
                                             <td><i class="fas fa-user-tie"></i> {{x.admin}}</td>
-                                            <td><i class="fas fa-user"></i> {{x.recipient}}</td>
-                    
                                           </tr>
                                           {% endfor %}
                                         </tbody>
                                       </table>
                                     </div>
-                    
                     
                                     <div style="margin-top: 10px">
                                       <div class="row">

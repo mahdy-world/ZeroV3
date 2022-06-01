@@ -8,7 +8,7 @@ class WorkerForm(forms.ModelForm):
         model = Worker
         exclude = ['deleted']
         widgets = {
-            'name' : forms.TextInput(attrs={'class':'form-control'}),
+            'name' : forms.TextInput(attrs={'class':'form-control' , }),
             'image' : forms.FileInput(attrs={'class':'form-control'}),
             'phone' : forms.NumberInput(attrs={'class':'form-control'}),
             'work_type' : forms.Select(attrs={'class':'form-control'}),
