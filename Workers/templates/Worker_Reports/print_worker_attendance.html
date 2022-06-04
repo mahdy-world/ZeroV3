@@ -2,13 +2,19 @@
   <head>
     <meta charset="utf-8">
     
-    <title>تقرير</title>
+    <title>{{date|date:'Y-d-m'}} {{worker.name}}</title>
     <meta name="description" content="Invoice demo sample">
   </head>
 
   <body>
     <h1>
-        <img src={{system_info.logo.url}} width="150px" height="150px">
+      
+      {% if system_info.logo %}
+       <img src={{system_info.logo.url}} width="150px" height="150px">
+       {% else %}
+       <img src="/static/assets/images/new.png" width="150px" height="150px">
+      {% endif %}
+        
     </h1>
 
     <aside>

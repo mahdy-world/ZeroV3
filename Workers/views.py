@@ -202,8 +202,22 @@ class WorkerProductions(LoginRequiredMixin, DetailView):
         context['production'] = queryset.order_by('-id')
         context['form'] = WorkerProductionForm(self.request.POST or None)
         context['type']  = 'list'
-        context['total_production'] = queryset.aggregate(quantity=Sum('quantity')).get('quantity')
-        context['total'] = queryset.aggregate(quantity=Sum('quantity')).get('quantity') * self.object.day_cost
+        
+        # summ all quantity
+        total = queryset.aggregate(quantity=Sum('quantity')).get('quantity') 
+        # day cost for worker
+        price = self.object.day_cost    
+        
+        # check if price and cost has value
+        if price and total != None:
+            cost = total * price
+        else:
+            cost = 0
+            
+        context['total_production']  = total  
+        context['total'] = cost                
+        
+        
         return context
         
 
@@ -219,9 +233,44 @@ class Worker_Production_div(LoginRequiredMixin, DetailView):
         context['production'] = queryset.order_by('-id')
         context['form'] = WorkerProductionForm(self.request.POST or None)
         context['type']  = 'list'
+        
+        # summ all quantity
+        total = queryset.aggregate(quantity=Sum('quantity')).get('quantity') 
+        # day cost for worker
+        price = self.object.day_cost    
+        
+        # check if price and cost has value
+        if price and total != None:
+            cost = total * price
+        else:
+            cost = 0
+            
+        context['total_production']  = total  
+        context['total'] = cost                
+        
+        
         return context
         
-    
+class WorkerProductionUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/auth/login/'
+    model = WorkerProduction
+    form_class = WorkerProductionForm
+    template_name = 'forms/form_template.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'تعديل  انتاج العامل يوم : ' + str(self.object)
+        context['message'] = 'update'
+        context['action_url'] = reverse_lazy('Workers:WorkerProductionUpdate', kwargs={'pk': self.object.id})
+        return context 
+
+    def get_success_url(self):
+        messages.success(self.request, " تم تعديل الانتاج " + str(self.object) + " بنجاح ", extra_tags="success")
+        if self.request.POST.get('url'):
+            return self.request.POST.get('url')
+        else:
+            return self.success_url
+           
     
 class WorkerPayment_div(LoginRequiredMixin, DetailView):
     login_url = '/auth/login/'
@@ -264,26 +313,7 @@ class WorkerPaymentUpdate(LoginRequiredMixin, UpdateView):
             return self.success_url
         
         
-class WorkerProductionUpdate(LoginRequiredMixin, UpdateView):
-    login_url = '/auth/login/'
-    model = WorkerProduction
-    form_class = WorkerProductionForm
-    template_name = 'forms/form_template.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'تعديل  انتاج العامل يوم : ' + str(self.object)
-        context['message'] = 'update'
-        context['action_url'] = reverse_lazy('Workers:WorkerProductionUpdate', kwargs={'pk': self.object.id})
-        return context 
-    
-    def get_success_url(self):
-        messages.success(self.request, " تم تعديل الانتاج " + str(self.object) + " بنجاح ", extra_tags="success")
-        if self.request.POST.get('url'):
-            return self.request.POST.get('url')
-        else:
-            return self.success_url
-         
+
 
 def WorkerPaymentCreate(request):
     if request.is_ajax():
@@ -354,45 +384,7 @@ def WorkerPaymentDelete(request):
 
         return JsonResponse(response)
 
-
-class WorkerPaymentReport(LoginRequiredMixin, ListView):
-    login_url = '/auth/login/'
-    model = WorkerPayment
-    form = WorkerPaymentReportForm()
-    template_name = 'Worker_Reports/worker_payment_report.html'
     
-   
-    def queryset(self):
-        if not self.request.GET.get('submit'):
-            queryset = None
-        else:
-            queryset = WorkerPayment.objects.filter(worker = self.kwargs['pk']).order_by('-id')
-            if self.request.GET.get('from_date'):
-                queryset = queryset.filter(date__gte = self.request.GET.get('from_date'))
-            if self.request.GET.get('to_date'):
-                queryset = queryset.filter(date__lte = self.request.GET.get('to_date'))
-                                  
-        return queryset 
-    
-    def get_sum_price(self):
-        queryset = self.queryset()
-        if queryset != None:
-            sum_price =  queryset.aggregate(price=Sum('price')).get('price')
-        else:
-            sum_price = 0
-        total = {
-            'sum_price' :sum_price
-        }
-        return total
-    
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = self.form
-        context['summary'] = self.get_sum_price()
-        context['name'] = Worker.objects.get(id=self.kwargs['pk'])
-        return context
-    
-
 def PrintWorkerPayment(request,pk):
     worker = Worker.objects.get(id=pk)
     system_info = SystemInformation.objects.all()
@@ -597,11 +589,10 @@ def WorkerProductionDelete(request):
         return JsonResponse(response)    
             
 
-class WorkerAttendanceReport(LoginRequiredMixin, ListView):
+class WorkerReports(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
-    model = WorkerAttendance
     form = WorkerPaymentReportForm()
-    template_name = 'Worker_Reports/worker_attendance_report.html'
+    template_name = 'Worker_Reports/worker_reports.html'
     
    
     def queryset(self):
@@ -616,37 +607,10 @@ class WorkerAttendanceReport(LoginRequiredMixin, ListView):
                                   
         return queryset 
     
-    def get_count_days(self):
-        queryset = self.queryset()
-        if queryset != None:
-            count_days =  queryset.count()
-        else:
-            count_days = 0
-        total = {
-            'count_days' :count_days
-        }
-        return total
-    
-
-    def get_sum_salary(self, **kwargs):
-        queryset = self.queryset()
-        if queryset != None:
-            worker = Worker.objects.get(id=self.kwargs['pk'])
-            worker_price = worker.day_cost
-            
-            count_days = self.queryset().count()
-            print(count_days)
-            sum_price = count_days * worker_price 
-            total = {
-                'sum_price': sum_price
-            }
-            return total
     
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form
-        context['summary'] = self.get_count_days()
-        context['all_cost'] = self.get_sum_salary()
         context['name'] = Worker.objects.get(id=self.kwargs['pk'])
         return context
     
@@ -677,6 +641,38 @@ def PrintWorkerAttendance(request,pk):
         'worker':worker,
     }
     html_string = render_to_string('Worker_Reports/print_worker_attendance.html', context)
+    html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
+    pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    return response
+
+      
+def PrintWorkerproductions(request,pk):
+    worker = Worker.objects.get(id=pk)
+    system_info = SystemInformation.objects.all()
+    if system_info.count() > 0:
+        system_info = system_info.last()
+    else:
+        system_info = None
+            
+    queryset = WorkerProduction.objects.filter(worker=pk).order_by('-id')
+    if request.GET.get('from_date'):
+        queryset = queryset.filter(date__gte = request.GET.get('from_date'))
+    if request.GET.get('to_date'):
+        queryset = queryset.filter(date__lte = request.GET.get('to_date'))
+    
+   
+    context = {
+        'queryset':queryset,
+        'total_productions':  queryset.aggregate(quantity=Sum('quantity')).get('quantity'),
+        'system_info':system_info,
+        'date': datetime.now(),
+        'user': request.user.username,
+        'from_date': request.GET.get('from_date'),
+        'to_date': request.GET.get('to_date'),
+        'worker':worker,
+    }
+    html_string = render_to_string('Worker_Reports/print_worker_productions.html', context)
     html = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri())
     pdf = html.write_pdf(stylesheets=[weasyprint.CSS('static/assets/css/invoice_pdf.css')], presentational_hints=True)
     response = HttpResponse(pdf, content_type='application/pdf')
