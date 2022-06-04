@@ -31,16 +31,14 @@
 
         <div class="d-flex">
 
-           
-
-            
-            
+           <!-- Search -->
             <div class="dropdown d-none d-lg-inline-block ml-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="modal" data-target="#search_modal">
                     <i class="bx bx-search-alt"></i>                
                 </button>
             </div>
 
+            <!-- full screen -->
             <div class="dropdown d-none d-lg-inline-block ml-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                     <i class="bx bx-fullscreen"></i>
@@ -252,21 +250,21 @@
 
                     {% if info %}
                     
-                    {% for x in info %}
-                        <a class="dropdown-item" data-toggle="modal" data-target="#action_modal" 
-                        href="{% url 'Core:SystemInfoUpdate' x.id %}">
-                            
-                        <i class='bx bx-info-circle font-size-16 align-middle mr-1' ></i>
-                            <span key="t-profile">بيانات النظام</span>
-                        </a>
+                        {% for x in info %}
+                            <a class="dropdown-item" data-toggle="modal" data-target="#action_modal" 
+                            href="{% url 'Core:SystemInfoUpdate' x.id %}">
+                                
+                            <i class='bx bx-info-circle font-size-16 align-middle mr-1' ></i>
+                                <span key="t-profile">بيانات النظام</span>
+                            </a>
                         {% endfor %}
-                        {% else %}
+                    {% else %}
                         <a class="dropdown-item" data-toggle="modal" data-target="#action_modal" 
                         href="{% url 'Core:SystemInfoCreate'%}">
                             <i class="bx bx-user font-size-16 align-middle mr-1"></i> 
                             <span key="t-profile">بيانات النظام</span>
                         </a>
-                        {% endif %}
+                    {% endif %}
                      
 
                     {% if  request.user.has_access_to_treasury == True  %}

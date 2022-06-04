@@ -106,16 +106,7 @@
                               اضافة
                             </button>
                           </th>
-                          <th class="col-lg-2 col-xl-1 col-md-2">
-                            <a href="{% url 'Workers:WorkerAttendanceReport' object.id %}"
-                              style="width: 100%"
-                              class="btn btn-primary"
-                              target='_blank'
-                            >
-                            <i class="fas fa-file-alt"></i>
-                                تقرير 
-                            </a>
-                          </th>
+                        
                         </tr>
                       </form>
                     </thead>
@@ -199,7 +190,13 @@
                                   اجمالي الإنتاج 
                                 </h5>
                                 <h3 class="mb-0 text-dark">
+                                  
+                                  {% if total_production %}
                                   {{total_production}} قطعة
+                                  {% else %}
+                                  0 قطعة
+                                  {% endif %}
+                                
                                 </h3>
                               </div>
 
@@ -226,8 +223,13 @@
                                   اجمالي الحساب المستحق
                                 </h5>
                                 <h3 class="mb-0 text-dark">
-                                 
-                                  {{total}} جنية
+                                  
+                                  {% if total %}
+                                    {{total}} جنية 
+                                  {% else %} 
+                                    0 جنية
+                                  {% endif %}
+  
                                 </h3>
                               </div>
 

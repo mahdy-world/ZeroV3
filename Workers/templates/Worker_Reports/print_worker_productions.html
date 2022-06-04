@@ -8,11 +8,13 @@
 
   <body>
     <h1>
+      
       {% if system_info.logo %}
-      <img src={{system_info.logo.url}} width="150px" height="150px">
-      {% else %}
-      <img src="/static/assets/images/new.png" width="150px" height="150px">
-     {% endif %}
+       <img src={{system_info.logo.url}} width="150px" height="150px">
+       {% else %}
+       <img src="/static/assets/images/new.png" width="150px" height="150px">
+      {% endif %}
+        
     </h1>
 
     <aside>
@@ -26,14 +28,15 @@
         <h5><span>{{date|date:'Y-d-m'}}</span>تاريخ التقرير :</h5> 
       <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
       <h5><span>{{system_info.address}}</span>العنوان: </h5> 
-      <h5><span>{{worker.name}}</span>مسحوبات العامل: </h5> 
+      <h5><span>{{worker.name}}</span>انتاج العامل: </h5> 
     </dl>
 
     <table>
       <thead>
         <tr>
           <th>المسئول</th>
-          <th>المبلغ</th>
+          <th>كمية الانتاج</th>
+          <th>المنتج</th>
           <th>التاريخ</th>
         </tr>
       </thead>
@@ -41,7 +44,8 @@
         {% for x in queryset %}
           <tr>
             <td>{{x.admin}}</td>
-            <td>{{x.price}}$</td>
+            <td>{{x.quantity}} قطعة</td>
+            <td>{{x.product}} </td>
             <td>{{x.date|date:'Y-m-d'}}</td>
           </tr>
         {% endfor %}
@@ -53,20 +57,14 @@
     <table id="total">
       <thead>
         <tr>
-          <th>اجمالي المبلغ</th>
+          <th>اجمالي الايام</th>
           <th>الي تاريخ</th>
           <th>من تاريخ</th>
         </tr>
       </thead>
       <tbody>
           <tr>
-            <td>
-            {% if count_price %}
-            {{count_price}}جنية
-            {% else %}
-            0 جنية
-            {% endif %}
-               </td>
+            <td>{{total_productions}} قطعة</td>
             <td>{{to_date}}</td>
           <td>{{from_date}}</td>
         </tr>

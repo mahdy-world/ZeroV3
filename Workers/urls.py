@@ -19,7 +19,6 @@ urlpatterns = [
     path('payment/create/', WorkerPaymentCreate, name="WorkerPaymentCreate"),
     path('payment/delete/', WorkerPaymentDelete, name="WorkerPaymentDelete"),
     path('payment/update/<int:pk>/', WorkerPaymentUpdate.as_view(), name="WorkerPaymentUpdate"),
-    path('payment/report/<int:pk>/', WorkerPaymentReport.as_view(), name="WorkerPaymentReport"),
     path('payment/print/<int:pk>/', PrintWorkerPayment , name="PrintWorkerPayment"),
     
     
@@ -29,8 +28,9 @@ urlpatterns = [
     path('update/attendance/<int:pk>/', WorkerAttendancesUpdate.as_view(), name="WorkerAttendancesUpdate"),
     path('create/attendnace', WorkerAttendanceCreate, name="WorkerAttendanceCreate"),
     path('delete/attendnace', WorkerAttendanceDelete, name="WorkerAttendanceDelete"),
-    path('report/attendance/<int:pk>/', WorkerAttendanceReport.as_view(), name="WorkerAttendanceReport"),
+    path('report/attendance/<int:pk>/', WorkerReports.as_view(), name="WorkerReports"),
     path('attendance/print/<int:pk>/', PrintWorkerAttendance , name="PrintWorkerAttendance"),
+    path('productions/print/<int:pk>/', PrintWorkerproductions , name="PrintWorkerproductions"),
     
     
     

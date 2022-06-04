@@ -30,15 +30,18 @@ class WorkerPaymentForm(forms.ModelForm):
         fields = ['date', 'price', 'worker', 'admin']
         model = WorkerPayment
         widgets = {
-            'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
-            'price' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'price'}),
-            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المستلم...', 'id':'recipient', 'id':'admin'}),
+            'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control',
+            'placeholder':'تاريخ السحب...', 'id':'date'}),
+            'price' : forms.NumberInput(attrs={ 'class':'form-control',
+            'placeholder':'المبلغ...', 'id':'price'}),
+            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المستلم...',
+            'id':'recipient', 'id':'admin'}),
         }
         
 class WorkerPaymentReportForm(forms.Form):
     from_date = forms.DateField(widget=forms.DateInput(attrs={
         'type':'date',
-        'name':'form_date',
+        'name':'from',
         'id':'from_date',
         'class':'form-control',
         'placeholder':'من ...'}),                       
@@ -60,8 +63,10 @@ class WorkerAttendanceForm(forms.ModelForm):
         fields = ['date', 'hour_count']
         model = WorkerAttendance
         widgets = {
-            'date' :  forms.DateInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ السحب...', 'id':'date'}),
-            'hour_count' : forms.Select(attrs={'class':'form-control',  'placeholder':'عدد الساعات...', 'id':'hours_count'}),
+            'date' :  forms.DateInput(attrs={'type':'date', 'class':'form-control',
+            'placeholder':'تاريخ السحب...', 'id':'date'}),
+            'hour_count' : forms.Select(attrs={'class':'form-control',
+            'placeholder':'عدد الساعات...', 'id':'hours_count'}),
         }
         
  
@@ -71,9 +76,12 @@ class WorkerProductionForm(forms.ModelForm):
         fields = ['date', 'quantity', 'product']
         model = WorkerProduction
         widgets = {
-            'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control', 'placeholder':'تاريخ الاستلام', 'id':'production_date'}),
-            'product' : forms.TextInput(attrs={'type':'text', 'class':'form-control', 'placeholder':' المنتج', 'id':'worker_production'}),
-            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...', 'id':'worker_quantity'})   
+            'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control',
+            'placeholder':'تاريخ الاستلام', 'id':'production_date'}),
+            'product' : forms.TextInput(attrs={'type':'text', 'class':'form-control',
+            'placeholder':' المنتج', 'id':'worker_production'}),
+            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...',
+            'id':'worker_quantity'})   
         }
                 
    
