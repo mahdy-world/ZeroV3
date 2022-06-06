@@ -71,21 +71,21 @@
                                                 {{form.to_date|as_crispy_field}}
                                               </th>
 
-                                              <th>
+                                              <!-- <th>
                                                 <button type="submit" name="submit" id='search'  value="1" class="btn btn-success"
                                                 onclick="document.getElementById('my_form').action = '#'; document.getElementById('my_form').target = '_self' "
                                                 >  
                                                     <i class="fas fa-search"></i> 
                                                      بحث
                                                 </button>
-                                              </th>
+                                              </th> -->
 
                                               <th>
                                                 <button type="submit" name="submit" id="print"  value="1" class="btn btn-primary"
                                                 onclick="document.getElementById('my_form').action = '{% url 'Factories:PrintInside' name.id  %}'; document.getElementById('my_form').target = '_blank' "
                                                 >  
                                                 <i class="fas fa-print"></i> 
-                                                  طباعة
+                                                  بحث
                                               </button>
                                               </th>
                                               
@@ -103,7 +103,7 @@
                                       }
                                     </style>
                     
-                                    <div class="card-body" id="paymnet">
+                                    <!-- <div class="card-body" id="paymnet">
                                       <div class="table-responsive">
                                         <table
                                           class="table table-centered table-dark table-nowrap text-center"
@@ -212,7 +212,7 @@
                                         
                                     </div>
                     
-                            
+                             -->
                                   </div>
                                 </div>
                               </div>
