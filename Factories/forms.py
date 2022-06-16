@@ -7,9 +7,9 @@ class FactoryForm(forms.ModelForm):
         exclude = ['deleted']
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control'}),
-            'hour_price' : forms.NumberInput(attrs={'class':'form-control'}),
+            'hour_price' : forms.NumberInput(attrs={'class':'form-control', 'min':0}),
             'machine_type' : forms.TextInput(attrs={'class':'form-control'}),
-            'machine_count' : forms.NumberInput(attrs={'class':'form-control'}),
+            'machine_count' : forms.NumberInput(attrs={'class':'form-control', 'min':0}),
             'phone' : forms.TextInput(attrs={'class':'form-control'}),
             'start_date' : forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
             'active' : forms.CheckboxInput(attrs={'class':'form-control'}),
@@ -37,7 +37,7 @@ class FactoryPaymentForm(forms.ModelForm):
         }
         
 class FactoryPaymentReportForm(forms.Form):
-    from_date = forms.DateField(widget=forms.DateInput(attrs={
+    from_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
         'type':'date',
         'name':'form_date',
         'id':'from_date',
@@ -46,7 +46,7 @@ class FactoryPaymentReportForm(forms.Form):
         label= 'من',
         )
          
-    to_date = forms.DateField(widget=forms.DateInput(attrs={
+    to_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
         'type':'date',
         'name':'to_date',
         'id':'to_date',
@@ -60,11 +60,10 @@ class FactoryPaymentReportForm(forms.Form):
         
 class FactoryOutSideForm(forms.ModelForm):
     class Meta:
-        fields = ['date', 'weight', 'color', 'percent_loss', 'weight_after_loss', 'admin', 'wool_type' ]
+        fields = ['date', 'weight', 'color', 'percent_loss', 'weight_after_loss', 'wool_type' ]
         model = FactoryOutSide
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الخروج...', 'id':'date'}),
-            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
             'weight' : forms.NumberInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'الوزن...', 'id':'weight'}),
             'color' : forms.TextInput(attrs={'class':'form-control', 'min':'1', 'placeholder':'اللون...', 'id':'color'}),
             'wool_type' : forms.Select(attrs={'class':'form-control',  'placeholder':'نوع الخامة...', 'id':'wool_type'}),
@@ -77,7 +76,7 @@ class FactoryInSideForm(forms.ModelForm):
     class Meta:
         fields = ['date', 'weight', 'color', 'product', 'product_weight', 
                   'product_time', 'product_count','hour_count', 'hour_price',
-                  'total_account', 'admin', 'wool_type', 'product_type']
+                  'total_account', 'wool_type']
         model = FactoryInSide
         widgets = {
             'date' : forms.TextInput(attrs={'type':'date', 'class':'form-control',  'placeholder':'تاريخ الاستلام...', 'id':'date'}),
@@ -88,9 +87,7 @@ class FactoryInSideForm(forms.ModelForm):
             'product_weight' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':' وزن القطعة...', 'id':'product_weight'}),
             'product_time' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':' وقت القطعة...', 'id':'product_time'}),
             'product_count' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'  عدد القطع...', 'id':'product_count'}),
-            'product_type' : forms.Select(attrs={'class':'form-control',  'placeholder':'نوع القطعة...', 'id':'product_type'}),
             'hour_count' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'  عدد الساعات...', 'id':'hour_count'}),
             'hour_price' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'سعر الساعة...', 'id':'hour_price'}),
             'total_account' : forms.NumberInput(attrs={ 'class':'form-control', 'min':'1', 'placeholder':'اجمالي الحساب...', 'id':'total_account'}),
-            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المسئول...', 'id':'admin'}),
         }

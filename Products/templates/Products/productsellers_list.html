@@ -94,43 +94,42 @@
                 {% if object_list %}
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row mb-3">
-                            <div class="col-lg-12 col-sm-6">
-                                <form class="mt-4 mt-sm-0 float-sm-right form-inline">
-                                    <div class="search-box mr-2">
-                                        <div class="position-relative">
-                                            <form class="app-search d-none d-lg-block" autocomplete="off" method="get" action="{% url 'Core:SellerSearch' %}">
-                                                <div class="position-relative" >
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3">
+                                <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:SellerSearch' %}">
+                                    <div class="position-relative" >
 
-                                                    <input type="text" value="{{seller_search}}" list="sells" autocomplete="off"  class="form-control border-0" style="border-radius: 0" name="seller" placeholder="بحث ... بإسم التاجر">
-                                                    <span >
-                                                        <button class="bx bx-search-alt btn btn-warning" style="border-radius: 0" type="submit"></button>
-                                                    </span>
-                                                    <datalist id="sells" >
-                                                        {% for sel in sellers %}
-                                                            <option value="{{ sel.name }}">
-                                                                {{ sel.name }}
-                                                                </option>
-                                                        {% endfor %}
-                                                    </datalist>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <input type="text" style="background-color: white" value="{{seller_serach}}" list="sel" autocomplete="off" class="form-control" name="seller" placeholder="بحث ... بإسم التاجر">
+                                        <span >
+                                            <button class="bx bx-search-alt btn btn-warning" type="submit">
+                                            </button>
+                                        </span>
+                                        <datalist id="sel" >
+                                            {% for pro in sellers %}
+                                                <option value="{{ pro.name }}">
+                                                    {{ pro.name }}
+                                                    </option>
+                                            {% endfor %}
+                                        </datalist>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     <div class="row">
                     {% for x in object_list  %}
                     {% sellers_debit x.id as sellers_debit_val %}
-                        <div class="col-xl-3 col-sm-6">
+                        <div class="col-xl-4 col-md-4 col-sm-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="product-img position-relative">
-                                        <img src="/static/assets/images/vector/supplier.png" width="250px" height="250px" alt="" class="img mx-auto d-block">
+                                        <img src="/static/assets/images/vector/seller2.png" width="180px" alt="" class="img mx-auto d-block">
                                     </div>
 
-                                    <div class="mt-4 text-center">
+                                    <div class="text-center">
                                         <h3 class="mb-3 text-truncate"><a href="#" class="text-dark">{{x.name}}</a></h3>
                                         <ul class="list-inline mb-0">
                                             <li class="list-inline-item mr-1"><h5 class="my-0"><span class="text-muted mr-1">الهاتف:</span> <b>{{x.phone}}</b></h5></li><br>
@@ -152,14 +151,29 @@
                                     </div>
                                     <div class="card-footer bg-transparent border-top">
                                         <div class="contact-links d-flex justify-content-center font-size-20">
-                                          {% if request.user.is_superuser %}
-                                          {% if type == "list"  %}
+                                          <div class="mr-3">
+                                               <a href="{% url 'Products:SellerInvoices' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
+                                                   <span class="badge badge-success"><i class='bx bx-list-ul' ></i>الفواتير</span>
+                                              </a>
+                                           </div>
 
                                           <div class="mr-3">
                                                <a href="{% url 'Products:SellerDetails' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
-                                                   <span class="badge badge-warning"><i class='bx bx-list-ul' ></i>العمليات</span>
+                                                   <span class="badge badge-warning"><i class='bx bx-list-ul' ></i>الحساب</span>
                                               </a>
                                            </div>
+
+                                            <div class="mr-3">
+                                               <a href="{% url 'Products:PrintSellerInvoicesDetails' x.id %}" target="_blank" data-placement="top" title="" data-original-title="Message">
+                                                   <span class="badge badge-secondary"><i class='bx bx-list-ul' ></i>كشف تفصيلي</span>
+                                              </a>
+                                           </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-top">
+                                        <div class="contact-links d-flex justify-content-center font-size-20">
+                                          {% if request.user.is_superuser %}
+                                          {% if type == "list"  %}
 
                                           <div class="mr-3">
                                                <a href="{% url 'Products:SellerUpdate' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">

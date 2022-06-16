@@ -7,34 +7,23 @@
   </head>
 
   <body>
-    <h1>
-      
+    <h1 style="margin-top: -100px">
       {% if system_info.logo %}
        <img src={{system_info.logo.url}} width="150px" height="150px">
        {% else %}
        <img src="/static/assets/images/new.png" width="150px" height="150px">
       {% endif %}
-        
     </h1>
 
-    <aside>
-      <address class="to">
-       
-      </address>
-    </aside>
-
-    <dl id="informations">
-        <h5>{{system_info.name}}</h5>
-        <h5><span>{{date|date:'Y-d-m'}}</span>تاريخ التقرير :</h5> 
-      <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
-      <h5><span>{{system_info.address}}</span>العنوان: </h5> 
-      <h5><span>{{worker.name}}</span>حضور العامل: </h5> 
+    <dl id="informations" style="margin-top: -100px">
+        <h2 class="text-center">{{system_info.name}}</h2>
+        <h5><span> {{date|date:'Y-d-m'}} </span>تاريخ التقرير: </h5>
+      <h5><span> {{worker.name}} </span>حضور العامل: </h5>
     </dl>
 
     <table>
       <thead>
         <tr>
-          <th>المسئول</th>
           <th>عدد الساعات</th>
           <th>التاريخ</th>
         </tr>
@@ -42,7 +31,6 @@
       <tbody>
         {% for x in queryset %}
           <tr>
-            <td>{{x.admin}}</td>
             <td>{{x.get_hour_count_display}} ساعة</td>
             <td>{{x.date|date:'Y-m-d'}}</td>
           </tr>
@@ -62,7 +50,11 @@
       </thead>
       <tbody>
           <tr>
-            <td>{{count_days}} يوم</td>
+            <td>
+                {{real_days}} يوم
+                و
+              {{rest_hours}} ساعة
+            </td>
             <td>{{to_date}}</td>
           <td>{{from_date}}</td>
         </tr>

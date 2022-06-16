@@ -18,12 +18,14 @@ class Invoice(models.Model):
     customer = models.CharField(max_length=255, verbose_name='العميل')
     total = models.FloatField(default=0.0, verbose_name='قيمة الفاتورة')
     discount = models.FloatField(default=0.0, verbose_name='الخصم')
+    old_value = models.FloatField(default=0.0, verbose_name='حساب قديم')
+    return_value = models.FloatField(default=0.0, verbose_name='مرتجع بقيمة')
+    paid_value = models.FloatField(default=0.0, verbose_name='دفعة بقيمة')
     overall = models.FloatField(default=0.0, verbose_name='الإجمالي')
     comment = models.TextField(null=True, blank=True, verbose_name="ملاحظات")
     saved = models.BooleanField(default=False, verbose_name='حفظ')
     close = models.BooleanField(default=False, verbose_name='اغلاق')
     deleted = models.BooleanField(default=False, verbose_name='حذف')
-    return_inv_id = models.IntegerField(default=0, verbose_name='رقم الفاتورة الأصلية')
 
     def __str__(self):
         return str(self.id)

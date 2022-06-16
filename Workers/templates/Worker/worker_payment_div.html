@@ -1,3 +1,4 @@
+{% load mathfilters %}
 <div class="table-responsive">
   <table
     class="table table-centered table-dark table-nowrap text-center"
@@ -28,14 +29,15 @@
               <td><i class="fas fa-user-tie"></i> {{x.admin}}</td>
               {% if request.user.is_superuser %}
               <td>
-              <a
-                  href="{% url 'Workers:WorkerPaymentUpdate' x.id %}"
-                  class="mr-3 text-warning"
-                  data-toggle="modal"
-                  data-target="#action_modal"
-                  data-original-title="Edit"
-                  ><i class="mdi mdi-pencil font-size-18"></i
-              ></a>
+              <!--
+{#              <a#}
+{#                  href="{% url 'Workers:WorkerPaymentUpdate' x.id %}"#}
+{#                  class="mr-3 text-warning"#}
+{#                  data-toggle="modal"#}
+{#                  data-target="#action_modal"#}
+{#                  data-original-title="Edit"#}
+{#                  ><i class="mdi mdi-pencil font-size-18"></i#}
+{#              ></a>#} -->
               <a
                   onclick="WorkerPaymentDelete('{{x.id}}')"
                   style="cursor: pointer"
@@ -61,10 +63,72 @@
           <div class="d-flex flex-wrap">
             <div class="">
               <h5 class="mb-2 text-light">
+                اجمالي الحساب المستحق
+              </h5>
+              <h3 class="mb-0 text-dark">
+                  {% if all_cost.sum_price %}
+                    {{all_cost.sum_price}} جنية
+                    {% else %}
+                    0.0
+                    {% endif %}
+              </h3>
+            </div>
+
+            <div class="avatar-sm ml-auto">
+              <div
+                class="avatar-title bg-light rounded-circle text-dark font-size-20"
+              >
+                <i class="fas fa-hand-holding-usd"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mini-stats-wid mb-0">
+        <div class="card-body bg-danger">
+          <div class="d-flex flex-wrap">
+            <div class="">
+              <h5 class="mb-2 text-light">
                 اجمالي المسحوبات
               </h5>
               <h3 class="mb-0 text-dark">
-                {{payment_sum}} جنية
+                  {% if payment_sum %}
+                  {{payment_sum}}
+                    {% else %}
+                    0.0
+                    {% endif %}
+                    جنيه
+              </h3>
+            </div>
+
+            <div class="avatar-sm ml-auto">
+              <div
+                class="avatar-title bg-light rounded-circle text-dark font-size-20"
+              >
+                <i class="fas fa-hand-holding-usd"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mini-stats-wid mb-0">
+        <div class="card-body bg-danger">
+          <div class="d-flex flex-wrap">
+            <div class="">
+              <h5 class="mb-2 text-light">
+                  الباقي للعامل
+              </h5>
+              <h3 class="mb-0 text-dark">
+                  {% if all_cost.sum_price %}
+                  {{all_cost.sum_price|sub:payment_sum}}
+                    {% else %}
+                    0.0
+                    {% endif %}
+                    جنيه
               </h3>
             </div>
 

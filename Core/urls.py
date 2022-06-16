@@ -14,6 +14,8 @@ urlpatterns = [
     path('product_search/', views.ProductSearch.as_view(), name='ProductSearch'),
     path('seller_search/', views.SellerSearch.as_view(), name='SellerSearch'),
     path('worker_search/', views.WorkerSearch.as_view(), name='WorkerSearch'),
+    path('invoice_search/', views.InvoiceSearch.as_view(), name='InvoiceSearch'),
+    path('sp_invoice_search/<int:type>/', views.SpInvoiceSearch.as_view(), name='SpInvoiceSearch'),
 
     
     path('read/', views.Read, name='Read'),

@@ -1,17 +1,23 @@
-
+<style>
+    li span{
+        font-weight: bold;
+        font-size: 16px;
+    }
+    li a{
+        font-weight: bold;
+    }
+</style>
 
 <!-- left sideBar  -->
     
-<div class="vertical-menu ">
+<div class="vertical-menu " style="background-color: white">
 
     <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
-            <ul class="metismenu list-styled" id="side-menu">
-
-                <li class="menu-title" key="t-menu">واجهة المستخدم</li>
+            <ul class="metismenu list-styled" id="side-menu" style="margin-top: 8px">
 
                 <!-- الرئيسية   -->
                 <li>
@@ -28,13 +34,13 @@
                         احصائيات عامة  </a></li> -->
 
                     <li>
-                        <a  data-toggle="modal" class="waves-effects" data-target="#search_modal">
+                        <a href="#" data-toggle="modal" class="waves-effects" data-target="#search_modal">
                             <i class='bx bx-search-alt' ></i>
                              <span> بحث ونتائج</span>
                         </a>
                     </li>       
 
-                <li class="menu-title " key="t-menu">أجزاء النظام</li>
+                <li class="menu-title " key="t-menu"><hr></li>
 
                 
                 {% if request.user.has_access_to_spareParts == True %}
@@ -369,7 +375,7 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class='bx bx-receipt bx-sm' ></i>
-                                <span key="t-ecommerce"> فواتير مرتجع المبيعات</span>
+                                <span key="t-ecommerce"> فواتير المرتجع</span>
                             </a>
                             <ul class="sub-menu bg-light" aria-expanded="false">
 
@@ -387,7 +393,7 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class='bx bx-receipt bx-sm' ></i>
-                                <span key="t-ecommerce"> مبيعات مستقلة</span>
+                                <span key="t-ecommerce"> فواتير القطاعي</span>
                             </a>
                             <ul class="sub-menu bg-light" aria-expanded="false">
 
@@ -432,7 +438,7 @@
                {% endif %}
 
 
-                <li class="menu-title" key="t-menu">التحويلات والمعاملات المالية</li>
+                <!--<li class="menu-title" key="t-menu">التحويلات والمعاملات المالية</li>-->
 
 
                 {% if request.user.has_access_to_treasury == True %}
@@ -509,7 +515,7 @@
                 
                 
                 {% if request.user.is_superuser %}
-                    <li class="menu-title" key="t-menu">أدوات النظام</li>
+                    <li class="menu-title" key="t-menu"><hr></li>
                     <!-- الاعددات   -->
                     <li>
                         <a href="javascript: void(0);"  class="has-arrow waves-effect">

@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <h1>
+    <h1 style="margin-top: -100px">
       
       {% if system_info.logo %}
        <img src={{system_info.logo.url}} width="150px" height="150px">
@@ -17,35 +17,23 @@
         
     </h1>
 
-    <aside>
-      <address class="to">
-       
-      </address>
-    </aside>
-
-    <dl id="informations">
-        <h5>{{system_info.name}}</h5>
-        <h5><span>{{date|date:'Y-d-m'}}</span>تاريخ التقرير :</h5> 
-      <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
-      <h5><span>{{system_info.address}}</span>العنوان: </h5> 
-      <h5><span>{{worker.name}}</span>انتاج العامل: </h5> 
+    <dl id="informations" style="margin-top: -100px">
+        <h2 class="text-center">{{system_info.name}}</h2>
+        <h5><span> {{date|date:'Y-d-m'}} </span>تاريخ التقرير: </h5>
+      <h5><span> {{worker.name}} </span>انتاج العامل: </h5>
     </dl>
 
     <table>
       <thead>
         <tr>
-          <th>المسئول</th>
-          <th>كمية الانتاج</th>
-          <th>المنتج</th>
+          <th>الكمية</th>
           <th>التاريخ</th>
         </tr>
       </thead>
       <tbody>
         {% for x in queryset %}
           <tr>
-            <td>{{x.admin}}</td>
-            <td>{{x.quantity}} قطعة</td>
-            <td>{{x.product}} </td>
+            <td>{{x.quantity}}</td>
             <td>{{x.date|date:'Y-m-d'}}</td>
           </tr>
         {% endfor %}
@@ -57,7 +45,7 @@
     <table id="total">
       <thead>
         <tr>
-          <th>اجمالي الايام</th>
+          <th>اجمالي الانتاج</th>
           <th>الي تاريخ</th>
           <th>من تاريخ</th>
         </tr>

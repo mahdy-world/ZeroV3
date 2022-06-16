@@ -18,11 +18,8 @@
 <div class="card">
   <div class="card-header">
     <div class="card-title">
-    </div>
-    <div class="card-tools">
-      <button type="button" class="btn btn-tool" data-dismiss="modal">
-        <i class="fas fa-times"></i>
-      </button>
+        <b class="font-weight-bold text-center"> {{ title }}</b>
+        <span class="card-tools" style="float: left">
       <button
         type="button"
         class="btn btn-tool"
@@ -44,7 +41,10 @@
         <input type="number" value="0" id="expand_modal" hidden />
         <i class="fas fa-expand"></i>
       </button>
-      
+        <button type="button" class="btn btn-tool" data-dismiss="modal">
+        <i class="fas fa-times"></i>
+      </button>
+    </span>
     </div>
   </div>
 
@@ -70,31 +70,25 @@
                   </div>
                 </div>
 
+                {% if obj.deleted == 0 %}
                 <div class="table-responsive" id="order_list">
                   <table class="table table-nowrap mb-0">
                     <thead>
                       <form>
                         <tr>
                           <th
-                            class="col-lg-2 col-xl-2 col-md-1"
+                            class="col-lg-5 col-xl-5 col-md-5"
                             style="width: 20%"
                           >
                             {{form.date|as_crispy_field}}
                           </th>
 
                           <th
-                            class="col-lg-2 col-xl-2 col-md-1"
+                            class="col-lg-5 col-xl-5 col-md-5"
                             style="width: 30%"
                           >
                             {{form.quantity|as_crispy_field}}
                           </th>
-                          <th
-                            class="col-lg-2 col-xl-2 col-md-1"
-                            style="width: 30%"
-                          >
-                            {{form.product|as_crispy_field}}
-                          </th>
-                        
                           
                           <th class="col-lg-2 col-xl-2 col-md-2">
                             <button
@@ -112,6 +106,7 @@
                     </thead>
                   </table>
                 </div>
+                {% endif %}
                 <style>
                   .table-responsive {
                     max-height: 500px;
@@ -130,8 +125,7 @@
                         <tr>
                           <th>م</th>
                           <th>التاريخ</th>
-                          <th>كمية الانتاج بالقطعة</th>
-                          <th>المنتج</th>
+                          <th>الكمية بالقطعة</th>
                           <th>المسئول</th>
                           <th><i class="fas fa-cogs"></i></th>
                         </tr>
@@ -150,18 +144,18 @@
                                 <td>
                                  {{x.quantity}}  
                                 </td>
-                                <td>{{x.product}}</td>
                                 <td>{{x.admin}}</td>
                                 {% if request.user.is_superuser %}
                                 <td>
-                                <a
-                                    href="{% url 'Workers:WorkerProductionUpdate' x.id %}"
-                                    class="mr-3 text-warning"
-                                    data-toggle="modal"
-                                    data-target="#action_modal"
-                                    data-original-title="Edit"
-                                    ><i class="mdi mdi-pencil font-size-18"></i
-                                ></a>
+                                <!--
+{#                                <a#}
+{#                                    href="{% url 'Workers:WorkerProductionUpdate' x.id %}"#}
+{#                                    class="mr-3 text-warning"#}
+{#                                    data-toggle="modal"#}
+{#                                    data-target="#action_modal"#}
+{#                                    data-original-title="Edit"#}
+{#                                    ><i class="mdi mdi-pencil font-size-18"></i#}
+{#                                ></a>#} -->
                                 <a
                                     onclick="WorkerProductionDelete('{{x.id}}')"
                                     style="cursor: pointer"
@@ -250,6 +244,9 @@
                 </div>
 
                 <script>
+                    $("#worker_quantity").attr({
+                       "value" : '',
+                    });
                   function workProductionCreate() {
                     $.ajax({
                       type: "POST",
@@ -257,8 +254,7 @@
                       data: {
                         id: "{{object.id}}",
                         date: $("#production_date").val(),
-                        worker_production: $("#worker_production").val(), 
-                        worker_quantity: $("#worker_quantity").val(), 
+                        worker_quantity: $("#worker_quantity").val(),
                         csrfmiddlewaretoken: "{{ csrf_token }}",
                         dataType: "json",
                       },
@@ -266,8 +262,7 @@
                         /* response message */
                         if (response.msg == 1) {
                           $("#date").val("");
-                          $("#worker_production").val("");
-                          $("#worker_quantity").val("")
+                          $("#worker_quantity").val("");
                           $("#production_worker").html("&nbsp;").load("{% url 'Workers:WorkerProductions_div' object.id %}");
                           alert("تم الاضافة بنجاح");
                         } else {

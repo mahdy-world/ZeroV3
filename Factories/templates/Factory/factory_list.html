@@ -90,17 +90,42 @@
 
                 {% if object_list %}
                 <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-3">
+                        <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:FactorySearch' %}">
+                            <div class="position-relative" >
+
+                                <input type="text" style="background-color: white" value="{{search}}" list="mach" autocomplete="off" class="form-control" name="factory" placeholder="بحث ... بإسم المصنع">
+                                <span >
+                                    <button class="bx bx-search-alt btn btn-warning" type="submit">
+                                    </button>
+                                </span>
+                                <datalist id="mach" >
+                                    {% for fact in factorys %}
+                                        <option value="{{ fact.name }}">
+                                            {{ fact.name }}
+                                            </option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="row">
                 {% for x in object_list  %}
-                <div class="col-xl-4 col-sm-6">
+                <div class="col-xl-4 col-md-4 col-sm-6">
                   <div class="card text-center">
                       <div class="card-body">
                           <div class="avatar-sm mx-auto mb-4 mt-4">
                               <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
-                                <img src="/static/assets/images/vector/factory1.png" alt="" width="100px">
+                                <img src="/static/assets/images/vector/factory2.png" alt="" width="150px">
 
                               </span>
-                          </div>
-                          <h3 ><a href="{% url 'Factories:FactoryPayment' x.id %}"  data-target="#sub_modal" data-toggle="modal" class="text-dark"> {{x.name}}</a></h3>
+                          </div><br>
+                          <h3><a href="{% url 'Factories:FactoryPayment' x.id %}"  data-target="#sub_modal" data-toggle="modal" class="text-dark"> {{x.name}}</a></h3>
 
                             <div class=" d-flex justify-content-center">
                                 <div style="padding-left: 10px;">
@@ -173,6 +198,14 @@
                                         <div>
                                             <a  href="{% url 'Factories:FactoryInside' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
                                                 <span class="badge  badge-warning" style="padding: 5px;"><i class="fas fa-dolly"></i> الداخل</span>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li class="list-inline-item mr-1">
+                                        <div>
+                                            <a  href="{% url 'Factories:PrintAll' x.id %}" target="_blank">
+                                                <span class="badge  badge-secondary" style="padding: 5px;"><i class="fas fa-print"></i> كشف حساب</span>
                                             </a>
                                         </div>
                                     </li>

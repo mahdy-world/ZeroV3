@@ -7,21 +7,17 @@
   </head>
 
   <body>
-    <h1>
-        <img src={{system_info.logo.url}} width="150px" height="150px">
+    <h1 style="margin-top: -100px">
+      {% if system_info.logo %}
+       <img src={{system_info.logo.url}} width="150px" height="150px">
+       {% else %}
+       <img src="/static/assets/images/new.png" width="150px" height="150px">
+      {% endif %}
     </h1>
 
-    <aside>
-      <address class="to">
-       
-      </address>
-    </aside>
-
-    <dl id="informations">
-        <h5>{{system_info.name}}</h5>
-        <h5><span>{{date|date:'Y-m-d'}}</span>تاريخ الفاتورة :</h5> 
-      <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
-      <h5><span>{{system_info.address}}</span>العنوان: </h5> 
+    <dl id="informations" style="margin-top: -100px">
+        <h2 class="text-center">{{system_info.name}}</h2>
+        <h5><span>{{date|date:'Y-m-d'}}</span>تاريخ التقرير :</h5>
       <h5><span>{{factory.name}}</span>داخل مصنع: </h5> 
     </dl>
 
@@ -29,14 +25,10 @@
       <thead>
         <tr>
           <th>اجمالي الحساب</th>
-          <th>حساب الساعة</th>
           <th>عدد الساعات</th>
-          <th>نوع القطع</th>
           <th>عدد القطع</th>
-          <th>المنتج </th>
-          <th>نوع الخامة </th>
-          <th>اللون </th>
-          <th>الوزن </th>
+          <th>المنتج</th>
+          <th>الوزن الكلي</th>
           <th>التاريخ</th>
         </tr>
       </thead>
@@ -44,13 +36,9 @@
         {% for x in queryset %}
           <tr>
             <td>{{x.total_account}}</td>
-            <td>{{x.hour_price}}</td>
             <td>{{x.hour_count}}</td>
-            <td>{{x.get_product_type_display}}</td>
             <td>{{x.product_count}}</td>
             <td>{{x.product}}</td>
-            <td>{{x.get_wool_type_display}}</td>
-            <td>{{x.color}}</td>
             <td>{{x.weight}}</td>
             <td>{{x.date|date:'Y-m-d'}}</td>
           </tr>
@@ -64,6 +52,7 @@
       <thead>
         <tr>
           <th>اجمالي الحساب</th>
+          <th>اجمالي الوزن</th>
           <th>الي تاريخ</th>
           <th>من تاريخ</th>
         </tr>
@@ -71,6 +60,7 @@
       <tbody>
           <tr>
             <td>{{sum_weight}} جنية</td>
+            <td>{{weight}} ك</td>
             <td>{{to_date}}</td>
           <td>{{from_date}}</td>
         </tr>

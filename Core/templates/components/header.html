@@ -3,22 +3,22 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            <div class="navbar-brand-box">
+            <div class="navbar-brand-box" style="background-color: #eaedef">
                 <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="/static/assets/images/new.png" alt="" height="22">
+                        <img src="/static/assets/images/new2.png" alt="" height="30">
                     </span>
                     <span class="logo-lg">
-                        <img src="/static/assets/images/new.png" alt="" height="17">
+                        <img src="/static/assets/images/main_logo2.png" alt="" height="30">
                     </span>
                 </a>
 
                 <a href="/" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="/static/assets/images/1logo.png" alt="" height="30">
+                        <img src="/static/assets/images/1logo2.png" alt="" height="30">
                     </span>
                     <span class="logo-lg">
-                        <img src="/static/assets/images/main_logo.png" alt="" height="30">
+                        <img src="/static/assets/images/main_logo2.png" alt="" height="30">
                     </span>
                 </a>
             </div>
@@ -52,7 +52,6 @@
                     
                     
                     {% if notification_count %}
-                        
                         <i class="bx bx-bell bx-tada"></i>
                         <span class="badge badge-danger badge-pill">{{notification_count}}</span>
                     {% else %}
@@ -63,178 +62,92 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
                     aria-labelledby="page-header-notifications-dropdown">
+
+                    <!--<div data-simplebar style="max-height: 230px;">-->
+                    {% if invoices_notify.count > 0 %}
                     <div class="p-3">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="m-0" key="t-notifications"> الأشعارات </h6>
+                                <h6 class="m-0" key="t-notifications"> فواتير مفتوحة </h6>
                             </div>
-                            <!-- <div class="col-auto">
-                                <a href="#!" class="small" key="t-view-all">عرض الجميع</a>
-                            </div> -->
                         </div>
                     </div>
-                    <div data-simplebar style="max-height: 230px;">
+                    <div data-simplebar style="max-height: 200px;">
                         
-                        {% for x in notifay %}
-                        
-                        {% if x.machine_order %}
-                            <a href="{% url 'Machines:MachinesOrdersDetail' x.machine_order.id %}" onclick="send_ajax('{{x.id}}')" class="text-reset notification-item">
+                        {% for x in invoices_notify %}
+                            <a href="{% url 'Invoices:InvoiceDetail' x.id %}" target="_blank" class="text-reset notification-item">
                                 <div class="media">
                                     <div class="avatar-xs mr-3">
                                         <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                            
-                                            {% if x.read == False %}
-                                            <i class='bx bx-bell bx-tada bx-sm'   ></i>
-                                            {% else %}
-                                            <i class='bx bx-bell bx-sm '></i>
-
-                                            {% endif %}
-                                                
+                                            <i class='bx bx-bell bx-tada bx-sm'></i>
                                         </span>
                                     </div>
                                     <div class="media-body">
-                                        <input id="machine" type="number" value="{{x.id}}" hidden>
-                                    
-                                        <h6 class="mt-0 mb-1" key="t-your-order">{{x.message}}</h6>
+                                        <h6 class="mt-0 mb-1" key="t-your-order">
+                                            {% if x.invoice_type == 1 %}
+                                            فاتورة مبيعات
+                                            {% elif x.invoice_type == 2 %}
+                                            فاتورة مرتجع مبيعات
+                                            {% else %}
+                                            فاتورة قطاعي
+                                            {% endif %}
+                                            لم يتم حفظها بشكل مؤقت او بشكل نهائي
+                                        </h6>
                                         <div class="font-size-12 text-muted">
                                             <p
-                                            {% if x.read == False %}
-                                            class="mb-1 badge badge-danger font-size-12"
-                                            {% elif x.read == True %}
-                                            class="mb-1 badge badge-secondary font-size-12"
-                                            
-                                            {% endif %} 
-                                            
-                                            key="t-grammer">
-
-                                            
-                                            {% if x.created_at == today %}
-                                                
-                                                {% if x.notifeaction_type == 1   %}
-                                                اليوم هو معاد دفع العربون
-                                                {% elif  x.notifeaction_type == 2 %}
-                                                اليوم هو معاد دفع باقي العربون
-                                                {% elif  x.notifeaction_type == 3 %}
-                                                اليوم هو معاد  استلام البضاعة
-                                                {% elif  x.notifeaction_type == 4 %}
-                                                اليوم هو معاد  استلام البضاعة
-                                                {% endif %}
-                                                
-                                            {% elif  x.created_at == tomorrow %}
-                                                {% if x.notifeaction_type == 1   %}
-                                                غداً هو معاد دفع العربون
-                                                {% elif  x.notifeaction_type == 2 %}
-                                                غداً هو معاد دفع باقي العربون
-                                                {% elif  x.notifeaction_type == 3 %}
-                                                غداً هو معاد  استلام البضاعة
-                                                {% elif  x.notifeaction_type == 4 %}
-                                                غداً هو معاد  استلام البضاعة
-                                                {% endif %}
-                                            
-                                            {% endif %}
+                                            class="mb-1 badge badge-danger font-size-12" key="t-grammer">
+                                            فاتورة رقم {{ x.id }}
+                                            <p class="mb-1 badge badge-primary font-size-12"> <span key="t-min-ago">{{x.date|date:'Y-m-d'}}</span></p>
                                         </p>
-                                            <br>
-                                            <p class="mb-0 badge badge-primary"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{x.created_at|date:'Y-m-d'}}</span></p>
                                         </div>
                                     </div>
                                 </div>
                             </a>
-
-                        {% elif x.spare_order %}
-                            <a href="{% url 'SpareParts:SparePartsOrderDetail' x.spare_order.id %}" onclick="send_ajax('{{x.id}}')" class="text-reset notification-item">
-                                <div class="media">
-                                    <div class="avatar-xs mr-3">
-                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                            
-                                            {% if x.read == False %}
-                                            <i class='bx bx-bell bx-tada bx-sm'   ></i>
-                                            {% else %}
-                                            <i class='bx bx-bell bx-sm '></i>
-
-                                            {% endif %}
-                                                
-                                        </span>
-                                    </div>
-                                    <div class="media-body">
-                                        <input id="machine" type="number" value="{{x.id}}" hidden>
-                                    
-                                        <h6 class="mt-0 mb-1" key="t-your-order">{{x.message}}</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p
-                                            {% if x.read == False %}
-                                            class="mb-1 badge badge-danger font-size-12"
-                                            {% elif x.read == True %}
-                                            class="mb-1 badge badge-secondary font-size-12"
-                                            
-                                            {% endif %} 
-                                            
-                                            key="t-grammer">
-
-                                            
-                                            {% if x.created_at == today %}
-                                                
-                                                {% if x.notifeaction_type == 5   %}
-                                                اليوم هو معاد دفع العربون
-                                                {% elif  x.notifeaction_type == 6 %}
-                                                اليوم هو معاد دفع باقي العربون
-                                                {% elif  x.notifeaction_type == 7 %}
-                                                اليوم هو معاد  استلام البضاعة
-                                                {% elif  x.notifeaction_type == 8 %}
-                                                اليوم هو معاد  استلام البضاعة
-                                                {% endif %}
-                                                
-                                            {% elif  x.created_at == tomorrow %}
-                                                {% if x.notifeaction_type == 5   %}
-                                                غداً هو معاد دفع العربون
-                                                {% elif  x.notifeaction_type == 6 %}
-                                                غداً هو معاد دفع باقي العربون
-                                                {% elif  x.notifeaction_type == 7 %}
-                                                غداً هو معاد  استلام البضاعة
-                                                {% elif  x.notifeaction_type == 8 %}
-                                                غداً هو معاد  استلام البضاعة
-                                                {% endif %}
-                                            
-                                            {% endif %}
-                                        </p>
-                                            <br>
-                                            <p class="mb-0 badge badge-primary"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{x.created_at|date:'Y-m-d'}}</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endif %}
-                            
-                        
                         {% endfor %}
                         
                     </div>
-                    <div class="p-2 border-top">
-                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
-                            </i> <span key="t-view-more">الأشعارات</span> 
-                        </a>
+                    {% endif %}
+
+                    {% if products_notify.count > 0 %}
+                    <div class="p-3">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="m-0" key="t-notifications"> منتجات سعر البيع أقل من التكلفة </h6>
+                            </div>
+                        </div>
                     </div>
+                    <div data-simplebar style="max-height: 200px;">
+
+                        {% for x in products_notify %}
+                            <a href="{% url 'Products:ProductUpdate' x.id %}" data-toggle="modal" data-target="#action_modal" class="text-reset notification-item">
+                                <div class="media">
+                                    <div class="avatar-xs mr-3">
+                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                            <i class='bx bx-bell bx-tada bx-sm'></i>
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="mt-0 mb-1" key="t-your-order">
+                                            موديل {{ x.name }}
+                                             تخسر في بيعه
+                                        </h6>
+                                        <div class="font-size-12 text-muted">
+                                            <p
+                                            class="mb-1 badge badge-danger font-size-12" key="t-grammer">
+                                            سعر البيع {{ x.price }}
+                                            <p class="mb-1 badge badge-primary font-size-12"><span key="t-min-ago">سعر التكلفة {{ x.cost }}</span></p>
+                                        </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+
+                    </div>
+                    {% endif %}
+                    <!--</div>-->
                 </div>
             </div>
-
-            <script>
-
-                function send_ajax(id){
-              
-                  $.ajax({
-                    type : "POST",
-                    url : "{% url 'Core:Read' %}",
-                    data : {
-                      id : id,
-                      order: $('#order').val(),
-                      csrfmiddlewaretoken: '{{ csrf_token }}',
-                      dataType: "json",
-                    },
-              
-                  });
-              
-                };
-              
-              </script>
 
             <!-- user item -->
             <div class="dropdown d-inline-block">

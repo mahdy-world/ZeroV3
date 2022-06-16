@@ -72,17 +72,19 @@
                                                 {{form.to_date|as_crispy_field}}
                                               </th>
 
-                                              <!-- <th>
-                                                <button type="submit" name="submit" id='search'  value="1" class="btn btn-success"
-                                                onclick="document.getElementById('my_form').action = '#'; document.getElementById('my_form').target = '_self' "
-                                                >  
-                                                    <i class="fas fa-search"></i> 
-                                                     بحث
-                                                </button>
-                                              </th> -->
+                                                <!--
+{#                                              <th>#}
+{#                                                <button type="submit" name="submit" id='search'  value="1" class="btn btn-success"#}
+{#                                                onclick="document.getElementById('my_form').action = '#'; document.getElementById('my_form').target = '_self' "#}
+{#                                                >  #}
+{#                                                    <i class="fas fa-search"></i> #}
+{#                                                     بحث#}
+{#                                                </button>#}
+{#                                              </th>#}-->
+
 
                                               <th>
-                                                <button type="submit" name="submit" id="print"  value="1" class="btn btn-primary"
+                                                <button type="submit" name="submit" id="print"  value="1" class="btn btn-success"
                                                 onclick="document.getElementById('my_form').action = '{% url 'Factories:PrintOutside' name.id  %}'; document.getElementById('my_form').target = '_blank' "
                                                 >  
                                                 <i class="fas fa-print"></i> 
@@ -103,93 +105,7 @@
                                         display: none;
                                       }
                                     </style>
-                    
-                                    <!-- <div class="card-body" id="paymnet">
-                                      <div class="table-responsive">
-                                        <table
-                                          class="table table-centered table-dark table-nowrap text-center"
-                                        >
-                                          <thead style="background-color: #0c2b4b">
-                                            <tr>
-                                              <th>م</th>
-                                              <th>التاريخ</th>
-                                              <th>الوزن</th>
-                                              <th>اللون</th>
-                                              <th>نوع الخامة</th>
-                                              <th>نسبة الهالك</th>
-                                              <th>الوزن بعد نسبة الهالك</th>
-                                              <th>المسئول</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {% for x in object_list %}
-                                            <tr style="text-align: center">
-                                              <td>{{forloop.counter}}</td>
-                                              <td>
-                                                <span class="badge badge-danger"
-                                                  ><i class="fas fa-calendar-alt"></i>
-                                                  {{x.date|date:'Y-m-d'}}</span
-                                                >
-                                              </td>
-                                              <td>
-                                                 {{x.weight}}
-                                              </td>
-                                              <td>
-                                                 {{x.color}}
-                                              </td>
-                                              <td>
-                                                 {{x.get_wool_type_display}}
-                                              </td>
-                                              <td>
-                                                 {{x.percent_loss}}
-                                              </td>
-                                              <td>
-                                                 {{x.weight_after_loss}}
-                                              </td>
-                                              <td>
-                                                 {{x.admin}}
-                                              </td>
-                    
-                                            </tr>
-                                            {% endfor %}
-                                          </tbody>
-                                        </table>
-                                      </div>
 
-                                      
-                                      <div style="margin-top: 10px">
-                                        <div class="row">
-                                          <div class="col-lg-12">
-                                            <div class="card mini-stats-wid mb-0">
-                                              <div class="card-body bg-danger">
-                                                <div class="d-flex flex-wrap">
-                                                  <div class="">
-                                                    <h5 class="mb-2 text-light">
-                                                      اجمالي الوزن بعد نسبة الهالك
-                                                    </h5>
-                                                    <h3 class="mb-0 text-dark">
-                                                      {{ summary.sum_weight}} كيلو جرام
-                                                    </h3>
-                                                  </div>
-
-                                                  <div class="avatar-sm ml-auto">
-                                                    <div
-                                                      class="avatar-title bg-light rounded-circle text-dark font-size-20"
-                                                    >
-                                                      <i class="fas fa-hand-holding-usd"></i>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        
-                                        </div>
-                                      </div>
-                                        
-                                    </div>
-                     -->
-                            
                                   </div>
                                 </div>
                               </div>

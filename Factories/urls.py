@@ -36,6 +36,6 @@ urlpatterns = [
     path('inside/delete/', FactoryInsideDelete, name="FactoryInsideDelete"), # url for delete function using ajax
     path('inside/report/<int:pk>/', FactoryInSideReport.as_view(), name="FactoryInSideReport"),
     path('inside/print/<int:pk>/', PrintInside , name="PrintInside"),
-    
-    
+    path('all/print/<int:pk>/', PrintAll , name="PrintAll"),
+    path('get_product_weight_time/', get_product_weight_time , name="get_product_weight_time"),
 ]

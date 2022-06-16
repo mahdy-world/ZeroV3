@@ -1,5 +1,7 @@
 from django import template
 from django.db.models import Sum
+import pyqrcode
+import png
 
 register = template.Library()
 from Invoices.models import *
@@ -43,3 +45,14 @@ def Profit_Decimal(num):
         numm = numbe
 
     return numm
+
+
+@register.simple_tag(name='qrcode')
+def qrcode(*args):
+    value = ''
+    for i in args:
+        value = value + '\n' + str(i)
+    code = pyqrcode.create(value, encoding='utf-8')
+    image_as_str = code.png_as_base64_str(scale=5)
+
+    return image_as_str

@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from Core.models import *
-
+from Products.templatetags.products_tags import sellers_debit as SellerDebit
 # Create your views here.
 
 
@@ -111,7 +111,8 @@ class InvoiceUpdate(LoginRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=self.form_class)
-        form.fields['seller'].queryset = ProductSellers.objects.filter(deleted=False)
+        if int(self.object.invoice_type) == 1 or int(self.object.invoice_type) == 2:
+            form.fields['seller'].queryset = ProductSellers.objects.filter(deleted=False)
         return form
 
     def get_success_url(self, **kwargs):
@@ -122,7 +123,21 @@ class InvoiceUpdate(LoginRequiredMixin, UpdateView):
 class InvoiceSave(LoginRequiredMixin, UpdateView):
     login_url = '/auth/login/'
     model = Invoice
-    form_class = InvoiceSaveForm
+    # form_class = InvoiceSaveForm
+    def get_form_class(self, **kwargs):
+        if int(self.object.invoice_type) == 1:
+            form_class_name = InvoiceSaveForm
+        elif int(self.object.invoice_type) == 2:
+            form_class_name = InvoiceSaveForm2
+        else:
+            form_class_name = InvoiceSaveForm3
+
+        if int(self.object.invoice_type) == 1 or int(self.object.invoice_type) == 2:
+            obj = self.object
+            obj.old_value = SellerDebit(self.object.seller.id) * -1
+            obj.save(update_fields=['old_value'])
+
+        return form_class_name
     template_name = 'forms/form_template.html'
 
     def get_context_data(self, **kwargs):
@@ -139,12 +154,27 @@ class InvoiceSave(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         total = form.cleaned_data.get("total")
         discount = form.cleaned_data.get("discount")
+        return_value = form.cleaned_data.get("return_value")
+        paid_value = form.cleaned_data.get("paid_value")
+        old_value = form.cleaned_data.get("old_value")
         inv = form.save(commit=False)
-        inv.overall = float(total) - float(discount)
+        if int(self.object.invoice_type) == 1:
+            inv.overall = float(total) - float(discount) - float(return_value) - float(paid_value) + float(old_value)
+            seller_pay = SellerPayments()
+            mform = Invoice.objects.get(id=self.kwargs['pk'])
+            seller_pay.seller = mform.seller
+            seller_pay.paid_value = paid_value
+            seller_pay.paid_type = 1
+            seller_pay.save()
+        elif int(self.object.invoice_type) == 2:
+            inv.overall = float(old_value) - (float(total) - float(discount))
+        else:
+            inv.overall = float(total) - float(discount)
         form.save()
         myform = Invoice.objects.get(id=self.kwargs['pk'])
         myform.saved = 1
         myform.save()
+
         return redirect(self.get_success_url())
 
 
@@ -272,6 +302,9 @@ class InvoiceSuperDelete(LoginRequiredMixin, UpdateView):
 
 def InvoiceDetail(request, pk):
     invoice = get_object_or_404(Invoice, id=pk)
+    # if invoice.saved == 0:
+    #     invoice.old_value = SellerDebit(invoice.seller.id) * -1
+    #     invoice.save()
     product = InvoiceItem.objects.filter(invoice=invoice).order_by('id')
     count_product = product.count()
 
@@ -297,12 +330,15 @@ def InvoiceDetail(request, pk):
     for prod in product:
         products.append(prod.item.id)
 
-    form.fields['item'].queryset = Product.objects.filter(deleted=False, quantity__gt=0).exclude(id__in=products)
+    form.fields['item'].queryset = Product.objects.filter(deleted=False).exclude(id__in=products)
 
     type_page = "list"
     page = "active"
     action_url = reverse_lazy('Invoices:AddProductInvoice', kwargs={'pk': invoice.id})
 
+    # if int(invoice.invoice_type) == 1 or int(invoice.invoice_type) == 2:
+    #     if invoice.seller.agreement:
+    #         messages.warning(request, "اتفاق مسبق مع التاجر: " + str(invoice.seller.agreement), extra_tags="warning")
     context = {
         'invoice': invoice,
         'type': type_page,
@@ -346,13 +382,13 @@ def AddProductInvoice(request, pk):
         item = form.cleaned_data.get("item")
         trans = item.quantity
 
-        if trans >= quantity:
-            obj = form.save(commit=False)
-            obj.invoice = invoice
-            obj.save()
-            messages.success(request, " تم اضافة منتج الي الفاتورة بنجاح ", extra_tags="success")
-        else:
-            messages.success(request, " لاتوجد كمية كافية من المنتج داخل المخزن ", extra_tags="danger")
+        # if trans >= quantity:
+        obj = form.save(commit=False)
+        obj.invoice = invoice
+        obj.save()
+        messages.success(request, " تم اضافة منتج الي الفاتورة بنجاح ", extra_tags="success")
+        # else:
+        #     messages.success(request, " لاتوجد كمية كافية من المنتج داخل المخزن ", extra_tags="danger")
         return redirect('Invoices:InvoiceDetail', pk=invoice.id)
 
     return render(request, 'Invoices/invoice_detail.html', context)
@@ -387,13 +423,13 @@ class InvoiceProductsUpdate(LoginRequiredMixin, UpdateView):
         trans = item.quantity
         object_item = self.object.item
 
-        if trans >= quantity:
-            prod = form.save(commit=False)
-            prod.total_price = float(quantity) * float(unit_price)
-            form.save()
-            messages.success(self.request, " تم تعديل منتج " + str(object_item) + " بنجاح ", extra_tags="success")
-        else:
-            messages.success(self.request, " لاتوجد كمية كافية من المنتج داخل المخزن ", extra_tags="danger")
+        # if trans >= quantity:
+        prod = form.save(commit=False)
+        prod.total_price = float(quantity) * float(unit_price)
+        form.save()
+        messages.success(self.request, " تم تعديل منتج " + str(object_item) + " بنجاح ", extra_tags="success")
+        # else:
+        #     messages.success(self.request, " لاتوجد كمية كافية من المنتج داخل المخزن ", extra_tags="danger")
         return redirect(self.get_success_url())
 
 

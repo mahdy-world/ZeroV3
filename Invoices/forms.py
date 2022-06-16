@@ -26,10 +26,40 @@ class InvoiceForm2(forms.ModelForm):
 class InvoiceSaveForm(forms.ModelForm):
     class Meta:
         model = Invoice
+        fields = ['old_value', 'total', 'discount', 'return_value', 'paid_value', 'overall', 'comment']
+        widgets = {
+            'total': forms.NumberInput(attrs={'class': 'form-control', 'id': 'inv_total', 'readonly': 'readonly', 'min':0}),
+            'old_value': forms.NumberInput(attrs={'class': 'form-control', 'id': 'inv_old_value', 'readonly': 'readonly'}),
+            'overall': forms.HiddenInput(attrs={'class': 'form-control', 'id': 'inv_overall', 'readonly': 'readonly', 'min':0}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['discount'].widget.attrs = {'min': '0', 'max': self['total'].value(), 'id': 'inv_discount'}
+
+
+class InvoiceSaveForm2(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = ['old_value', 'total', 'discount', 'overall', 'comment']
+        widgets = {
+            'total': forms.NumberInput(attrs={'class': 'form-control', 'id': 'inv_total', 'readonly': 'readonly', 'min':0}),
+            'old_value': forms.NumberInput(attrs={'class': 'form-control', 'id': 'inv_old_value', 'readonly': 'readonly'}),
+            'overall': forms.HiddenInput(attrs={'class': 'form-control', 'id': 'inv_overall', 'readonly': 'readonly', 'min':0}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['discount'].widget.attrs = {'min': '0', 'max': self['total'].value(), 'id': 'inv_discount'}
+
+
+class InvoiceSaveForm3(forms.ModelForm):
+    class Meta:
+        model = Invoice
         fields = ['total', 'discount', 'overall', 'comment']
         widgets = {
-            'total': forms.NumberInput(attrs={'class': 'form-control', 'id': 'inv_total', 'readonly': 'readonly'}),
-            'overall': forms.HiddenInput(attrs={'class': 'form-control', 'id': 'inv_overall', 'readonly': 'readonly'}),
+            'total': forms.NumberInput(attrs={'class': 'form-control', 'id': 'inv_total', 'readonly': 'readonly', 'min':0}),
+            'overall': forms.HiddenInput(attrs={'class': 'form-control', 'id': 'inv_overall', 'readonly': 'readonly', 'min':0}),
         }
 
     def __init__(self, *args, **kwargs):

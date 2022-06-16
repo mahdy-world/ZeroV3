@@ -31,7 +31,8 @@ urlpatterns = [
     path('report/attendance/<int:pk>/', WorkerReports.as_view(), name="WorkerReports"),
     path('attendance/print/<int:pk>/', PrintWorkerAttendance , name="PrintWorkerAttendance"),
     path('productions/print/<int:pk>/', PrintWorkerproductions , name="PrintWorkerproductions"),
-    
+    path('all/print/<int:pk>/', PrintWorkerAll , name="PrintWorkerAll"),
+
     
     
 
