@@ -38,6 +38,7 @@
 
             
             <div class="row">
+
                 {% if request.user.has_access_to_products %}
                 <div class="col-xl-4 col-lg-6 col-md-6">
                     <a data-toggle="modal" data-target="#invoice1_modal">
@@ -84,6 +85,8 @@
                     </a>
                 </div>
                 {% endif %}
+
+
 
                 <div class="col-xl-4 col-lg-6 col-md-6 ">
                     <a href="" data-toggle="modal" data-target="#factory_modal">

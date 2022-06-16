@@ -310,6 +310,7 @@ class FactoryOutside(LoginRequiredMixin, DetailView):
         context['outSide'] = queryset.order_by('-date')
         context['title'] = 'الخارج من المصنع: ' + str(self.object)
         sum_weight = queryset.aggregate(weight=Sum('weight')).get('weight')
+
         if sum_weight:
             context['sum_weight'] = "{:.1f}".format(sum_weight)
         else:
@@ -322,6 +323,7 @@ class FactoryOutside(LoginRequiredMixin, DetailView):
         form = FactoryOutSideForm(self.request.POST or None)
         form.fields['percent_loss'].initial = 0
         context['form'] = form
+
         context['type'] = 'list'
         context['factory'] = self.object
         return context
@@ -337,13 +339,14 @@ class FactoryOutSide_div(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['outSide'] = queryset.order_by('-date')
         sum_weight = queryset.aggregate(weight=Sum('weight')).get('weight')
-        context['sum_weight'] = "{:.1f}".format(sum_weight)
+        context['sum_weight'] = sum_weight
         sum_weight_after = queryset.aggregate(after=Sum('weight_after_loss')).get('after')
         context['sum_weight_after'] = "{:.1f}".format(sum_weight_after)
         form = FactoryOutSideForm(self.request.POST or None)
         form.fields['percent_loss'].initial = 0
         context['form'] = form
         context['factory'] = self.object
+
         return context    
 
 
