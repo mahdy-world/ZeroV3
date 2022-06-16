@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load mathfilters %}
 {% block title %}
 <title>
     {% if invoice.invoice_type == 1 %}
@@ -7,7 +7,7 @@
     {% elif invoice.invoice_type == 2 %}
     فاتورة مرتجع مبيعات
     {% elif invoice.invoice_type == 3 %}
-    مبيعات مستقلة
+    مبيعات قطاعي
     {% endif %}
     {{invoice.id}}</title>
 {% endblock title %}
@@ -65,7 +65,7 @@
                                 {% elif invoice.invoice_type == 2 %}
                                 فاتورة مرتجع مبيعات
                                 {% elif invoice.invoice_type == 3 %}
-                                مبيعات مستقلة
+                                مبيعات قطاعي
                                 {% endif %}
                                 {{invoice.id}}</h3>
 
@@ -84,7 +84,7 @@
                                         {% elif invoice.invoice_type == 2 %}
                                         فاتورة مرتجع مبيعات
                                         {% elif invoice.invoice_type == 3 %}
-                                        مبيعات مستقلة
+                                        مبيعات قطاعي
                                         {% endif %}
                                         {{invoice.id}}</li>
                                 </ol>
@@ -221,7 +221,11 @@
                                                        
                                                     </div>
                                                 </div>
-
+                                                    {% if invoice.seller.agreement %}
+                                                        <div class="text-center">
+                                                        <h5 class="badge badge-warning" style="font-size: medium; margin-top: 3px">اتفاق مسبق: {{ invoice.seller.agreement }}</h5>
+                                                        </div>
+                                                    {% endif %}
                                                     {% if not invoice.saved %}
                                                     <div class="table-responsive" id="order_list">
                                                         <table class="table table-nowrap mb-0">
@@ -399,7 +403,7 @@
 
                         {% if invoice.saved %}
                         <div class="row">
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-4 col-md-4">
                                                <div class="card mini-stats-wid">
                                                    <div class="card-body">
                                                        <div class="media">
@@ -424,15 +428,15 @@
                                                    </div>
                                                </div>
                                </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-4 col-md-4">
                                                <div class="card mini-stats-wid">
                                                    <div class="card-body">
                                                        <div class="media">
                                                            <div class="media-body">
                                                                <p class="text-muted font-weight-bold ">المطلوب للدفع </p>
                                                                <h4 class="mb-0">
-                                                                   {% if invoice.overall %}
-                                                                   {{invoice.overall}}
+                                                                   {% if invoice.total %}
+                                                                   {{invoice.total|sub:invoice.discount}}
                                                                    {% else %}
                                                                    0.0
                                                                    {% endif %}
@@ -449,7 +453,114 @@
                                                    </div>
                                                </div>
                                </div>
+                            {% if invoice.invoice_type == 1 or invoice.invoice_type == 2 %}
+                            <div class="col-lg-4 col-md-4">
+                                       <div class="card mini-stats-wid">
+                                           <div class="card-body">
+                                               <div class="media">
+                                                   <div class="media-body">
+                                                       <p class="text-muted font-weight-bold">حساب قديم</p>
+                                                       <h4 class="mb-0">
+                                                            {% if invoice.old_value < 0 %}
+                                                                له
+                                                                {{invoice.old_value|mul:-1}}
+                                                              {% elif invoice.old_value > 0 %}
+                                                                عليه
+                                                                {{invoice.old_value}}
+                                                              {% else %}
+                                                                {{invoice.old_value}}
+                                                              {% endif %}
+                                                       </h4>
+                                                   </div>
+
+                                                   <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                                                       <span class="avatar-title">
+                                                           <i class='bx bx-dollar-circle bx-sm'  ></i>
+                                                       </span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                            {% endif %}
                         </div>
+
+                        <div class="row">
+                                {% if invoice.invoice_type == 1 %}
+                                <!-- الكمية -->
+                               <div class="col-lg-4 col-md-4">
+                                               <div class="card mini-stats-wid">
+                                                   <div class="card-body">
+                                                       <div class="media">
+                                                           <div class="media-body">
+                                                               <p class="text-muted font-weight-bold ">قيمة مرتجع </p>
+                                                              <h4 class="mb-0">{{invoice.return_value}} جنيه</h4>
+                                                           </div>
+
+                                                           <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                                                               <span class="avatar-title">
+                                                                <i class='bx bx-dollar-circle bx-sm'  ></i>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                               </div>
+
+                               <!-- المبلغ -->
+                               <div class="col-lg-4 col-md-4">
+                                               <div class="card mini-stats-wid">
+                                                   <div class="card-body">
+                                                       <div class="media">
+                                                           <div class="media-body">
+                                                               <p class="text-muted font-weight-bold ">قيمة مدفوعة </p>
+                                                              <h4 class="mb-0">{{invoice.paid_value}} جنيه</h4>
+                                                           </div>
+
+                                                           <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                                                               <span class="avatar-title">
+                                                                   <i class='bx bx-dollar-circle bx-sm'  ></i>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                               </div>
+                                {% endif %}
+
+                                {% if invoice.invoice_type == 1 or invoice.invoice_type == 2 %}
+                                <div class="col-lg-4 col-md-4">
+                                               <div class="card mini-stats-wid">
+                                                   <div class="card-body bg-warning text-white">
+                                                       <div class="media">
+                                                           <div class="media-body">
+                                                               <p class="text-muted font-weight-bold ">الحساب الحالي </p>
+                                                              <h4 class="mb-0">
+                                                                  {% if invoice.overall < 0 %}
+                                                                      له
+                                                                    {{invoice.overall|mul:-1}}
+                                                                  {% elif invoice.overall > 0 %}
+                                                                      عليه
+                                                                    {{invoice.overall}}
+                                                                  {% else %}
+                                                                    {{invoice.overall}}
+                                                                      جنيه
+                                                                  {% endif %}
+                                                              </h4>
+                                                           </div>
+
+                                                           <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                                                               <span class="avatar-title">
+                                                                   <i class='bx bx-dollar-circle bx-sm'  ></i>
+                                                               </span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                               </div>
+                                {% endif %}
+                       </div>
+
                         {% endif %}
 
                     </div>

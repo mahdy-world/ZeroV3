@@ -94,28 +94,26 @@
                 {% if object_list %}
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row mb-3">
-                            <div class="col-lg-12 col-sm-6">
-                                <form class="mt-4 mt-sm-0 float-sm-right form-inline">
-                                    <div class="search-box mr-2">
-                                        <div class="position-relative">
-                                            <form class="app-search d-none d-lg-block" method="get"  action="{% url 'Core:ProductSearch' %}">
-                                                <div class="position-relative" >
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3">
+                                <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:ProductSearch' %}">
+                                    <div class="position-relative" >
 
-                                                    <input type="text" value="{{product_serach}}" list="produ"  class="form-control border-0" style="border-radius: 0" name="product" placeholder="بحث ... بإسم المنتج">
-                                                    <span >
-                                                        <button class="bx bx-search-alt btn btn-warning" style="border-radius: 0" type="submit"></button>
-                                                    </span>
-                                                    <datalist id="produ" >
-                                                        {% for pro in products %}
-                                                            <option value="{{ pro.name }}">
-                                                                {{ pro.name }}
-                                                                </option>
-                                                        {% endfor %}
-                                                    </datalist>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <input style="background-color: white" type="text" value="{{product_serach}}" list="produ" autocomplete="off" class="form-control" name="product" placeholder="بحث ... بإسم المنتج">
+                                        <span >
+                                            <button class="bx bx-search-alt btn btn-warning" type="submit">
+                                            </button>
+                                        </span>
+                                        <datalist id="produ" >
+                                            {% for pro in products %}
+                                                <option value="{{ pro.name }}">
+                                                    {{ pro.name }}
+                                                    </option>
+                                            {% endfor %}
+                                        </datalist>
                                     </div>
                                 </form>
                             </div>
@@ -123,26 +121,31 @@
                     <div class="row">
                     {% for x in object_list  %}
                         {% product_12_quantity x.id as product_12_quantity %}
-                        <div class="col-xl-3 col-sm-6">
+                        <div class="col-xl-4 col-md-4 col-sm-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="product-img position-relative">
-                                        <div class="avatar-sm product-ribbon">
-                                            <span class="avatar-title rounded-circle bg-secondary">
-                                                {{x.quantity}}
-                                                ق
-                                            </span>
-                                        </div>
-
-
-                                        {% if x.quantity >= 12 %}
-                                        <div class="avatar-sm product-ribbon" style="margin-right: 80%">
-                                            <span class="avatar-title rounded-circle bg-primary">
-                                                {{product_12_quantity}}
-                                                د
-                                            </span>
-                                        </div>
-                                        {% endif %}
+                                    <!--
+{#                                        <div class="avatar-sm product-ribbon">#}
+{#                                            <span class="avatar-title rounded-circle bg-secondary">#}
+{#                                                {% if x.quantity %}#}
+{#                                                {{x.quantity}}#}
+{#                                                {% else %}#}
+{#                                                0#}
+{#                                                {% endif %}#}
+{#                                                ق#}
+{#                                            </span>#}
+{#                                        </div>#}
+{##}
+{##}
+{#                                        {% if x.quantity >= 12 %}#}
+{#                                        <div class="avatar-sm product-ribbon" style="margin-right: 80%">#}
+{#                                            <span class="avatar-title rounded-circle bg-primary">#}
+{#                                                {{product_12_quantity}}#}
+{#                                                د#}
+{#                                            </span>#}
+{#                                        </div>#}
+{#                                        {% endif %}#}-->
 
 
                                         {% if x.image %}
@@ -163,6 +166,12 @@
                                     </div>
                                     <div class="card-footer bg-transparent border-top">
                                         <div class="contact-links d-flex justify-content-center font-size-20">
+                                            <div class="mr-3">
+                                               <a href="{% url 'Products:ProductDetails' x.id %}" data-toggle="modal" data-target="#sub_modal" data-placement="top" title="" data-original-title="Message">
+                                                   <span class="badge badge-success"><i class='bx bx-list-ul' ></i>الإنتاج</span>
+                                              </a>
+                                           </div>
+
                                           {% if request.user.is_superuser %}
                                           {% if type == "list"  %}
               
@@ -206,16 +215,23 @@
                                             
                                           </div>
                                     </div>
-                                    {% if x.deleted == 0 %}
-                                    <div class="card-footer bg-transparent border-top">
-                                        <div class="contact-links d-flex justify-content-center font-size-20">
-                                          <div class="mr-3">
-                                           <a href="{% url 'Products:AddProductQuantity' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">                                                   <span class="btn btn-outline-secondary"><i class='bx bx-plus-circle' ></i>اضافة كمية جديدة</span>
-                                              </a>
-                                           </div>
-                                        </div>
-                                    </div>
-                                    {% endif %}
+                                <!--
+{#                                    {% if x.deleted == 0 %}#}
+{#                                    <div class="card-footer bg-transparent border-top">#}
+{#                                        <div class="contact-links d-flex justify-content-center font-size-20">#}
+{#                                          <div class="mr-3">#}
+{#                                           <a href="{% url 'Products:AddProductQuantity' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">#}
+{#                                               <span class="btn btn-outline-secondary"><i class='bx bx-plus-circle' ></i>اضافة كمية</span>#}
+{#                                              </a>#}
+{#                                           </div>#}
+{#                                            <div class="mr-3">#}
+{#                                           <a href="{% url 'Products:MinusProductQuantity' x.id %}" data-toggle="modal" data-target="#action_modal" data-placement="top" title="" data-original-title="Message">#}
+{#                                               <span class="btn btn-outline-secondary"><i class='bx bx-minus-circle' ></i>خصم كمية</span>#}
+{#                                              </a>#}
+{#                                           </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    {% endif %}#}-->
                                 </div>
                             </div>
                         </div>

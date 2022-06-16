@@ -20,8 +20,7 @@
     <div class="card-header">
         <div class="card-title">
             <b class="font-weight-bold text-center"> {{ title }}</b>
-        </div>
-        <div class="card-tools">
+            <span class="card-tools" style="float: left">
             <button type="button" class="btn btn-tool" data-card-widget="maximize"
             onclick="
             if (document.getElementById('expand_modal').value === '0'){
@@ -43,6 +42,7 @@
             <button type="button" class="btn btn-tool" data-dismiss="modal">
                 <i class="fas fa-times"></i>
             </button>
+        </span>
         </div>
     </div>
               
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
 
-                                     
+                                     {% if factory.deleted == 0 %}
                                     <div class="table-responsive" id="order_list">
                                         <table class="table table-nowrap mb-0">
                                             <thead>
@@ -83,8 +83,6 @@
                                                     <th class="col-lg-1 col-xl-1 col-md-1" style="width: 20%;">{{form.wool_type|as_crispy_field}}</th>
                                                     <th class="col-lg-1 col-xl-1 col-md-1" style="width: 20%;">{{form.percent_loss|as_crispy_field}}</th>
                                                     <th class="col-lg-1 col-xl-1 col-md-1" style="width: 20%;">{{form.weight_after_loss|as_crispy_field}}</th>
-                                                    <th class="col-lg-1 col-xl-1 col-md-1" style="width: 30%;">{{form.admin|as_crispy_field}}</th>
-
                                                     <th class="col-lg-1 col-xl-1 col-md-1">
                                                         <button style="width: 100%" onclick="OutSideCreate()" class="btn btn-success">اضافة</button>
                                                     </th>
@@ -107,6 +105,7 @@
                                            
                                         </table>
                                     </div>
+                                    {% endif %}
                                      <style>
                                          .table-responsive{
                                             max-height: 500px;
@@ -145,7 +144,8 @@
                                                         <td><i class="fas fa-user-tie"></i> {{x.admin}} </td>
                                                         {% if request.user.is_superuser %}
                                                         <td>
-                                                            <a href="{% url 'Factories:FactoryOutSideUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#action_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                        <!--
+{#                                                            <a href="{% url 'Factories:FactoryOutSideUpdate' x.id %}" class="mr-3 text-warning" data-toggle="modal" data-target="#action_modal" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>#}-->
                                                             <a onclick="OutsideDelete('{{x.id}}')" style="cursor: pointer;" class="text-danger" ><i class="mdi mdi-close font-size-18"></i></a>
                                                         </td>
                                                         {% endif %}
@@ -209,12 +209,28 @@
 
                                     <script>
 
-                                       $('#percent_loss').on('change', function (){
+                                        $('#weight').on('keyup change', function (){
                                             const weight = $('#weight').val();
                                             const percent_loss = $('#percent_loss').val();
+                                            if (percent_loss == 0){
+                                                $('#weight_after_loss').val(weight)
+                                            }
+                                            else {
+                                                let prcent_loss_valu = (weight - (weight * percent_loss)/100);
+                                                $('#weight_after_loss').val(prcent_loss_valu);
+                                            }
+                                       });
 
-                                            let prcent_loss_valu = (weight - (weight * percent_loss)/100); 
-                                            let weight_after_loss = $('#weight_after_loss').val(prcent_loss_valu);
+                                       $('#percent_loss').on('keyup change', function (){
+                                            const weight = $('#weight').val();
+                                            const percent_loss = $('#percent_loss').val();
+                                            if (percent_loss == 0){
+                                                $('#weight_after_loss').val(weight)
+                                            }
+                                            else {
+                                                let prcent_loss_valu = (weight - (weight * percent_loss)/100);
+                                                $('#weight_after_loss').val(prcent_loss_valu);
+                                            }
                                        }); 
 
                                         function OutSideCreate(){
@@ -229,7 +245,6 @@
                                                     wool_type : $('#wool_type').val(),
                                                     percent_loss : $('#percent_loss').val(),
                                                     weight_after_loss : $('#weight_after_loss').val(),
-                                                    admin : $('#admin').val(),
                                                     csrfmiddlewaretoken: '{{ csrf_token }}',
                                                     dataType: "json",
                                                 },
@@ -241,7 +256,6 @@
                                                         $('#wool_type').val('');
                                                         $('#weight_after_loss').val('');
                                                         $('#percent_loss').val('');
-                                                        $('#admin').val('');
                                                         $( '#outside' ).html( '&nbsp;' ).load( "{% url 'Factories:FactoryOutSide_div' object.id %}");
                                                         alert("تم الاضافة بنجاح");
                                                     }else{

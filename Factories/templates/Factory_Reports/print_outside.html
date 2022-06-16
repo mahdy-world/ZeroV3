@@ -7,28 +7,23 @@
   </head>
 
   <body>
-    <h1>
-        <img src={{system_info.logo.url}} width="150px" height="150px">
+    <h1 style="margin-top: -100px">
+      {% if system_info.logo %}
+       <img src={{system_info.logo.url}} width="150px" height="150px">
+       {% else %}
+       <img src="/static/assets/images/new.png" width="150px" height="150px">
+      {% endif %}
     </h1>
 
-    <aside>
-      <address class="to">
-       
-      </address>
-    </aside>
-
-    <dl id="informations">
-        <h5>{{system_info.name}}</h5>
-        <h5><span>{{date|date:'Y-m-d'}}</span>تاريخ الفاتورة :</h5> 
-      <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
-      <h5><span>{{system_info.address}}</span>العنوان: </h5> 
+    <dl id="informations" style="margin-top: -100px">
+        <h2 class="text-center">{{system_info.name}}</h2>
+        <h5><span>{{date|date:'Y-m-d'}}</span>تاريخ التقرير :</h5>
       <h5><span>{{factory.name}}</span>خارج مصنع: </h5> 
     </dl>
 
     <table>
       <thead>
         <tr>
-          <th>المسئول</th>
           <th>الوزن بعد الهالك</th>
           <th>نسبة الهالك</th>
           <th>نوع الخامة</th>
@@ -40,7 +35,6 @@
       <tbody>
         {% for x in queryset %}
           <tr>
-            <td>{{x.admin}}</td>
             <td>{{x.weight_after_loss}}</td>
             <td>{{x.percent_loss}}</td>
             <td>{{x.get_wool_type_display}}</td>

@@ -8,9 +8,11 @@ urlpatterns = [
     path('create/', ProductCreate.as_view(), name="ProductCreate"),
     path('update/<int:pk>', ProductUpdate.as_view(), name="ProductUpdate"),
     path('add_quantity/<int:pk>', AddProductQuantity.as_view(), name="AddProductQuantity"),
+    path('minus_quantity/<int:pk>', MinusProductQuantity.as_view(), name="MinusProductQuantity"),
     path('delete/<int:pk>', ProductDelete.as_view(), name="ProductDelete"),
     path('restore/<int:pk>', ProductRestore.as_view(), name="ProductRestore"),
     path('superDelete/<int:pk>', ProductSuperDelete.as_view(), name="ProductSuperDelete"),
+    path('details/<int:pk>', ProductDetails.as_view(), name="ProductDetails"),
     ######################################################################################
     path('seller_list/', SellerList.as_view(), name="SellerList"),
     path('seller_trash/', SellerTrashList.as_view(), name="SellerTrashList"),
@@ -22,4 +24,6 @@ urlpatterns = [
     path('seller_restore/<int:pk>', SellerRestore.as_view(), name="SellerRestore"),
     path('seller_superDelete/<int:pk>', SellerSuperDelete.as_view(), name="SellerSuperDelete"),
     path('seller_details/<int:pk>', SellerDetails.as_view(), name="SellerDetails"),
+    path('seller_invoices/<int:pk>', SellerInvoices.as_view(), name="SellerInvoices"),
+    path('seller_print/<int:pk>', PrintSellerInvoicesDetails, name="PrintSellerInvoicesDetails"),
 ]

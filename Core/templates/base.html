@@ -44,7 +44,7 @@
 
 
 
-    <body data-sidebar="dark" style="background-color:#eaedef" class="sidebar-enable">
+    <body data-sidebar="" style="background-color:#eaedef" class="sidebar-enable">
 
         <!-- Spinner -->
         <!-- <div id="preloader" >
@@ -75,11 +75,11 @@
           
             <!-- spareparts -->
             <div class="modal fade"  data-backdrop="static" id="spareparts_invoice_modal">
-            <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                <div class="modal-content" style="background: #3f3f3f;">
+            <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                <div class="modal-content" style="background: #fefefa;">
                     <div class="row">
                         <div class="col-lg-12" >
-                            <div class="card" style="background: #3f3f3f;">
+                            <div class="card" style="background: #fefefa;">
                                 <div class="card-header">
                                     <div class="card-title">
                                         <b class="font-weight-bold text-center">أقسام قطع الغيار</b>
@@ -96,7 +96,7 @@
                                                     document.getElementById('action_modal2').className = 'modal-dialog';
                                                     document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                 }
-                    
+
                                                 ">
                                             <input type="number" value="0" id="expand_modal" hidden />
                                             <i class="fas fa-expand"></i>
@@ -107,8 +107,8 @@
                                     </div>
                                 </div>
 
-                                
-                                <div class="card-body" style="background: #3f3f3f;">
+
+                                <div class="card-body" style="background: #fefefa;">
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="">
@@ -124,8 +124,8 @@
                                                   </div>
                                             </a>
                                         </div>
-                        
-                        
+
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                              <a href="{% url 'SpareParts:SparePartsOrderList' %}">
                                                 <div class="container_new">
@@ -138,9 +138,9 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                             </a> 
+                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'SpareParts:SparePartsSupplierList' %}">
                                                 <div class="container_new">
@@ -154,9 +154,9 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            
+
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                            <a href="{% url 'SpareParts:SparePartsWarehouseList' %}">
                                             <div class="container_new">
@@ -171,7 +171,7 @@
                                             </div>
                                            </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'SpareParts:SparePartsNameList' %}">
                                                 <div class="container_new">
@@ -186,7 +186,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'SpareParts:SpareTypeList' %}">
                                                 <div class="container_new">
@@ -214,11 +214,11 @@
 
             <!-- machines -->
             <div class="modal fade"  data-backdrop="static" id="machine_invoice_modal">
-            <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                <div class="modal-content" style="background: #3f3f3f;">
+            <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                <div class="modal-content" style="background: #fefefa;">
                     <div class="row">
                         <div class="col-lg-12" >
-                            <div class="card" style="background: #3f3f3f;">
+                            <div class="card" style="background: #fefefa;">
                                 <div class="card-header">
                                     <div class="card-title">
                                         <b class="font-weight-bold text-center">أقسام المكينات</b>
@@ -235,7 +235,7 @@
                                                     document.getElementById('action_modal2').className = 'modal-dialog';
                                                     document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                 }
-                    
+
                                                 ">
                                             <input type="number" value="0" id="expand_modal" hidden />
                                             <i class="fas fa-expand"></i>
@@ -246,10 +246,10 @@
                                     </div>
                                 </div>
 
-                                <div class="card-body" style="background: #3f3f3f;">
+                                <div class="card-body" style="background: #fefefa;">
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-6 col-md-6">
-                                            <a href=""> 
+                                            <a href="">
                                                 <div class="container_new">
                                                     <div class="card">
                                                       <div class="imgBx">
@@ -260,10 +260,10 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                            </a>  
+                                            </a>
                                         </div>
-                        
-                        
+
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                              <a href="{% url 'Machines:MachinesOrdersList' %}">
                                                 <div class="container_new">
@@ -276,9 +276,9 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                             </a> 
+                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'Machines:suppliers_active_list' %}">
                                                 <div class="container_new">
@@ -293,7 +293,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'Machines:warehouses_active_list' %}">
                                                 <div class="container_new">
@@ -308,7 +308,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'Machines:names_active_list' %}">
                                                 <div class="container_new">
@@ -323,7 +323,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'Machines:types_active_list' %}">
                                                 <div class="container_new">
@@ -351,11 +351,11 @@
 
             <!-- home -->
             <div class="modal fade"  data-backdrop="static" id="home_invoice_modal">
-            <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                <div class="modal-content" style="background: #3f3f3f;">
+            <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                <div class="modal-content" style="background: #fefefa;">
                     <div class="row">
                         <div class="col-lg-12" >
-                            <div class="card" style="background: #3f3f3f;">
+                            <div class="card" style="background: #fefefa;">
                                 <div class="card-header">
                                     <div class="card-title">
                                         <b class="font-weight-bold text-center">أقسام الرئيسية</b>
@@ -372,7 +372,7 @@
                                                     document.getElementById('action_modal2').className = 'modal-dialog';
                                                     document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                 }
-                    
+
                                                 ">
                                             <input type="number" value="0" id="expand_modal" hidden />
                                             <i class="fas fa-expand"></i>
@@ -383,10 +383,10 @@
                                     </div>
                                 </div>
 
-                                <div class="card-body" style="background: #3f3f3f;">
+                                <div class="card-body" style="background: #fefefa;">
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-6 col-md-6">
-                                            <a href=""> 
+                                            <a href="">
                                                 <div class="container_new">
                                                     <div class="card">
                                                       <div class="imgBx">
@@ -397,10 +397,10 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                            </a>  
+                                            </a>
                                         </div>
-                        
-                        
+
+
                                         <div class="col-xl-6 col-lg-6 col-md-6">
                                              <a data-toggle="modal" data-target="#search_modal">
                                                 <div class="container_new">
@@ -413,9 +413,9 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                             </a> 
+                                             </a>
                                         </div>
-                        
+
                                     </div>
                                 </div>
                             </div>
@@ -428,11 +428,11 @@
 
             <!-- bank -->
             <div class="modal fade"  data-backdrop="static" id="bank_invoice_modal">
-            <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                <div class="modal-content" style="background: #3f3f3f;">
+            <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                <div class="modal-content" style="background: #fefefa;">
                     <div class="row">
                         <div class="col-lg-12" >
-                            <div class="card" style="background: #3f3f3f;">
+                            <div class="card" style="background: #fefefa;">
                                 <div class="card-header">
                                     <div class="card-title">
                                         <b class="font-weight-bold text-center"> الخزائن و الحسابات البنكية</b>
@@ -449,7 +449,7 @@
                                                     document.getElementById('action_modal2').className = 'modal-dialog';
                                                     document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                 }
-                    
+
                                                 ">
                                             <input type="number" value="0" id="expand_modal" hidden />
                                             <i class="fas fa-expand"></i>
@@ -460,11 +460,11 @@
                                     </div>
                                 </div>
 
-                             
-                                <div class="card-body" style="background: #3f3f3f;">
+
+                                <div class="card-body" style="background: #fefefa;">
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-6 col-md-6">
-                                            <a href="{% url 'Treasury:WorkTreasuryList' %}""> 
+                                            <a href="{% url 'Treasury:WorkTreasuryList' %}">
                                                 <div class="container_new">
                                                     <div class="card">
                                                       <div class="imgBx">
@@ -475,10 +475,10 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                            </a>  
+                                            </a>
                                         </div>
-                        
-                        
+
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                              <a href="{% url 'Treasury:HomeTreasuryList' %}">
                                                 <div class="container_new">
@@ -491,9 +491,9 @@
                                                       </div>
                                                     </div>
                                                   </div>
-                                             </a> 
+                                             </a>
                                         </div>
-                        
+
                                         <div class="col-xl-4 col-lg-6 col-md-6">
                                             <a href="{% url 'Treasury:BankAccountList' %}">
                                                 <div class="container_new">
@@ -508,8 +508,8 @@
                                                 </div>
                                             </a>
                                         </div>
-                        
-                                     
+
+
 
                                     </div>
                                 </div>
@@ -522,16 +522,15 @@
 
             <!-- users -->
             <div class="modal fade"  data-backdrop="static" id="user_invoice_modal">
-            <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                <div class="modal-content" style="background: #3f3f3f;">
+            <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                <div class="modal-content" style="background: #fefefa;">
                     <div class="row">
                         <div class="col-lg-12" >
-                            <div class="card" style="background: #3f3f3f;">
+                            <div class="card" style="background: #fefefa;">
                                 <div class="card-header">
                                     <div class="card-title">
                                         <b class="font-weight-bold text-center">المستخدمين</b>
-                                    </div>
-                                    <div class="card-tools">
+                                        <span class="card-tools" style="float: left">
                                         <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
                                                 if (document.getElementById('expand_modal').value === '0'){
                                                     document.getElementById('expand_modal').value = 1;
@@ -543,7 +542,7 @@
                                                     document.getElementById('action_modal2').className = 'modal-dialog';
                                                     document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                 }
-                    
+
                                                 ">
                                             <input type="number" value="0" id="expand_modal" hidden />
                                             <i class="fas fa-expand"></i>
@@ -551,44 +550,45 @@
                                         <button type="button" class="btn btn-tool" data-dismiss="modal">
                                             <i class="fas fa-times"></i>
                                         </button>
+                                    </span>
                                     </div>
                                 </div>
 
-                               
-                                <div class="card-body" style="background: #3f3f3f;">
+
+                                <div class="card-body" style="background: #fefefa;">
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-6 col-md-6">
                                             <a href="{% url 'Auth:Users' %}"
-                                            data-target="#sub_modal" data-toggle="modal"> 
+                                            data-target="#sub_modal" data-toggle="modal">
                                                 <div class="container_new">
                                                     <div class="card">
                                                       <div class="imgBx">
-                                                        <img class="image" src="/static/assets/images/vector/users.png">
+                                                        <img class="image" src="/static/assets/images/vector/list.png">
                                                       </div>
                                                       <div class="contentBx">
                                                         <h2>قائمة المستخدمين</h2>
                                                       </div>
                                                     </div>
                                                   </div>
-                                            </a>  
+                                            </a>
                                         </div>
-                        
-                        
+
+
                                         <div class="col-xl-6 col-lg-6 col-md-6">
                                              <a  href="{% url 'Auth:create_user' %}" data-target="#sub_modal" data-toggle="modal">
                                                 <div class="container_new">
                                                     <div class="card">
                                                       <div class="imgBx">
-                                                        <img class="image" src="/static/assets/images/vector/users.png">
+                                                        <img class="image" src="/static/assets/images/vector/add.png">
                                                       </div>
                                                       <div class="contentBx">
                                                         <h2>اضافة مستخدم جديد</h2>
                                                       </div>
                                                     </div>
                                                   </div>
-                                             </a> 
+                                             </a>
                                         </div>
-                                     
+
 
                                     </div>
                                 </div>
@@ -602,16 +602,15 @@
 
             <!-- Factory -->
             <div class="modal fade"  data-backdrop="static" id="factory_modal">
-                <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                    <div class="modal-content" style="background: #3f3f3f;">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
                         <div class="row">
                             <div class="col-lg-12" >
-                                <div class="card" style="background: #3f3f3f;">
+                                <div class="card" style="background: #fefefa;">
                                     <div class="card-header">
                                         <div class="card-title">
                                             <b class="font-weight-bold text-center">اقسام المصانع</b>
-                                        </div>
-                                        <div class="card-tools">
+                                            <span class="card-tools" style="float: left">
                                             <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
                                                     if (document.getElementById('expand_modal').value === '0'){
                                                         document.getElementById('expand_modal').value = 1;
@@ -623,7 +622,7 @@
                                                         document.getElementById('action_modal2').className = 'modal-dialog';
                                                         document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                     }
-                        
+
                                                     ">
                                                 <input type="number" value="0" id="expand_modal" hidden />
                                                 <i class="fas fa-expand"></i>
@@ -631,41 +630,42 @@
                                             <button type="button" class="btn btn-tool" data-dismiss="modal">
                                                 <i class="fas fa-times"></i>
                                             </button>
+                                        </span>
                                         </div>
                                     </div>
 
-                                
-                                    <div class="card-body" style="background: #3f3f3f;">
+
+                                    <div class="card-body" style="background: #fefefa;">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-6 col-md-6">
-                                                <a href="{% url 'Factories:FactoryList' %}"> 
+                                                <a href="{% url 'Factories:FactoryList' %}">
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/factory1.png">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>قائمة المصانع</h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a>  
+                                                </a>
                                             </div>
-                            
-                            
+
+
                                             <div class="col-xl-4 col-lg-6 col-md-6">
                                                 <a  href="{% url 'Factories:FactoryCreate' %}" data-target="#sub_modal" data-toggle="modal">
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/new.png">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>اضافة مصنع جديد</h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a> 
+                                                </a>
                                             </div>
 
                                             <div class="col-xl-4 col-lg-6 col-md-6">
@@ -673,16 +673,16 @@
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/trach.png">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>سلة المهملات </h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a> 
+                                                </a>
                                             </div>
-                                        
+
 
                                         </div>
                                     </div>
@@ -693,20 +693,16 @@
                 </div>
             </div>
 
-
-
-            <!-- Product -->
-            <div class="modal fade"  data-backdrop="static" id="product_modal">
-                <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                    <div class="modal-content" style="background: #3f3f3f;">
+            <div class="modal fade"  data-backdrop="static" id="invoice1_modal">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
                         <div class="row">
                             <div class="col-lg-12" >
-                                <div class="card" style="background: #3f3f3f;">
+                                <div class="card" style="background: #fefefa;">
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <b class="font-weight-bold text-center">اقسام المنتجات</b>
-                                        </div>
-                                        <div class="card-tools">
+                                            <b class="font-weight-bold text-center">اقسام فواتير المبيعات</b>
+                                            <span class="card-tools" style="float: left">
                                             <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
                                                     if (document.getElementById('expand_modal').value === '0'){
                                                         document.getElementById('expand_modal').value = 1;
@@ -718,7 +714,7 @@
                                                         document.getElementById('action_modal2').className = 'modal-dialog';
                                                         document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                     }
-                        
+
                                                     ">
                                                 <input type="number" value="0" id="expand_modal" hidden />
                                                 <i class="fas fa-expand"></i>
@@ -726,41 +722,319 @@
                                             <button type="button" class="btn btn-tool" data-dismiss="modal">
                                                 <i class="fas fa-times"></i>
                                             </button>
+                                        </span>
                                         </div>
                                     </div>
 
-                                
-                                    <div class="card-body" style="background: #3f3f3f;">
+
+                                    <div class="card-body" style="background: #fefefa;">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-6 col-md-6">
-                                                <a href="{% url 'Products:ProductList' %}"> 
+                                                <a href="{% url 'Invoices:InvoiceList' 1 %}">
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/product.png">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>قائمة الفواتير</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Invoices:InvoiceCreate' 1 %}" data-target="#sub_modal" data-toggle="modal">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>اضافة فاتورة جديدة</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Invoices:InvoiceTrashList' 1 %}" >
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>سلة المهملات </h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade"  data-backdrop="static" id="invoice2_modal">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <div class="card" style="background: #fefefa;">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <b class="font-weight-bold text-center">اقسام فواتير مرتجع المبيعات</b>
+                                            <span class="card-tools" style="float: left">
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
+                                                    if (document.getElementById('expand_modal').value === '0'){
+                                                        document.getElementById('expand_modal').value = 1;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog expand_modal';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg expand_modal';
+                                                    }
+                                                    else {
+                                                        document.getElementById('expand_modal').value = 0;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
+                                                    }
+
+                                                    ">
+                                                <input type="number" value="0" id="expand_modal" hidden />
+                                                <i class="fas fa-expand"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-dismiss="modal">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-body" style="background: #fefefa;">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a href="{% url 'Invoices:InvoiceList' 2 %}">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>قائمة الفواتير</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Invoices:InvoiceCreate' 2 %}" data-target="#sub_modal" data-toggle="modal">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>اضافة فاتورة جديدة</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Invoices:InvoiceTrashList' 2 %}" >
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>سلة المهملات </h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade"  data-backdrop="static" id="invoice3_modal">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <div class="card" style="background: #fefefa;">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <b class="font-weight-bold text-center">اقسام المبيعات القطاعي</b>
+                                            <span class="card-tools" style="float: left">
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
+                                                    if (document.getElementById('expand_modal').value === '0'){
+                                                        document.getElementById('expand_modal').value = 1;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog expand_modal';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg expand_modal';
+                                                    }
+                                                    else {
+                                                        document.getElementById('expand_modal').value = 0;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
+                                                    }
+
+                                                    ">
+                                                <input type="number" value="0" id="expand_modal" hidden />
+                                                <i class="fas fa-expand"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-dismiss="modal">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-body" style="background: #fefefa;">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a href="{% url 'Invoices:InvoiceList' 3 %}">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>قائمة الفواتير</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Invoices:InvoiceCreate' 3 %}" data-target="#sub_modal" data-toggle="modal">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>اضافة فاتورة جديدة</h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a  href="{% url 'Invoices:InvoiceTrashList' 3 %}" >
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
+                                                        </div>
+                                                        <div class="contentBx">
+                                                            <h2>سلة المهملات </h2>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product -->
+            <div class="modal fade"  data-backdrop="static" id="product_modal">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <div class="card" style="background: #fefefa;">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <b class="font-weight-bold text-center">اقسام المنتجات</b>
+                                            <span class="card-tools" style="float: left">
+                                            <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
+                                                    if (document.getElementById('expand_modal').value === '0'){
+                                                        document.getElementById('expand_modal').value = 1;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog expand_modal';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg expand_modal';
+                                                    }
+                                                    else {
+                                                        document.getElementById('expand_modal').value = 0;
+                                                        document.getElementById('action_modal2').className = 'modal-dialog';
+                                                        document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
+                                                    }
+
+                                                    ">
+                                                <input type="number" value="0" id="expand_modal" hidden />
+                                                <i class="fas fa-expand"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-dismiss="modal">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-body" style="background: #fefefa;">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                                <a href="{% url 'Products:ProductList' %}">
+                                                    <div class="container_new">
+                                                        <div class="card">
+                                                        <div class="imgBx">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>قائمة المنتجات</h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a>  
+                                                </a>
                                             </div>
-                            
-                            
+
+
                                             <div class="col-xl-4 col-lg-6 col-md-6">
                                                 <a  href="{% url 'Products:ProductCreate' %}" data-target="#sub_modal" data-toggle="modal">
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/new.png">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>اضافة منتج جديد</h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a> 
+                                                </a>
                                             </div>
 
                                             <div class="col-xl-4 col-lg-6 col-md-6">
@@ -768,16 +1042,16 @@
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/trach.png">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>سلة المهملات </h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a> 
+                                                </a>
                                             </div>
-                                        
+
 
                                         </div>
                                     </div>
@@ -787,19 +1061,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Workers -->
             <div class="modal fade"  data-backdrop="static" id="worker_modal">
-                <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                    <div class="modal-content" style="background: #3f3f3f;">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
                         <div class="row">
                             <div class="col-lg-12" >
-                                <div class="card" style="background: #3f3f3f;">
+                                <div class="card" style="background: #fefefa;">
                                     <div class="card-header">
                                         <div class="card-title">
                                             <b class="font-weight-bold text-center">اقسام العمال</b>
-                                        </div>
-                                        <div class="card-tools">
+                                            <span class="card-tools" style="float: left">
                                             <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
                                                     if (document.getElementById('expand_modal').value === '0'){
                                                         document.getElementById('expand_modal').value = 1;
@@ -811,7 +1084,7 @@
                                                         document.getElementById('action_modal2').className = 'modal-dialog';
                                                         document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                     }
-                        
+
                                                     ">
                                                 <input type="number" value="0" id="expand_modal" hidden />
                                                 <i class="fas fa-expand"></i>
@@ -819,41 +1092,42 @@
                                             <button type="button" class="btn btn-tool" data-dismiss="modal">
                                                 <i class="fas fa-times"></i>
                                             </button>
+                                        </span>
                                         </div>
                                     </div>
 
-                                
-                                    <div class="card-body" style="background: #3f3f3f;">
+
+                                    <div class="card-body" style="background: #fefefa;">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-6 col-md-6">
-                                                <a href="{% url 'Workers:WorkerList' %}"> 
+                                                <a href="{% url 'Workers:WorkerList' %}">
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/worker.png">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>قائمة العمال</h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a>  
+                                                </a>
                                             </div>
-                            
-                            
+
+
                                             <div class="col-xl-4 col-lg-6 col-md-6">
                                                 <a  href="{% url 'Workers:WorkerCreate' %}" data-target="#sub_modal" data-toggle="modal">
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/new.png">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>اضافة عامل جديد</h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a> 
+                                                </a>
                                             </div>
 
                                             <div class="col-xl-4 col-lg-6 col-md-6">
@@ -861,16 +1135,16 @@
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/trach.png">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>سلة المهملات </h2>
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </a> 
+                                                </a>
                                             </div>
-                                        
+
 
                                         </div>
                                     </div>
@@ -880,19 +1154,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- sellers -->
             <div class="modal fade"  data-backdrop="static" id="seller_modal">
-                <div class="modal-dialog modal-xl" style="background: #3f3f3f;">
-                    <div class="modal-content" style="background: #3f3f3f;">
+                <div class="modal-dialog modal-xl" style="background: #fefefa;">
+                    <div class="modal-content" style="background: #fefefa;">
                         <div class="row">
                             <div class="col-lg-12" >
-                                <div class="card" style="background: #3f3f3f;">
+                                <div class="card" style="background: #fefefa;">
                                     <div class="card-header">
                                         <div class="card-title">
                                             <b class="font-weight-bold text-center">اقسام التجار</b>
-                                        </div>
-                                        <div class="card-tools">
+                                            <span class="card-tools" style="float: left">
                                             <button type="button" class="btn btn-tool" data-card-widget="maximize" onclick="
                                                     if (document.getElementById('expand_modal').value === '0'){
                                                         document.getElementById('expand_modal').value = 1;
@@ -904,7 +1177,7 @@
                                                         document.getElementById('action_modal2').className = 'modal-dialog';
                                                         document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                     }
-                        
+
                                                     ">
                                                 <input type="number" value="0" id="expand_modal" hidden />
                                                 <i class="fas fa-expand"></i>
@@ -912,18 +1185,19 @@
                                             <button type="button" class="btn btn-tool" data-dismiss="modal">
                                                 <i class="fas fa-times"></i>
                                             </button>
+                                        </span>
                                         </div>
                                     </div>
 
-                                
-                                    <div class="card-body" style="background: #3f3f3f;">
+
+                                    <div class="card-body" style="background: #fefefa;">
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-6 col-md-6">
                                                 <a href="{% url 'Products:SellerList' %}"> 
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/seller.png">
+                                                            <img class="image" src="/static/assets/images/vector/list.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>قائمة التجار</h2>
@@ -939,7 +1213,7 @@
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/new.png">
+                                                            <img class="image" src="/static/assets/images/vector/add.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>اضافة تاجر جديد</h2>
@@ -954,7 +1228,7 @@
                                                     <div class="container_new">
                                                         <div class="card">
                                                         <div class="imgBx">
-                                                            <img class="image" src="/static/assets/images/vector/trach.png">
+                                                            <img class="image" src="/static/assets/images/vector/delete.png">
                                                         </div>
                                                         <div class="contentBx">
                                                             <h2>سلة المهملات </h2>
@@ -1010,8 +1284,7 @@
                                         <div class="card-header">
                                             <div class="card-title">
                                                 <b class="font-weight-bold text-center">البحث داخل النظام ....</b>
-                                            </div>
-                                            <div class="card-tools">
+                                                <span class="card-tools" style="float: left">
                                                 <button type="button" class="btn btn-tool" data-card-widget="maximize"
                                                 onclick="
                                                 if (document.getElementById('expand_modal').value === '0'){
@@ -1024,7 +1297,7 @@
                                                     document.getElementById('action_modal2').className = 'modal-dialog';
                                                     document.getElementById('sub_modal2').className = 'modal-dialog modal-lg';
                                                 }
-                    
+
                                                 "
                                                 >
                                                     <input type="number" value="0" id="expand_modal" hidden>
@@ -1033,6 +1306,7 @@
                                                 <button type="button" class="btn btn-tool" data-dismiss="modal">
                                                     <i class="fas fa-times"></i>
                                                 </button>
+                                            </span>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -1044,7 +1318,7 @@
                                                     <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:FactorySearch' %}">
                                                         <div class="position-relative" >
                                                             
-                                                            <input type="text" value="{{search}}" list="mach"  class="form-control" name="factory" placeholder="بحث ... بإسم المصنع">
+                                                            <input type="text" value="{{search}}" list="mach" autocomplete="off" class="form-control" name="factory" placeholder="بحث ... بإسم المصنع">
                                                             <span >
                                                                 <button class="bx bx-search-alt btn btn-light" type="submit">
                                                                 </button>
@@ -1068,7 +1342,7 @@
                                                     <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:ProductSearch' %}">
                                                         <div class="position-relative" >
                                                             
-                                                            <input type="text" value="{{product_serach}}" list="produ"  class="form-control" name="product" placeholder="بحث ... بإسم المنتج">
+                                                            <input type="text" value="{{product_serach}}" list="produ" autocomplete="off" class="form-control" name="product" placeholder="بحث ... بإسم المنتج">
                                                             <span >
                                                                 <button class="bx bx-search-alt btn btn-light" type="submit">
                                                                 </button>
@@ -1092,7 +1366,7 @@
                                                     <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:SellerSearch' %}">
                                                         <div class="position-relative" >
                                                             
-                                                            <input type="text" value="{{seller_serach}}" list="sel"  class="form-control" name="seller" placeholder="بحث ... بإسم المنتج">
+                                                            <input type="text" value="{{seller_serach}}" list="sel" autocomplete="off" class="form-control" name="seller" placeholder="بحث ... بإسم التاجر">
                                                             <span >
                                                                 <button class="bx bx-search-alt btn btn-light" type="submit">
                                                                 </button>
@@ -1116,7 +1390,7 @@
                                                     <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:WorkerSearch' %}">
                                                         <div class="position-relative" >
                                                             
-                                                            <input type="text" value="{{worker_serach}}" list="work"  class="form-control" name="worker" placeholder="بحث ... بإسم المنتج">
+                                                            <input type="text" value="{{worker_serach}}" list="work" autocomplete="off" class="form-control" name="worker" placeholder="بحث ... بإسم العامل">
                                                             <span >
                                                                 <button class="bx bx-search-alt btn btn-light" type="submit">
                                                                 </button>
@@ -1133,7 +1407,20 @@
                             
                                                 </div>
                                                 {% endif %}
-                                               
+                                               <div class="col-lg-6">
+                                                    <span style="margin-right: 10px;" class="font-weight-bold">بحث عن فاتورة ...</span>
+                                                    <form class="app-search d-none d-lg-block" method="get" action="{% url 'Core:InvoiceSearch' %}">
+                                                        <div class="position-relative" >
+
+                                                            <input type="number" value="{{invoice_serach}}" autocomplete="off" class="form-control" name="invoice" placeholder="بحث ... برقم الفاتورة">
+                                                            <span >
+                                                                <button class="bx bx-search-alt btn btn-light" type="submit">
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
 
 
                                                 {% if request.user.has_access_to_spareParts or request.user.has_access_to_machine %}

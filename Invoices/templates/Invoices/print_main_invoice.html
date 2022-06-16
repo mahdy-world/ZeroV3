@@ -38,10 +38,15 @@
             </td>
         </tr>
     </table>
-</div><hr><br>
-
+</div>
+<div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center; margin-top: -15px">
+  <span style="font-size: 40px; margin-right: 100%">
+    <img style = "width: 65px; height: 65px; margin-top: -12px" src = "data:image/png;base64,{% qrcode 'https://goo.gl/maps/YpocxsY5tmsnnsq49' %}">
+  </span>
+</div>
+<br>
 <div>
-<div style="text-align: right; margin-right: -70px">
+<div style="text-align: right; margin-right: -70px; font-size: 20px">
     <span>
     تحريرا في/
         {{ invoice.date|date:'d-m-Y' }}
@@ -62,6 +67,7 @@
         {% endif %}
     </span>
 </div><br>
+
 <table class="prods">
 <thead>
 <tr style="background-color: white; color: black">
@@ -92,39 +98,119 @@
 <td> {{ forloop.counter }}
 </td>
 </tr> {% endfor %}
+</tbody>
+</table>
+
+<br>
+<table class="prods">
 <tr style="background-color:transparent">
-<td style="background-color:white; color: black">
+<td style="background-color:white; color: black; border: none">
     {% profit_decimal invoice.total as num %} {{ num }}
+    &nbsp;&nbsp;&nbsp;
 </td>
-<td style="background-color:white; color: black">
+<td style="background-color:white; color: black; border: none">
     اجمالي الفاتورة
 </td>
 </tr>
+
 <tr style="background-color:transparent">
-<td style="background-color:white; color: black">
+<td style="background-color:white; color: black; border: none">
     {% profit_decimal invoice.discount as num %} {{ num }}
+    －
 </td>
-<td style="background-color:white; color: black">
+<td style="background-color:white; color: black; border: none">
     قيمة الخصم
 </td>
-<td colspan="4" style="border: none">
-    <sup>جـ</sup>
-     المطلوب:
-    {% profit_decimal invoice.overall as num %} {{ num }}
-</td>
 </tr>
+
 <tr style="background-color:transparent">
-<td style="background-color:white; color: black">
-    {% profit_decimal invoice.overall as num %} {{ num }}
+<td style="background-color:white; color: black; border-left: none; border-bottom: none; border-right: none">
+    {% profit_decimal invoice.total|sub:invoice.discount as num %} {{ num }}
+    &nbsp;&nbsp;&nbsp;
 </td>
-<td style="background-color:white; color: black">
+<td style="background-color:white; color: black; border-left: none; border-bottom: none; border-right: none">
     صافي الفاتورة
 </td>
-<td colspan="4" style="border: none">
-     شكرا لتعاملكم معنا
+</tr>
+
+{% if invoice.invoice_type == 1 or invoice.invoice_type == 2 %}
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black; border: none">
+    {% profit_decimal invoice.old_value as num %}
+    {% if invoice.old_value < 0 %}
+    {{ num|mul:-1 }}
+        －
+    {% elif invoice.old_value > 0 %}
+    {{ num }}
+        ＋
+    {% else %}
+    {{ num }}
+        ＋
+    {% endif %}
+</td>
+<td style="background-color:white; color: black; border: none">
+    حساب قديم
+    {% profit_decimal invoice.old_value as num %}
+    {% if invoice.old_value < 0 %}
+    للتاجر
+    {% elif invoice.old_value > 0 %}
+    علي التاجر
+    {% else %}
+    {% endif %}
 </td>
 </tr>
-</tbody>
+
+{% if invoice.invoice_type == 1 %}
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black; border-left: none; border-bottom: none; border-right: none">
+    {% profit_decimal invoice.total|sub:invoice.discount|add:invoice.old_value as num %} {{ num }}
+    &nbsp;&nbsp;&nbsp;
+</td>
+<td style="background-color:white; color: black; border-left: none; border-bottom: none; border-right: none">
+    اجمالي الحساب
+</td>
+</tr>
+
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black; border: none">
+    {% profit_decimal invoice.return_value as num %} {{ num }}
+    －
+</td>
+<td style="background-color:white; color: black; border: none">
+    قيمة مرتجع
+</td>
+</tr>
+
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black; border: none">
+    {% profit_decimal invoice.paid_value as num %} {{ num }}
+    －
+</td>
+<td style="background-color:white; color: black; border: none">
+    قيمة مدفوعة
+</td>
+</tr>
+{% endif %}
+
+<tr style="background-color:transparent">
+<td style="background-color:white; color: black; border-left: none; border-bottom: none; border-right: none">
+    <span style="background-color: black; padding: 5px; color: white">{% profit_decimal invoice.overall as num %}
+        {% if invoice.overall < 0 %}
+        {{ num|mul:-1 }} للتاجر
+        {% elif invoice.overall > 0 %}
+        {{ num }} علي التاجر
+        {% else %}
+        {{ num }}
+        {% endif %}
+    </span>
+    &nbsp;&nbsp;&nbsp;
+</td>
+<td style="background-color:white; color: black; border-left: none; border-bottom: none; border-right: none">
+    الحساب الحالي
+</td>
+</tr>
+{% endif %}
+
 </table>
 </div>
 </body>

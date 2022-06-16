@@ -1,5 +1,4 @@
-<div class="main-content" style="background-image: url('/static/assets/images/main.jpg'); background-repeat: no-repeat;
-background-size: cover;">
+<div class="main-content">
 
     <div class="page-content">
         <div class="container">
@@ -39,12 +38,59 @@ background-size: cover;">
 
             
             <div class="row">
+                {% if request.user.has_access_to_products %}
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <a data-toggle="modal" data-target="#invoice1_modal">
+                        <div class="container_new">
+                            <div class="card">
+                                <div class="imgBx">
+                                    <img class="image" src="/static/assets/images/vector/printt.png">
+                                </div>
+                                <div class="contentBx">
+                                    <h2>فواتير المبيعات</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <a data-toggle="modal" data-target="#invoice2_modal">
+                        <div class="container_new">
+                            <div class="card">
+                                <div class="imgBx">
+                                    <img class="image" src="/static/assets/images/vector/printt.png">
+                                </div>
+                                <div class="contentBx">
+                                    <h2>فواتير مرتجع المبيعات</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <a data-toggle="modal" data-target="#invoice3_modal">
+                        <div class="container_new">
+                            <div class="card">
+                                <div class="imgBx">
+                                    <img class="image" src="/static/assets/images/vector/printt.png">
+                                </div>
+                                <div class="contentBx">
+                                    <h2>المبيعات القطاعي</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+
                 <div class="col-xl-4 col-lg-6 col-md-6 ">
                     <a href="" data-toggle="modal" data-target="#factory_modal">
                         <div class="container_new  "> 
                             <div class="card">
                               <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/factory1.png">
+                                <img class="image" src="/static/assets/images/vector/factory2.png">
                               </div>
                               <div class="contentBx">
                                 <h2>المصانع</h2>
@@ -249,7 +295,7 @@ background-size: cover;">
                         <div class="container_new">
                             <div class="card">
                                 <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/product.png">
+                                    <img class="image" src="/static/assets/images/vector/product2.png">
                                 </div>
                                 <div class="contentBx">
                                     <h2>المنتجات</h2>
@@ -266,7 +312,7 @@ background-size: cover;">
                     <div class="container_new">
                         <div class="card">
                             <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/worker.png">
+                                <img class="image" src="/static/assets/images/vector/worker2.png">
                             </div>
                             <div class="contentBx">
                                 <h2>العمال</h2>
@@ -284,7 +330,7 @@ background-size: cover;">
                     <div class="container_new">
                         <div class="card">
                             <div class="imgBx">
-                                <img class="image" src="/static/assets/images/vector/seller.png">
+                                <img class="image" src="/static/assets/images/vector/seller2.png">
                             </div>
                             <div class="contentBx">
                                 <h2>التجار</h2>
@@ -302,7 +348,7 @@ background-size: cover;">
                         <div class="container_new">
                             <div class="card">
                                 <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/search.png">
+                                    <img class="image" src="/static/assets/images/vector/search2.png">
                                 </div>
                                 <div class="contentBx">
                                     <h2>البحث</h2>
@@ -317,7 +363,7 @@ background-size: cover;">
                         <div class="container_new">
                             <div class="card">
                                 <div class="imgBx">
-                                    <img class="image" src="/static/assets/images/vector/users.png">
+                                    <img class="image" src="/static/assets/images/vector/users2.png">
                                 </div>
                                 <div class="contentBx">
                                     <h2> المستخدمين</h2>

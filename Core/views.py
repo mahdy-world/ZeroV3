@@ -13,7 +13,7 @@ from SpareParts.models import SparePartsOrders
 from Factories.models import Factory
 from Wool.models import  WoolColor
 from Workers.models import Worker
-
+from Invoices.models import Invoice
 # Create your views here.
 
 
@@ -89,7 +89,8 @@ class MachineSearch(LoginRequiredMixin, ListView):
         machine_search = self.request.GET.get("machine")  
         queryset = self.model.objects.filter(name__icontains=machine_search, deleted=False)
         return queryset
-    
+
+
 class FactorySearch(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = Factory
@@ -99,6 +100,7 @@ class FactorySearch(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['message'] = 'active'
         context['page'] = 'active'
+        context['search'] = self.request.GET.get("factory")
         context['type'] = 'list'
         context['count'] = self.model.objects.filter(deleted=False).count()
         return context
@@ -118,6 +120,7 @@ class ProductSearch(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['message'] = 'active'
         context['page'] = 'active'
+        context['product_serach'] = self.request.GET.get("product")
         context['type'] = 'list'
         context['count'] = self.model.objects.filter(deleted=False).count()
         return context
@@ -126,9 +129,60 @@ class ProductSearch(LoginRequiredMixin, ListView):
         product_serach = self.request.GET.get("product")  
         queryset = self.model.objects.filter(name__icontains=product_serach, deleted=False)
         return queryset
-    
-    
-    
+
+
+class InvoiceSearch(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Invoice
+    template_name = 'Invoices/invoice_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'active'
+        if self.model.objects.filter(id=int(self.request.GET.get("invoice")), deleted=False):
+            inv_type = self.model.objects.get(id=int(self.request.GET.get("invoice")), deleted=False).invoice_type
+            context['type'] = inv_type
+            context['count'] = self.model.objects.filter(deleted=False, invoice_type=inv_type).count()
+        else:
+            context['type'] = 1
+            context['count'] = self.model.objects.filter(deleted=False, invoice_type=1).count()
+        context['invoice_serach'] = self.request.GET.get("invoice")
+        return context
+
+    def get_queryset(self):
+        invoice_serach = self.request.GET.get("invoice")
+        queryset = self.model.objects.filter(id=int(invoice_serach), deleted=False)
+        if queryset:
+            inv_type = self.model.objects.get(id=int(invoice_serach), deleted=False).invoice_type
+            queryset = queryset.filter(invoice_type=inv_type)
+        else:
+            queryset = self.model.objects.filter(deleted=False, invoice_type=1)
+        return queryset
+
+
+class SpInvoiceSearch(LoginRequiredMixin, ListView):
+    login_url = '/auth/login/'
+    model = Invoice
+    template_name = 'Invoices/invoice_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'active'
+        context['type'] = self.kwargs['type']
+        context['invoice_serach'] = self.request.GET.get("invoice")
+        context['count'] = self.model.objects.filter(deleted=False, invoice_type=int(self.kwargs['type'])).count()
+        return context
+
+    def get_queryset(self):
+        invoice_serach = self.request.GET.get("invoice")
+        queryset = self.model.objects.filter(id=int(invoice_serach), deleted=False, invoice_type=int(self.kwargs['type']))
+        if queryset:
+            queryset = queryset
+        else:
+            queryset = self.model.objects.filter(deleted=False, invoice_type=int(self.kwargs['type']))
+        return queryset
+
+
 class WorkerSearch(LoginRequiredMixin, ListView):
     login_url = '/auth/login/'
     model = Worker
@@ -138,6 +192,7 @@ class WorkerSearch(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['message'] = 'active'
         context['page'] = 'active'
+        context['worker_serach'] = self.request.GET.get("worker")
         context['type'] = 'list'
         context['count'] = self.model.objects.filter(deleted=False).count()
         return context
@@ -167,7 +222,6 @@ class SparePartsSearch(LoginRequiredMixin, ListView):
         spare_search = self.request.GET.get("spare")
         queryset = self.model.objects.filter(name__icontains=spare_search, deleted=False)
         return queryset
-
 
 
 class SparePartsOrderSearch(LoginRequiredMixin, ListView):
@@ -233,6 +287,7 @@ class SellerSearch(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['type'] = 'list'
         context['title'] = 'قائمة التجار'
+        context['seller_serach'] = self.request.GET.get('seller')
         context['page'] = 'active'
         context['seller_search'] = self.request.GET.get('seller')
         context['count'] = self.model.objects.filter(deleted=False).count()

@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <h1>
+    <h1 style="margin-top: -100px">
       {% if system_info.logo %}
       <img src={{system_info.logo.url}} width="150px" height="150px">
       {% else %}
@@ -15,24 +15,15 @@
      {% endif %}
     </h1>
 
-    <aside>
-      <address class="to">
-       
-      </address>
-    </aside>
-
-    <dl id="informations">
-        <h5>{{system_info.name}}</h5>
-        <h5><span>{{date|date:'Y-d-m'}}</span>تاريخ التقرير :</h5> 
-      <h5><span>{{system_info.phone}}</span> الموبيل: </h5> 
-      <h5><span>{{system_info.address}}</span>العنوان: </h5> 
-      <h5><span>{{worker.name}}</span>مسحوبات العامل: </h5> 
+    <dl id="informations" style="margin-top: -100px">
+        <h2 class="text-center">{{system_info.name}}</h2>
+        <h5><span> {{date|date:'Y-d-m'}} </span>تاريخ التقرير:</h5>
+      <h5><span> {{worker.name}} </span>مسحوبات العامل: </h5>
     </dl>
 
     <table>
       <thead>
         <tr>
-          <th>المسئول</th>
           <th>المبلغ</th>
           <th>التاريخ</th>
         </tr>
@@ -40,8 +31,7 @@
       <tbody>
         {% for x in queryset %}
           <tr>
-            <td>{{x.admin}}</td>
-            <td>{{x.price}}$</td>
+            <td>{{x.price}}</td>
             <td>{{x.date|date:'Y-m-d'}}</td>
           </tr>
         {% endfor %}

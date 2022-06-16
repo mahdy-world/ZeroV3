@@ -112,7 +112,25 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 text-center">
+                            <div class="col-md-4 text-center">
+                                <p class="btn btn-warning">
+                                قيمة افتتاحية:
+                                {% if seller.initial_balance_debit %}
+                                {{ seller.initial_balance_debit }}
+                                {% else %}
+                                0.0
+                                {% endif %}
+                                جنيه
+                                {% if seller.initial_balance_debit %}
+                                {% if seller.initial_balance_type == 1 %}
+                                للتاجر
+                                {% else %}
+                                علي التاجر
+                                {% endif %}
+                                {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-center">
                                 <p class="btn btn-success">
                                 التاجر دفع لك:
                                 {% if from.sum %}
@@ -120,9 +138,10 @@
                                 {% else %}
                                 0.0
                                 {% endif %}
+                                جنيه
                                 </p>
                             </div>
-                            <div class="col-md-6 text-center">
+                            <div class="col-md-4 text-center">
                                 <p class="btn btn-danger">
                                 أنت دفعت للتاجر:
                                 {% if to.sum %}
@@ -130,6 +149,7 @@
                                 {% else %}
                                 0.0
                                 {% endif %}
+                                جنيه
                                 </p>
                             </div>
                         </div>

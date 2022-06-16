@@ -6,8 +6,7 @@
       <tr>
         <th>م</th>
         <th>التاريخ</th>
-      <th>كمية الانتاج بالقطعة</th>
-        <th>المنتج</th>
+      <th>الكمية بالقطعة</th>
         <th>المسئول</th>
         <th><i class="fas fa-cogs"></i></th>
       </tr>
@@ -26,18 +25,18 @@
               <td>
                {{x.quantity}}  
               </td>
-              <td>{{x.product}}</td>
               <td>{{x.admin}}</td>
               {% if request.user.is_superuser %}
               <td>
-              <a
-                  href="{% url 'Workers:WorkerProductionUpdate' x.id %}"
-                  class="mr-3 text-warning"
-                  data-toggle="modal"
-                  data-target="#action_modal"
-                  data-original-title="Edit"
-                  ><i class="mdi mdi-pencil font-size-18"></i
-              ></a>
+              <!--
+{#              <a#}
+{#                  href="{% url 'Workers:WorkerProductionUpdate' x.id %}"#}
+{#                  class="mr-3 text-warning"#}
+{#                  data-toggle="modal"#}
+{#                  data-target="#action_modal"#}
+{#                  data-original-title="Edit"#}
+{#                  ><i class="mdi mdi-pencil font-size-18"></i#}
+{#              ></a>#} -->
               <a
                   onclick="WorkerAttendanceDelete('{{x.id}}')"
                   style="cursor: pointer"

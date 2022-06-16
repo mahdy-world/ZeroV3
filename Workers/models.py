@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.db import models
 
 from Auth.models import User
+from Products.models import Product
 
 # Create your models here.
 
@@ -14,9 +15,9 @@ WORKER_TYPE = (
 class Worker(models.Model):
     name = models.CharField(max_length=30, verbose_name="اسم العامل")
     image = models.ImageField(verbose_name="صورة العامل", null=True, blank=True)
-    phone = models.IntegerField(null=True, verbose_name="رقم الموبيل")
-    worker_type = models.IntegerField(choices=WORKER_TYPE, verbose_name="نوع العامل")
-    day_cost = models.FloatField(default=0, null=True, verbose_name="تكلفة")
+    phone = models.IntegerField(null=True, blank=True, verbose_name="رقم الموبيل")
+    worker_type = models.IntegerField(choices=WORKER_TYPE, null=True, blank=True, verbose_name="نوع العامل")
+    day_cost = models.FloatField(default=0, null=True, blank=True, verbose_name="التكلفة (*حساب اليومية في حالة عامل اليومية *حساب القطعة في حالة عامل الانتاج)")
     deleted = models.BooleanField(default=False, verbose_name="حذف")
     
     def __str__(self):
@@ -52,8 +53,8 @@ class WorkerPayment(models.Model):
 class WorkerProduction(models.Model):
     date = models.DateField(verbose_name="تاريخ الاستلام", default=django.utils.timezone.now())
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name="العامل")
-    quantity = models.FloatField(default=0, verbose_name="الكمية")
-    product = models.CharField(max_length=50, verbose_name="المنتج", null=True, blank=True)
+    quantity = models.FloatField(default=0, verbose_name="الكمية بالقطعة")
+    # product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="المنتج", null=True, blank=True)
     admin = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="المسئول")
     
     def __str__(self):

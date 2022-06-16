@@ -10,9 +10,9 @@ class WorkerForm(forms.ModelForm):
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control' , }),
             'image' : forms.FileInput(attrs={'class':'form-control'}),
-            'phone' : forms.NumberInput(attrs={'class':'form-control'}),
+            'phone' : forms.TextInput(attrs={'class':'form-control'}),
             'work_type' : forms.Select(attrs={'class':'form-control'}),
-            'day_cost' : forms.NumberInput(attrs={'class':'form-control'}),
+            'day_cost' : forms.NumberInput(attrs={'class':'form-control', 'min':0}),
         }
         
 
@@ -27,19 +27,18 @@ class WorkerDeleteForm(forms.ModelForm):
         
 class WorkerPaymentForm(forms.ModelForm):
     class Meta:
-        fields = ['date', 'price', 'worker', 'admin']
+        fields = ['date', 'price', 'worker']
         model = WorkerPayment
         widgets = {
             'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control',
             'placeholder':'تاريخ السحب...', 'id':'date'}),
             'price' : forms.NumberInput(attrs={ 'class':'form-control',
             'placeholder':'المبلغ...', 'id':'price'}),
-            'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المستلم...',
-            'id':'recipient', 'id':'admin'}),
+            # 'admin' : forms.Select(attrs={'class':'form-control',  'placeholder':'المستلم...','id':'recipient', 'id':'admin'}),
         }
         
 class WorkerPaymentReportForm(forms.Form):
-    from_date = forms.DateField(widget=forms.DateInput(attrs={
+    from_date = forms.DateField(required=False ,widget=forms.DateInput(attrs={
         'type':'date',
         'name':'from',
         'id':'from_date',
@@ -48,7 +47,7 @@ class WorkerPaymentReportForm(forms.Form):
         label= 'من',
         )
          
-    to_date = forms.DateField(widget=forms.DateInput(attrs={
+    to_date = forms.DateField(required=False ,widget=forms.DateInput(attrs={
         'type':'date',
         'name':'to_date',
         'id':'to_date',
@@ -73,15 +72,15 @@ class WorkerAttendanceForm(forms.ModelForm):
  
 class WorkerProductionForm(forms.ModelForm):
     class Meta:
-        fields = ['date', 'quantity', 'product']
+        fields = ['date', 'quantity']
         model = WorkerProduction
         widgets = {
             'date' : forms.DateInput(attrs={'type':'date', 'class':'form-control',
             'placeholder':'تاريخ الاستلام', 'id':'production_date'}),
-            'product' : forms.TextInput(attrs={'type':'text', 'class':'form-control',
-            'placeholder':' المنتج', 'id':'worker_production'}),
-            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'المبلغ...',
-            'id':'worker_quantity'})   
+            # 'product' : forms.Select(attrs={'type':'text', 'class':'form-control',
+            # 'placeholder':' المنتج', 'id':'worker_production'}),
+            'quantity' : forms.NumberInput(attrs={ 'class':'form-control', 'placeholder':'الكمية...',
+            'id':'worker_quantity'})
         }
                 
    
